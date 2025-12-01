@@ -1,0 +1,4107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Iron Pig - Brewing custom software solutions. Where exceptional code meets coffee culture.">
+    <meta name="author" content="Iron Pig PTY">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline';">
+    <meta name="theme-color" content="#2a2220">
+    <meta property="og:title" content="Iron Pig - Software Development">
+    <meta property="og:description" content="Brewing custom software solutions. Serving fresh code daily.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>Iron Pig - Brewing Software Solutions</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Pinyon+Script&family=Tangerine:wght@400;700&family=Mr+De+Haviland&family=Righteous&family=Pacifico&family=Sacramento&family=Inter:wght@400;500;600;700&display=block" rel="stylesheet">
+    <style>
+        /* ===================================
+           CSS CUSTOM PROPERTIES
+           =================================== */
+        :root {
+            /* Colors */
+            --bg-color: #f5e6d3;
+            --floor-color: #d4b398;
+            --counter-color: #2a2220;
+            --counter-edge-color: #3a3230;
+            --table-color: #b8967a;
+            --table-leg-color: #a88567;
+            --stool-seat-color: #b8967a;
+            --stool-leg-color: #a88567;
+            --white: #ffffff;
+            --black: #000000;
+            --shelf-color: #8B6F47;
+            --shelf-edge: #9d8055;
+            --wood-border: #8B6F47;
+            --text-light: #f5f5f5;
+            --text-dark: #2a2220;
+            --text-muted: #776f6e;
+            --text-label: #b8967a;
+            --green-accent: #d4e157;
+            --dark-bg: #1a1a1a;
+            --chalkboard-bg: #2a2520;
+
+            /* Coffee machine colors */
+            --machine-header: #ddcfcc;
+            --machine-button: #282323;
+            --machine-button-shadow: #615e5e;
+            --machine-display: #8db88f;
+            --machine-display-border: #4a7c4f;
+            --machine-details: #9b9091;
+            --machine-body: #bcb0af;
+            --machine-body-dark: #776f6e;
+            --machine-portafilter: #231f20;
+            --machine-handle: #9e9495;
+            --machine-cup: #ffffff;
+            --machine-coffee: #74372b;
+            --machine-steam: #b3aeae;
+            --machine-footer: #4a7c4f;
+            --machine-base: #000000;
+
+            /* Iron Pig brand */
+            --iron-pig-green: #355e3b;
+
+            /* Rug colors */
+            --rug-sage-lightest: #a3b5a4;
+            --rug-sage-light: #8fa890;
+            --rug-sage-medium: #7a9a7c;
+            --rug-sage-warm: #7a8a70;
+            --rug-sage-dark: #6b8a6d;
+            --rug-sage-darkest: #5a7a5d;
+
+            /* Dimensions */
+            --floor-height: 100px;
+            --counter-height: 250px;
+            --table-size: 200px;
+            --stool-height: 130px;
+
+            /* Z-index layers - Organized from bottom to top */
+            --z-floor: 1;
+            --z-shelf: 5;
+            --z-counter: 10;
+            --z-table: 15;
+            --z-stool: 15;
+            --z-machine: 20;
+            --z-mug: 50;
+            --z-sign: 100;
+            --z-overlay: 999;
+            --z-modal: 1000;
+            --z-modal-mug: 1001;
+        }
+
+        /* ===================================
+           RESET & BASE
+           =================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            background:
+                /* Horizontal mortar lines */
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 30px,
+                    rgba(190, 180, 165, 0.8) 30px,
+                    rgba(190, 180, 165, 0.8) 32px
+                ),
+                /* Vertical mortar lines - first row */
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 118px,
+                    rgba(190, 180, 165, 0.7) 118px,
+                    rgba(190, 180, 165, 0.7) 120px
+                ),
+                /* Vertical mortar lines - offset row */
+                repeating-linear-gradient(
+                    90deg,
+                    transparent 60px,
+                    transparent 178px,
+                    rgba(190, 180, 165, 0.7) 178px,
+                    rgba(190, 180, 165, 0.7) 180px
+                ),
+                /* Individual brick shading */
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.03) 0px,
+                    rgba(0, 0, 0, 0.01) 15px,
+                    rgba(0, 0, 0, 0.03) 30px,
+                    transparent 32px
+                ),
+                /* Base gradient for depth */
+                linear-gradient(180deg, #ddd0bc 0%, #d1c4af 100%);
+            overflow-x: hidden;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* ===================================
+           FLOOR
+           =================================== */
+        .floor {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: var(--floor-height);
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    #d4b398 0px,
+                    #d4b398 80px,
+                    #c9a888 80px,
+                    #c9a888 81px
+                );
+            z-index: var(--z-floor);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ===================================
+           RUG - Center floor decoration
+           =================================== */
+        .rug {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 99%;
+            height: 90px;
+            z-index: calc(var(--z-floor) + 1);
+            background:
+                /* Border stripe */
+                linear-gradient(to right,
+                    var(--rug-sage-darkest) 0px,
+                    var(--rug-sage-darkest) 3px,
+                    transparent 3px,
+                    transparent calc(100% - 3px),
+                    var(--rug-sage-darkest) calc(100% - 3px)
+                ),
+                linear-gradient(to bottom,
+                    var(--rug-sage-darkest) 0px,
+                    var(--rug-sage-darkest) 3px,
+                    transparent 3px,
+                    transparent calc(100% - 3px),
+                    var(--rug-sage-darkest) calc(100% - 3px)
+                ),
+                /* Diagonal crosshatch for basket weave */
+                repeating-linear-gradient(
+                    45deg,
+                    transparent 0px,
+                    transparent 8px,
+                    rgba(90, 122, 93, 0.15) 8px,
+                    rgba(90, 122, 93, 0.15) 9px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent 0px,
+                    transparent 8px,
+                    rgba(90, 122, 93, 0.15) 8px,
+                    rgba(90, 122, 93, 0.15) 9px
+                ),
+                /* Varied vertical threads - chunky weave */
+                repeating-linear-gradient(
+                    90deg,
+                    var(--rug-sage-medium) 0px,
+                    var(--rug-sage-medium) 2px,
+                    var(--rug-sage-light) 2px,
+                    var(--rug-sage-light) 5px,
+                    var(--rug-sage-warm) 5px,
+                    var(--rug-sage-warm) 7px,
+                    var(--rug-sage-dark) 7px,
+                    var(--rug-sage-dark) 10px,
+                    var(--rug-sage-lightest) 10px,
+                    var(--rug-sage-lightest) 12px,
+                    var(--rug-sage-medium) 12px,
+                    var(--rug-sage-medium) 15px
+                ),
+                /* Horizontal threads with variation */
+                repeating-linear-gradient(
+                    0deg,
+                    var(--rug-sage-dark) 0px,
+                    var(--rug-sage-dark) 2px,
+                    var(--rug-sage-medium) 2px,
+                    var(--rug-sage-medium) 3px,
+                    var(--rug-sage-warm) 3px,
+                    var(--rug-sage-warm) 6px,
+                    var(--rug-sage-light) 6px,
+                    var(--rug-sage-light) 8px
+                ),
+                /* Subtle depth shadows */
+                linear-gradient(
+                    180deg,
+                    rgba(0, 0, 0, 0.08) 0%,
+                    transparent 20%,
+                    transparent 80%,
+                    rgba(0, 0, 0, 0.05) 100%
+                ),
+                /* Base color with warmth */
+                linear-gradient(
+                    135deg,
+                    var(--rug-sage-medium) 0%,
+                    var(--rug-sage-warm) 50%,
+                    var(--rug-sage-medium) 100%
+                );
+            border-radius: 3px;
+            box-shadow:
+                0 5px 15px rgba(0, 0, 0, 0.3),
+                0 2px 5px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 -1px 2px rgba(0, 0, 0, 0.15);
+            filter: contrast(1.05);
+        }
+
+        /* Enhanced fringe on left side */
+        .rug::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -14px;
+            width: 14px;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0px,
+                transparent 2px,
+                var(--rug-sage-darkest) 2px,
+                var(--rug-sage-darkest) 3px,
+                var(--rug-sage-dark) 3px,
+                var(--rug-sage-dark) 4px,
+                transparent 4px,
+                transparent 5px,
+                var(--rug-sage-medium) 5px,
+                var(--rug-sage-medium) 6px,
+                transparent 6px,
+                transparent 9px
+            );
+            opacity: 0.8;
+            filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.3));
+        }
+
+        /* Enhanced fringe on right side */
+        .rug::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -14px;
+            width: 14px;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0px,
+                transparent 2px,
+                var(--rug-sage-darkest) 2px,
+                var(--rug-sage-darkest) 3px,
+                var(--rug-sage-dark) 3px,
+                var(--rug-sage-dark) 4px,
+                transparent 4px,
+                transparent 5px,
+                var(--rug-sage-medium) 5px,
+                var(--rug-sage-medium) 6px,
+                transparent 6px,
+                transparent 9px
+            );
+            opacity: 0.8;
+            filter: drop-shadow(-1px 2px 2px rgba(0, 0, 0, 0.3));
+        }
+
+        /* ===================================
+           COUNTER - Left side
+           =================================== */
+        .counter {
+            position: absolute;
+            bottom: var(--floor-height);
+            left: 0;
+            width: 50%;
+            height: var(--counter-height);
+            background:
+                /* Subtle depth from center to edges */
+                radial-gradient(ellipse at center,
+                    rgba(58, 47, 40, 0.3) 0%,
+                    transparent 70%
+                ),
+                /* Main vertical gradient */
+                linear-gradient(180deg,
+                    #3a2f28 0%,
+                    #2e2422 30%,
+                    #2a2220 70%,
+                    #242020 100%
+                );
+            z-index: var(--z-counter);
+            box-shadow:
+                0 6px 16px rgba(0, 0, 0, 0.35),
+                0 2px 8px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                inset -3px 0 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Light wood countertop - overhangs on right */
+        .counter::before {
+            content: '';
+            position: absolute;
+            top: -18px;
+            left: 0;
+            width: calc(100% + 15px);
+            height: 18px;
+            background:
+                /* Wood grain - subtle horizontal lines */
+                repeating-linear-gradient(
+                    0deg,
+                    transparent 0px,
+                    transparent 2px,
+                    rgba(139, 111, 71, 0.15) 2px,
+                    rgba(139, 111, 71, 0.15) 3px
+                ),
+                /* Darker grain streaks */
+                repeating-linear-gradient(
+                    0deg,
+                    transparent 0px,
+                    transparent 8px,
+                    rgba(101, 84, 63, 0.2) 8px,
+                    rgba(101, 84, 63, 0.2) 9px
+                ),
+                /* Top highlight for rounded edge */
+                linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.25) 0%,
+                    transparent 30%
+                ),
+                /* Wood color gradient for depth */
+                linear-gradient(180deg,
+                    #d4b89a 0%,
+                    #c9a87a 30%,
+                    #b8967a 70%,
+                    #a8856a 100%
+                );
+            border-radius: 8px 8px 0 0;
+            box-shadow:
+                0 -2px 4px rgba(0, 0, 0, 0.1),
+                0 3px 8px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            z-index: 1;
+        }
+
+        /* ===================================
+           TABLE - Right side
+           =================================== */
+        .table {
+            position: absolute;
+            bottom: var(--floor-height);
+            right: 200px;
+            width: var(--table-size);
+            height: var(--table-size);
+            z-index: var(--z-table);
+        }
+
+        .table-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background: linear-gradient(135deg, var(--table-color) 0%, #a8856a 100%);
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .table-leg {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: calc(var(--table-size) - 12px);
+            background: linear-gradient(90deg, var(--table-leg-color) 0%, #998060 50%, var(--table-leg-color) 100%);
+            clip-path: polygon(40% 0%, 60% 0%, 70% 100%, 30% 100%);
+        }
+
+        /* ===================================
+           STOOLS
+           =================================== */
+        .stool {
+            position: absolute;
+            bottom: var(--floor-height);
+            width: 60px;
+            height: var(--stool-height);
+            z-index: var(--z-stool);
+        }
+
+        .stool-1 {
+            right: 365px;
+        }
+
+        .stool-2 {
+            right: 173px;
+        }
+
+        .stool-seat {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            background: linear-gradient(135deg, var(--stool-seat-color) 0%, #a8856a 100%);
+            border-radius: 50%;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .stool-leg {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 119px;
+            background: var(--stool-leg-color);
+        }
+
+        /* ===================================
+           SHELVES
+           =================================== */
+        .shelf {
+            position: absolute;
+            left: 8%;
+            width: 180px;
+            height: 8px;
+            background: linear-gradient(180deg, var(--shelf-color) 0%, #7d6340 100%);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            z-index: var(--z-shelf);
+        }
+
+        .shelf::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--shelf-edge);
+        }
+
+
+        .shelf-1 {
+            bottom: 650px;
+        }
+
+        .shelf-2 {
+            bottom: 560px;
+        }
+
+        /* Shelf items */
+        .shelf-item {
+            position: absolute;
+            bottom: 8px;
+        }
+
+        /* Coffee bag */
+        .coffee-bag {
+            width: 28px;
+            height: 40px;
+            background: linear-gradient(135deg, #8B6F47 0%, #6d5737 100%);
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .coffee-bag::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--iron-pig-green);
+            border-radius: 50%;
+        }
+
+        .shelf-1 .bag-1 {
+            left: 15px;
+        }
+
+        .shelf-1 .bag-2 {
+            left: 50px;
+        }
+
+        .shelf-1 .bag-3 {
+            left: 85px;
+        }
+
+        /* Plant pot */
+        .plant-pot {
+            width: 30px;
+            height: 35px;
+        }
+
+        .plant-pot__pot {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 18px;
+            background: #c97a5f;
+            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+        }
+
+        .plant-pot__plant {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 20px;
+            background: var(--iron-pig-green);
+        }
+
+        .plant-pot__leaf {
+            position: absolute;
+            width: 12px;
+            height: 8px;
+            background: var(--iron-pig-green);
+            border-radius: 50% 0 50% 0;
+        }
+
+        .plant-pot__leaf--left {
+            top: 8px;
+            left: -6px;
+            transform: rotate(-30deg);
+        }
+
+        .plant-pot__leaf--right {
+            top: 12px;
+            right: -6px;
+            transform: rotate(30deg) scaleX(-1);
+        }
+
+        .shelf-1 .plant-1 {
+            right: 15px;
+        }
+
+        /* Stack of cups */
+        .cup-stack {
+            width: 35px;
+            height: 30px;
+        }
+
+        .cup-stack__cup {
+            position: absolute;
+            width: 24px;
+            height: 12px;
+            background: var(--white);
+            border-radius: 0 0 40% 40%;
+            border: 2px solid #e0e0e0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .cup-stack__cup:nth-child(1) {
+            bottom: 18px;
+        }
+
+        .cup-stack__cup:nth-child(2) {
+            bottom: 9px;
+        }
+
+        .cup-stack__cup:nth-child(3) {
+            bottom: 0px;
+        }
+
+        .shelf-2 .cups-1 {
+            right: 20px;
+        }
+
+        /* Jar */
+        .jar {
+            width: 25px;
+            height: 35px;
+        }
+
+        .jar__body {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 22px;
+            height: 30px;
+            background: rgba(139, 111, 71, 0.3);
+            border-radius: 3px;
+            border: 2px solid rgba(139, 111, 71, 0.5);
+        }
+
+        .jar__lid {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 6px;
+            background: var(--shelf-color);
+            border-radius: 2px;
+        }
+
+        .jar__content {
+            position: absolute;
+            bottom: 2px;
+            left: 2px;
+            right: 2px;
+            height: 20px;
+            background: #74372b;
+            border-radius: 2px;
+        }
+
+        .shelf-2 .jar-1 {
+            left: 60px;
+        }
+
+        .shelf-2 .jar-2 {
+            left: 95px;
+        }
+
+        /* Small plant - More realistic pot plant styling */
+        .shelf-2 .plant-2 {
+            left: 20px;
+        }
+
+        /* Make plant-2 bushier and more compact */
+        .plant-2 .plant-pot__pot {
+            width: 24px;
+            height: 20px;
+            background: linear-gradient(135deg, #2a2a2a 0%, var(--black) 100%);
+        }
+
+        .plant-2 .plant-pot__plant {
+            width: 6px;
+            height: 16px;
+        }
+
+        /* Add more leaves for a bushier appearance */
+        .plant-2 .plant-pot__leaf {
+            width: 14px;
+            height: 10px;
+            background: linear-gradient(135deg, #4a8550 0%, var(--iron-pig-green) 100%);
+        }
+
+        .plant-2 .plant-pot__leaf--left {
+            top: 6px;
+            left: -8px;
+            transform: rotate(-40deg);
+        }
+
+        .plant-2 .plant-pot__leaf--right {
+            top: 4px;
+            right: -8px;
+            transform: rotate(40deg) scaleX(-1);
+        }
+
+        /* Add extra leaves using pseudo-elements */
+        .plant-2 .plant-pot__plant::before,
+        .plant-2 .plant-pot__plant::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 9px;
+            background: linear-gradient(135deg, #4a8550 0%, var(--iron-pig-green) 100%);
+            border-radius: 50% 0 50% 0;
+        }
+
+        .plant-2 .plant-pot__plant::before {
+            top: 1px;
+            left: -6px;
+            transform: rotate(-20deg);
+        }
+
+        .plant-2 .plant-pot__plant::after {
+            top: 2px;
+            right: -6px;
+            transform: rotate(20deg) scaleX(-1);
+        }
+
+        /* ===================================
+           COUNTER PLANT - Flowering plant on counter
+           =================================== */
+        .counter-plant {
+            position: absolute;
+            bottom: calc(var(--floor-height) + var(--counter-height) + 18px);
+            left: 42%;
+            width: 70px;
+            height: 100px;
+            z-index: 30;
+            cursor: pointer;
+            /* Button reset styles */
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            font: inherit;
+            color: inherit;
+        }
+
+        .counter-plant:focus {
+            outline: none;
+        }
+
+        .counter-plant__pot {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 30px;
+            background: linear-gradient(135deg, #c97a5f 0%, #a86a50 100%);
+            clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+        }
+
+        .counter-plant__pot::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 35px;
+            height: 4px;
+            background: #b56f56;
+            border-radius: 50%;
+        }
+
+        .counter-plant__stem {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 45px;
+            background: linear-gradient(180deg, #4a8550 0%, var(--iron-pig-green) 100%);
+        }
+
+        .counter-plant__stem-2 {
+            left: 45%;
+            height: 38px;
+            transform: translateX(-50%) rotate(-8deg);
+        }
+
+        .counter-plant__stem-3 {
+            left: 55%;
+            height: 40px;
+            transform: translateX(-50%) rotate(10deg);
+        }
+
+        /* Flower heads */
+        .counter-plant__flower {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+        }
+
+        .counter-plant__flower-1 {
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .counter-plant__flower-2 {
+            top: 30px;
+            left: 42%;
+            transform: translateX(-50%);
+        }
+
+        .counter-plant__flower-3 {
+            top: 28px;
+            left: 58%;
+            transform: translateX(-50%);
+        }
+
+        /* Flower petals */
+        .counter-plant__petal {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #e8b89a;
+            border-radius: 50% 0 50% 0;
+        }
+
+        .counter-plant__petal:nth-child(1) {
+            top: -3px;
+            left: 4px;
+            transform: rotate(0deg);
+        }
+
+        .counter-plant__petal:nth-child(2) {
+            top: 4px;
+            right: -3px;
+            transform: rotate(90deg);
+        }
+
+        .counter-plant__petal:nth-child(3) {
+            bottom: -3px;
+            left: 4px;
+            transform: rotate(180deg);
+        }
+
+        .counter-plant__petal:nth-child(4) {
+            top: 4px;
+            left: -3px;
+            transform: rotate(270deg);
+        }
+
+        /* Flower center */
+        .counter-plant__center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px;
+            height: 4px;
+            background: #ffd700;
+            border-radius: 50%;
+        }
+
+        /* Leaves on stems */
+        .counter-plant__leaf {
+            position: absolute;
+            width: 10px;
+            height: 6px;
+            background: var(--iron-pig-green);
+            border-radius: 50% 0 50% 0;
+        }
+
+        .counter-plant__leaf-1 {
+            bottom: 45px;
+            left: 48%;
+            transform: rotate(-45deg);
+        }
+
+        .counter-plant__leaf-2 {
+            bottom: 38px;
+            left: 52%;
+            transform: rotate(45deg) scaleX(-1);
+        }
+
+        .counter-plant__leaf-3 {
+            bottom: 50px;
+            left: 40%;
+            transform: rotate(-60deg);
+        }
+
+        .counter-plant__leaf-4 {
+            bottom: 47px;
+            left: 60%;
+            transform: rotate(60deg) scaleX(-1);
+        }
+
+        /* ===================================
+           COFFEE MACHINE
+           =================================== */
+        .coffee-machine {
+            width: 400px;
+            height: 200px;
+            position: absolute;
+            bottom: 411px;
+            left: 6%;
+            transform: scale(0.55);
+            transform-origin: left bottom;
+            z-index: var(--z-machine);
+        }
+
+        /* Machine header (top section) */
+        .coffee-header {
+            width: 100%;
+            height: 80px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(180deg, #eee3e0 0%, var(--machine-header) 50%, #c9bbb8 100%);
+            border-radius: 10px;
+        }
+
+        /* Control buttons */
+        .coffee-header__buttons {
+            width: 25px;
+            height: 25px;
+            position: absolute;
+            top: 25px;
+            background-color: var(--machine-button);
+            border-radius: 50%;
+        }
+
+        .coffee-header__buttons::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--machine-button-shadow);
+        }
+
+        .coffee-header__button-one {
+            left: 15px;
+        }
+
+        .coffee-header__button-two {
+            left: 50px;
+        }
+
+        /* Display screen */
+        .coffee-header__display {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background-color: var(--machine-display);
+            border: 5px solid var(--machine-display-border);
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .coffee-header__display img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            image-rendering: auto;
+            -webkit-backface-visibility: hidden;
+            -webkit-transform: translateZ(0) scale(1.0, 1.0);
+            transform: translateZ(0);
+        }
+
+        /* Detail indicators */
+        .coffee-header__details {
+            width: 8px;
+            height: 20px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--machine-details);
+            box-shadow: -12px 0 0 var(--machine-details), -24px 0 0 var(--machine-details);
+        }
+
+        /* Machine body (middle section) */
+        .coffee-medium {
+            width: 90%;
+            height: 160px;
+            position: absolute;
+            top: 80px;
+            left: 5%;
+            background-color: var(--machine-body);
+        }
+
+        .coffee-medium::before {
+            content: '';
+            width: 90%;
+            height: 100px;
+            background-color: var(--machine-body-dark);
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+            border-radius: 20px 20px 0 0;
+        }
+
+        /* Portafilters (group heads) */
+        .coffee-medium__exit {
+            width: 60px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            background-color: var(--machine-portafilter);
+        }
+
+        .coffee-medium__exit-one {
+            left: 20%;
+        }
+
+        .coffee-medium__exit-two {
+            right: 20%;
+        }
+
+        .coffee-medium__exit::before {
+            content: '';
+            width: 50px;
+            height: 20px;
+            border-radius: 0 0 50% 50%;
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--machine-portafilter);
+        }
+
+        .coffee-medium__exit::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--machine-portafilter);
+        }
+
+        /* Coffee cups */
+        .coffee-medium__cup {
+            width: 60px;
+            height: 40px;
+            position: absolute;
+            bottom: 0;
+            background-color: var(--machine-cup);
+            border-radius: 0 0 70px 70px / 0 0 110px 110px;
+        }
+
+        .coffee-medium__cup::after {
+            content: '';
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            top: 6px;
+            right: -10px;
+            border: 4px solid var(--machine-cup);
+            border-radius: 50%;
+        }
+
+        .coffee-medium__cup-one {
+            left: 20%;
+        }
+
+        .coffee-medium__cup-two {
+            right: 20%;
+        }
+
+        /* Coffee liquid animation - Using transform for 60fps performance */
+        @keyframes liquid {
+            0% {
+                transform: scaleY(0);
+                opacity: 1;
+            }
+            5% {
+                transform: scaleY(0);
+                opacity: 1;
+            }
+            20% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+            95% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scaleY(1);
+                opacity: 0;
+            }
+        }
+
+        .coffee-medium__liquid {
+            width: 6px;
+            height: 68px;
+            opacity: 0;
+            position: absolute;
+            top: 50px;
+            background-color: var(--machine-coffee);
+            transform-origin: top;
+        }
+
+        .coffee-medium__liquid-one {
+            left: 27.5%;
+            animation: liquid 4s 2s ease-in-out infinite;
+        }
+
+        .coffee-medium__liquid-two {
+            right: 27.5%;
+            animation: liquid 4s 4s ease-in-out infinite;
+        }
+
+        /* Steam/smoke animation - Using transform for 60fps performance */
+        .coffee-medium__smoke {
+            width: 8px;
+            height: 20px;
+            position: absolute;
+            border-radius: 5px;
+            background-color: var(--machine-steam);
+        }
+
+        @keyframes smokeOne {
+            0% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+            40% {
+                transform: translateY(-30px);
+                opacity: 0.5;
+            }
+            80% {
+                transform: translateY(-60px);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-60px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes smokeTwo {
+            0% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+            40% {
+                transform: translateY(-30px);
+                opacity: 0.5;
+            }
+            80% {
+                transform: translateY(-40px);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-40px);
+                opacity: 0;
+            }
+        }
+
+        .coffee-medium__smoke-one {
+            opacity: 0;
+            bottom: 50px;
+            left: 25%;
+            animation: smokeOne 3s 3s ease-in-out infinite;
+        }
+
+        .coffee-medium__smoke-two {
+            opacity: 0;
+            bottom: 70px;
+            left: 22%;
+            animation: smokeTwo 3s 4s ease-in-out infinite;
+        }
+
+        .coffee-medium__smoke-three {
+            opacity: 0;
+            bottom: 65px;
+            right: 22%;
+            animation: smokeTwo 3s 5s ease-in-out infinite;
+        }
+
+        .coffee-medium__smoke-four {
+            opacity: 0;
+            bottom: 50px;
+            right: 25%;
+            animation: smokeOne 3s 6s ease-in-out infinite;
+        }
+
+        /* Machine base/footer */
+        .coffee-footer {
+            width: 95%;
+            height: 15px;
+            position: absolute;
+            bottom: -54px;
+            left: 2.5%;
+            background-color: var(--machine-footer);
+            border-radius: 10px;
+        }
+
+        .coffee-footer::after {
+            content: '';
+            width: 106%;
+            height: 26px;
+            position: absolute;
+            bottom: -25px;
+            left: -3%;
+            background-color: var(--machine-base);
+        }
+
+        /* ===================================
+           ACCESSIBILITY - Reduced Motion
+           =================================== */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* ===================================
+           RESPONSIVE DESIGN - Mobile Layout
+           =================================== */
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            main {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 12px 0 24px;
+                min-height: 100vh;
+                gap: 0;
+            }
+
+            /* Hide scene elements on mobile */
+            .floor,
+            .rug,
+            .counter,
+            .table,
+            .stool,
+            .counter-plant,
+            .shelf,
+            .iron-mug,
+            .walking-cat,
+            .corgi-container,
+            .pendant-light {
+                display: none !important;
+            }
+
+            /* Coffee machine - display between sign and boards */
+            .coffee-machine {
+                position: static !important;
+                transform: scale(0.65);
+                transform-origin: center top;
+                margin: 0 auto -8px;
+                padding-bottom: 16px;
+                order: 1;
+                z-index: 10;
+            }
+
+            /* Neon sign - compact header style */
+            .neon-sign {
+                position: static !important;
+                transform: none !important;
+                font-size: 42px;
+                margin: 0 auto 8px;
+                padding: 24px 16px 16px;
+                order: 0;
+                text-align: center;
+                letter-spacing: 2px;
+            }
+
+            .neon-sign::before {
+                display: none !important;
+            }
+
+            .neon-sign__est {
+                gap: 8px;
+                margin-top: 4px;
+            }
+
+            .neon-sign__est-text {
+                font-size: 11px;
+                letter-spacing: 2px;
+            }
+
+            .neon-sign__est-line {
+                width: 35px;
+            }
+
+            /* All boards - consistent width, spacing, and appearance */
+            .price-list,
+            .wifi-sign,
+            .actual-wifi-sign,
+            .contact-info {
+                position: static !important;
+                width: calc(100% - 32px) !important;
+                max-width: none !important;
+                margin: 0 16px 16px !important;
+                transform: none !important;
+                /* Consistent chalkboard background */
+                background:
+                    radial-gradient(circle at 30% 40%, rgba(255,255,255,0.03) 0%, transparent 50%),
+                    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.02) 0%, transparent 50%),
+                    linear-gradient(135deg, #2a2520 0%, #1f1d1a 100%) !important;
+                border: 6px solid var(--wood-border) !important;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+            }
+
+            .price-list { order: 2; }
+            .wifi-sign:not(.actual-wifi-sign) { order: 3; }
+            .actual-wifi-sign { order: 4; }
+            .contact-info { order: 5; }
+
+            /* Expanded states - same width */
+            .wifi-sign.expanded,
+            .actual-wifi-sign.expanded,
+            .contact-info.expanded {
+                width: calc(100% - 32px) !important;
+                max-width: none !important;
+            }
+
+            /* Disable hover transforms */
+            .wifi-sign:hover,
+            .actual-wifi-sign:hover,
+            .contact-info:hover {
+                transform: none !important;
+            }
+
+            /* Mug shop modal - fit small screens */
+            .mug-shop {
+                width: calc(100% - 32px) !important;
+                max-width: 350px;
+                padding: 24px;
+            }
+
+            .mug-shop__image {
+                transform: scale(0.8);
+                margin: -10px 0;
+            }
+
+            .mug-shop__title {
+                font-size: 24px;
+            }
+
+            .mug-shop__description {
+                font-size: 13px;
+            }
+
+            /* Notification modal - fit small screens */
+            .notification-modal__content {
+                width: calc(100% - 32px);
+                max-width: 350px;
+                padding: 24px;
+            }
+        }
+
+        /* ===================================
+           RESPONSIVE - Small phones (max-width: 380px)
+           =================================== */
+        @media (max-width: 380px) {
+            .neon-sign {
+                font-size: 32px;
+                padding: 16px 12px 12px;
+            }
+
+            .neon-sign__est-text {
+                font-size: 9px;
+            }
+
+            .neon-sign__est-line {
+                width: 25px;
+            }
+
+            /* Tighter margins on small phones */
+            .price-list,
+            .wifi-sign,
+            .actual-wifi-sign,
+            .contact-info {
+                width: calc(100% - 24px) !important;
+                margin: 0 12px 12px !important;
+                padding: 14px;
+            }
+
+            .price-list__title,
+            .wifi-sign__title,
+            .contact-info__title {
+                font-size: 18px;
+                letter-spacing: 1px;
+            }
+
+            .price-list__name,
+            .price-list__price {
+                font-size: 12px;
+            }
+
+            .wifi-sign__content,
+            .contact-info__item {
+                font-size: 13px;
+            }
+        }
+
+        /* ===================================
+           RESPONSIVE - Tablet (769px - 1024px)
+           =================================== */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            /* Scale down the neon sign */
+            .neon-sign {
+                font-size: 80px;
+            }
+
+            .neon-sign__est-text {
+                font-size: 14px;
+            }
+
+            .neon-sign__est-line {
+                width: 60px;
+            }
+
+            /* Adjust sign positions to prevent overlap */
+            .price-list {
+                width: 280px;
+                padding: 20px;
+            }
+
+            .price-list__title {
+                font-size: 20px;
+            }
+
+            .price-list__name,
+            .price-list__price {
+                font-size: 13px;
+            }
+
+            .wifi-sign {
+                width: 240px;
+                padding: 16px;
+                right: 8%;
+            }
+
+            .wifi-sign.expanded {
+                width: 300px;
+            }
+
+            .wifi-sign__title {
+                font-size: 20px;
+            }
+
+            .actual-wifi-sign {
+                width: 200px;
+                padding: 16px;
+                right: 8%;
+            }
+
+            .actual-wifi-sign.expanded {
+                width: 280px;
+            }
+
+            .contact-info {
+                width: 220px;
+                padding: 18px;
+            }
+
+            .contact-info.expanded {
+                width: 300px;
+            }
+
+            .contact-info__title {
+                font-size: 22px;
+            }
+
+            /* Scale down coffee machine */
+            .coffee-machine {
+                transform: scale(0.45);
+            }
+
+            /* Hide corgi on tablet - too crowded */
+            .corgi-container {
+                display: none;
+            }
+
+            /* Reduce pendant light glow */
+            .pendant-light__glow {
+                border-left-width: 200px;
+                border-right-width: 200px;
+                border-bottom-width: 350px;
+                opacity: 0.7;
+            }
+
+            .pendant-light__glow::before {
+                border-left-width: 150px;
+                border-right-width: 150px;
+                border-bottom-width: 280px;
+                left: -150px;
+            }
+
+            .pendant-light__glow::after {
+                border-left-width: 100px;
+                border-right-width: 100px;
+                border-bottom-width: 200px;
+                left: -100px;
+            }
+        }
+
+        /* ===================================
+           RESPONSIVE - Small Desktop (1025px - 1200px)
+           =================================== */
+        @media (min-width: 1025px) and (max-width: 1200px) {
+            .neon-sign {
+                font-size: 100px;
+            }
+
+            .price-list {
+                width: 300px;
+            }
+
+            .wifi-sign {
+                width: 260px;
+                right: 10%;
+            }
+
+            .wifi-sign.expanded {
+                width: 320px;
+            }
+
+            .actual-wifi-sign {
+                width: 210px;
+                right: 10%;
+            }
+
+            .actual-wifi-sign.expanded {
+                width: 300px;
+            }
+
+            .contact-info {
+                width: 240px;
+            }
+
+            .coffee-machine {
+                transform: scale(0.5);
+            }
+
+            /* Hide corgi on small desktop */
+            .corgi-container {
+                display: none;
+            }
+
+            /* Reduce pendant light glow slightly */
+            .pendant-light__glow {
+                border-left-width: 250px;
+                border-right-width: 250px;
+                border-bottom-width: 420px;
+            }
+
+            .pendant-light__glow::before {
+                border-left-width: 190px;
+                border-right-width: 190px;
+                border-bottom-width: 340px;
+                left: -190px;
+            }
+
+            .pendant-light__glow::after {
+                border-left-width: 125px;
+                border-right-width: 125px;
+                border-bottom-width: 250px;
+                left: -125px;
+            }
+        }
+
+        /* ===================================
+           WALL DECORATIONS
+           =================================== */
+
+        /* Neon Sign - Pink cursive centerpiece */
+        .neon-sign {
+            position: absolute;
+            top: 42%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Pacifico', cursive;
+            font-size: 95px;
+            font-weight: 400;
+            color: #f5f5dc;
+            text-align: center;
+            z-index: calc(var(--z-sign) + 5);
+            pointer-events: none;
+            user-select: none;
+            letter-spacing: 4px;
+            text-shadow:
+                0 0 10px #fff,
+                0 0 20px #b5c99a,
+                0 0 30px #97a97c,
+                0 0 40px #7d8a5e;
+            animation: neonFlicker 4s infinite alternate;
+        }
+
+        /* Neon sign EST 2025 container */
+        .neon-sign__est {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 0px;
+        }
+
+        /* EST 2025 text */
+        .neon-sign__est-text {
+            font-family: 'Pacifico', cursive;
+            font-size: 18px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            color: #f5f5dc;
+            text-shadow:
+                0 0 8px #fff,
+                0 0 15px #b5c99a,
+                0 0 20px #97a97c,
+                0 0 25px #7d8a5e;
+        }
+
+        /* Decorative lines on left and right */
+        .neon-sign__est-line {
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #f5f5dc, transparent);
+            box-shadow:
+                0 0 5px #fff,
+                0 0 10px #fff;
+        }
+
+        /* Neon sign glow backdrop */
+        .neon-sign::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 160%;
+            height: 200%;
+            background: radial-gradient(ellipse at center,
+                rgba(181, 201, 154, 0.4) 0%,
+                rgba(151, 169, 124, 0.25) 30%,
+                rgba(125, 138, 94, 0.15) 60%,
+                rgba(125, 138, 94, 0.05) 80%,
+                transparent 100%);
+            z-index: -1;
+            border-radius: 50%;
+            filter: blur(25px);
+            will-change: filter, opacity;
+            animation: neonGlowPulse 4s infinite alternate;
+        }
+
+        @keyframes neonGlowPulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes neonFlicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow:
+                    0 0 10px #fff,
+                    0 0 20px #b5c99a,
+                    0 0 30px #97a97c,
+                    0 0 40px #7d8a5e;
+            }
+            20%, 24%, 55% {
+                text-shadow:
+                    0 0 6px #fff,
+                    0 0 12px #b5c99a,
+                    0 0 18px #97a97c,
+                    0 0 24px #7d8a5e;
+            }
+        }
+
+        /* WiFi Sign - Chalkboard style with expansion */
+        .wifi-sign {
+            position: absolute;
+            top: 8%;
+            right: 12%;
+            width: 280px;
+            padding: 20px;
+            background:
+                radial-gradient(circle at 30% 40%, rgba(255,255,255,0.03) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(255,255,255,0.02) 0%, transparent 50%),
+                linear-gradient(135deg, #2a2520 0%, #1f1d1a 100%);
+            border: 8px solid var(--wood-border);
+            box-shadow:
+                0 6px 16px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            z-index: var(--z-sign);
+            cursor: pointer;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.3s ease,
+                        transform 0.3s ease,
+                        z-index 0s;
+            overflow: hidden;
+        }
+
+        .wifi-sign:hover {
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .wifi-sign.expanded {
+            width: 360px;
+            padding: 24px;
+            z-index: calc(var(--z-sign) + 10);
+        }
+
+        .wifi-sign__title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+        }
+
+        .wifi-sign__content {
+            color: var(--bg-color);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .wifi-sign__label {
+            color: var(--text-label);
+            font-weight: bold;
+            display: block;
+            margin-top: 8px;
+        }
+
+        .wifi-sign__value {
+            color: var(--white);
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+        }
+
+        .wifi-sign__hint {
+            text-align: center;
+            color: var(--green-accent);
+            font-size: 11px;
+            margin-top: 12px;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .wifi-sign__extra {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s,
+                        margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 0;
+        }
+
+        .wifi-sign.expanded .wifi-sign__extra {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 16px;
+        }
+
+        .wifi-sign__section {
+            margin-bottom: 14px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(184, 150, 122, 0.3);
+        }
+
+        .wifi-sign__section-title {
+            color: var(--green-accent);
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .wifi-sign__section-content {
+            color: var(--bg-color);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .wifi-sign__rule {
+            color: var(--bg-color);
+            font-size: 12px;
+            margin-bottom: 4px;
+            padding-left: 8px;
+        }
+
+        /* Actual WiFi Sign - positioned below tech stack */
+        .actual-wifi-sign {
+            position: absolute;
+            top: 38%;
+            right: 12%;
+            width: 220px;
+            padding: 20px;
+            background: var(--chalkboard-bg);
+            border: 8px solid var(--wood-border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: var(--z-sign);
+            cursor: pointer;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.3s ease,
+                        transform 0.3s ease,
+                        z-index 0s;
+            overflow: hidden;
+        }
+
+        .actual-wifi-sign:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .actual-wifi-sign.expanded {
+            width: 320px;
+            padding: 24px;
+            z-index: calc(var(--z-sign) + 10);
+        }
+
+        /* Price List - Felt letter board style */
+        .price-list {
+            position: absolute;
+            top: 8%;
+            left: 6%;
+            width: 400px;
+            padding: 28px 32px;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.02) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.01) 0%, transparent 50%),
+                linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 8px solid var(--wood-border);
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            z-index: var(--z-sign);
+        }
+
+        .price-list__title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+        }
+
+        .price-list__item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .price-list__item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .price-list__name {
+            font-size: 15px;
+            color: var(--text-light);
+            letter-spacing: 0.3px;
+            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+        }
+
+        .price-list__price {
+            font-size: 18px;
+            color: var(--text-light);
+            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+            text-align: right;
+            white-space: nowrap;
+            min-width: 60px;
+        }
+
+        /* Contact Info - Felt letter board style */
+        .contact-info {
+            position: absolute;
+            top: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 260px;
+            padding: 22px;
+            background:
+                radial-gradient(circle at 25% 35%, rgba(255,255,255,0.02) 0%, transparent 50%),
+                radial-gradient(circle at 75% 65%, rgba(255,255,255,0.01) 0%, transparent 50%),
+                linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 8px solid var(--wood-border);
+            box-shadow:
+                0 6px 16px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            z-index: var(--z-sign);
+            cursor: pointer;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.3s ease,
+                        transform 0.3s ease,
+                        z-index 0s;
+            overflow: hidden;
+        }
+
+        .contact-info:hover {
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            transform: translate(-50%, -2px);
+        }
+
+        .contact-info.expanded {
+            width: 340px;
+            padding: 26px;
+            z-index: calc(var(--z-sign) + 10);
+        }
+
+        .contact-info__title {
+            font-size: 26px;
+            font-weight: bold;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-info__item {
+            margin-bottom: 12px;
+            color: var(--text-light);
+            font-size: 15px;
+            text-align: center;
+            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        .contact-info__label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-label);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .contact-info__hint {
+            text-align: center;
+            color: var(--green-accent);
+            font-size: 11px;
+            margin-top: 12px;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .contact-info__extra {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s,
+                        margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 0;
+        }
+
+        .contact-info.expanded .contact-info__extra {
+            max-height: 600px;
+            opacity: 1;
+            margin-top: 16px;
+        }
+
+        .contact-info__section {
+            margin-bottom: 14px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(184, 150, 122, 0.3);
+        }
+
+        .contact-info__section-title {
+            color: var(--green-accent);
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .contact-info__section-content {
+            color: var(--text-light);
+            font-size: 13px;
+            line-height: 1.7;
+            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Iron Pig Mug - On table with shop expansion */
+        .iron-mug {
+            position: absolute;
+            bottom: calc(var(--floor-height) + var(--table-size));
+            right: 240px;
+            width: 80px;
+            height: 90px;
+            cursor: pointer;
+            z-index: var(--z-mug);
+            transition: transform 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            backface-visibility: hidden;
+        }
+
+        .iron-mug:hover {
+            transform: scale(1.05);
+        }
+
+        .iron-mug:focus {
+            outline: none;
+            transform: scale(1.05);
+        }
+
+        .iron-mug.floating {
+            position: fixed;
+            z-index: var(--z-modal-mug);
+            transition: top 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        left 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .iron-mug.centered {
+            top: 50% !important;
+            left: 50% !important;
+            right: auto !important;
+            bottom: auto !important;
+            transform: translate(-50%, calc(-50% - 120px)) scale(1.5);
+        }
+
+        .iron-mug__body {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 50%, #e8e8e8 100%);
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset -2px 0 4px rgba(0, 0, 0, 0.1);
+            -webkit-font-smoothing: antialiased;
+            backface-visibility: hidden;
+        }
+
+        .iron-mug__top {
+            position: absolute;
+            bottom: 56px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 54px;
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 50%;
+        }
+
+        .iron-mug__handle {
+            position: absolute;
+            bottom: 22px;
+            right: 0px;
+            width: 17px;
+            height: 22px;
+            border: 3px solid var(--iron-pig-green);
+            border-left: none;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .iron-mug__logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 32px;
+            height: 32px;
+        }
+
+        .iron-mug__logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+
+        /* Steam coming from the mug */
+        .iron-mug__steam {
+            position: absolute;
+            width: 4px;
+            height: 18px;
+            background: linear-gradient(to top,
+                rgba(255, 255, 255, 0.7),
+                rgba(179, 174, 174, 0.5),
+                rgba(179, 174, 174, 0.2));
+            border-radius: 50%;
+            opacity: 0;
+            filter: blur(2px);
+            will-change: transform, opacity;
+        }
+
+        @keyframes steamSwirl1 {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg) scaleY(1);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.9;
+            }
+            30% {
+                transform: translateY(-15px) translateX(6px) rotate(15deg) scaleY(1.3);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-28px) translateX(-4px) rotate(-10deg) scaleY(1.1);
+                opacity: 0.6;
+            }
+            70% {
+                transform: translateY(-40px) translateX(10px) rotate(20deg) scaleY(0.9);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-55px) translateX(8px) rotate(25deg) scaleY(0.6);
+                opacity: 0;
+            }
+        }
+
+        @keyframes steamSwirl2 {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg) scaleY(1);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.85;
+            }
+            30% {
+                transform: translateY(-18px) translateX(-8px) rotate(-20deg) scaleY(1.4);
+                opacity: 0.75;
+            }
+            50% {
+                transform: translateY(-32px) translateX(5px) rotate(12deg) scaleY(1.2);
+                opacity: 0.55;
+            }
+            70% {
+                transform: translateY(-45px) translateX(-12px) rotate(-18deg) scaleY(0.8);
+                opacity: 0.35;
+            }
+            100% {
+                transform: translateY(-60px) translateX(-10px) rotate(-25deg) scaleY(0.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes steamSwirl3 {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg) scaleY(1);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.8;
+            }
+            30% {
+                transform: translateY(-12px) translateX(4px) rotate(10deg) scaleY(1.2);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-30px) translateX(-6px) rotate(-15deg) scaleY(1.15);
+                opacity: 0.5;
+            }
+            70% {
+                transform: translateY(-42px) translateX(8px) rotate(18deg) scaleY(0.85);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-58px) translateX(12px) rotate(22deg) scaleY(0.55);
+                opacity: 0;
+            }
+        }
+
+        .iron-mug__steam-1 {
+            bottom: 68px;
+            left: 50%;
+            animation: steamSwirl1 4s ease-in-out infinite;
+        }
+
+        .iron-mug__steam-2 {
+            bottom: 70px;
+            left: 46%;
+            animation: steamSwirl2 4.5s ease-in-out 0.7s infinite;
+        }
+
+        .iron-mug__steam-3 {
+            bottom: 69px;
+            left: 54%;
+            animation: steamSwirl3 4.2s ease-in-out 1.4s infinite;
+        }
+
+        /* Shop popup */
+        .mug-shop {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            padding: 32px;
+            background: var(--bg-color);
+            border: 10px solid var(--wood-border);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            z-index: var(--z-modal);
+            opacity: 0;
+        }
+
+        .mug-shop.active {
+            display: block;
+            animation: fadeInShop 0.35s 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .mug-shop.closing {
+            animation: fadeOutShop 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes fadeInShop {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @keyframes fadeOutShop {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.98);
+            }
+        }
+
+        .mug-shop__overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: var(--z-overlay);
+            opacity: 0;
+        }
+
+        .mug-shop__overlay.active {
+            display: block;
+            animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .mug-shop__overlay.closing {
+            animation: fadeOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
+        }
+
+        .mug-shop__title {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .mug-shop__subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .mug-shop__image {
+            width: 120px;
+            height: 140px;
+            margin: 0 auto 24px;
+            position: relative;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .mug-shop__description {
+            color: var(--text-dark);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .mug-shop__price {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .mug-shop__button {
+            width: 100%;
+            padding: 14px;
+            background: var(--counter-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .mug-shop__button:hover {
+            background: var(--counter-edge-color);
+        }
+
+        .mug-shop__close {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            color: var(--text-muted);
+            border: 2px solid var(--text-muted);
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mug-shop__close:hover {
+            background: var(--text-muted);
+            color: var(--bg-color);
+        }
+
+        /* ===================================
+           GROWING PLANT INTERACTION
+           =================================== */
+        .counter-plant__stem,
+        .counter-plant__leaf {
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .counter-plant.growing .counter-plant__stem {
+            transform: scale(1.3);
+            transform-origin: bottom center;
+        }
+
+        .counter-plant.growing .counter-plant__leaf {
+            transform: scale(1.3);
+        }
+
+        .counter-plant.growing .counter-plant__flower {
+            animation: flowerBloom 0.5s ease-out forwards;
+        }
+
+        @keyframes flowerBloom {
+            0% {
+                transform: translateX(-50%) scale(0.8);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.4);
+            }
+            100% {
+                transform: translateX(-50%) scale(1.2);
+            }
+        }
+
+        /* Sparkle effect */
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #ffd700 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkleFloat 1s ease-out forwards;
+            z-index: 100;
+        }
+
+        .sparkle::before,
+        .sparkle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 8px;
+            background: #ffd700;
+        }
+
+        .sparkle::before {
+            transform: translate(-50%, -50%);
+        }
+
+        .sparkle::after {
+            transform: translate(-50%, -50%) rotate(90deg);
+        }
+
+        @keyframes sparkleFloat {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-20px) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-40px) scale(0.5);
+            }
+        }
+
+        /* ===================================
+           PENDANT LIGHTS
+           =================================== */
+        .pendant-light {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            z-index: 110;
+        }
+
+        .pendant-light__cord {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 40px;
+            background: #3a3230;
+        }
+
+        .pendant-light__shade {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 40px;
+            background: linear-gradient(180deg, #8B6F47 0%, #6d5838 100%);
+            border-radius: 50% 50% 0 0 / 40% 40% 0 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .pendant-light__glow {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 300px solid transparent;
+            border-right: 300px solid transparent;
+            border-bottom: 500px solid rgba(255, 220, 150, 0.15);
+            pointer-events: none;
+            animation: lightFlicker 4s ease-in-out infinite;
+            filter: blur(30px);
+            will-change: filter, opacity;
+        }
+
+        .pendant-light__glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -225px;
+            width: 0;
+            height: 0;
+            border-left: 225px solid transparent;
+            border-right: 225px solid transparent;
+            border-bottom: 400px solid rgba(255, 220, 150, 0.25);
+            filter: blur(20px);
+            will-change: filter;
+        }
+
+        .pendant-light__glow::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150px;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-bottom: 300px solid rgba(255, 220, 150, 0.4);
+            filter: blur(15px);
+            will-change: filter;
+        }
+
+        @keyframes lightFlicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+
+        .pendant-light-1 {
+            top: 0;
+            left: 25%;
+        }
+
+        .pendant-light-2 {
+            top: 0;
+            left: 75%;
+        }
+
+        /* ===================================
+           CORGI
+           =================================== */
+        .corgi-container {
+            position: fixed;
+            bottom: var(--floor-height);
+            left: 62%;
+            width: 200px;
+            height: 150px;
+            z-index: calc(var(--z-mug) + 2);
+            transform: scale(0.6);
+            transform-origin: bottom center;
+            cursor: pointer;
+        }
+
+        .corgi-speech-bubble {
+            position: absolute;
+            top: 35px;
+            left: 100%;
+            transform: scale(0);
+            background: #fff;
+            color: #333;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            white-space: nowrap;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        .corgi-speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: -8px;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-right: 10px solid #fff;
+        }
+
+        .corgi-container.barking .corgi-speech-bubble {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .corgi {
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+
+        .corgi div {
+            position: absolute;
+        }
+
+        .corgi .ear {
+            background-color: #F09F2E;
+            height: 30%;
+            width: 55%;
+            top: 5%;
+            z-index: 3;
+        }
+
+        .corgi .ear--r {
+            right: 75%;
+            border-bottom-left-radius: 100% 90%;
+            border-top-left-radius: 10%;
+            transform-origin: 80% center;
+            animation: corgi-ear-shake-right 2s infinite;
+        }
+
+        .corgi .ear--l {
+            left: 63%;
+            background-color: #D27537;
+            border-bottom-right-radius: 100% 90%;
+            border-top-right-radius: 10%;
+            transform-origin: 20% center;
+            animation: corgi-ear-shake-left 2s infinite;
+        }
+
+        .corgi .head {
+            top: 6%;
+            right: 10%;
+            height: 40%;
+            width: 30%;
+            z-index: 3;
+            animation: corgi-head-shake 2s infinite;
+        }
+
+        .corgi .face {
+            background-color: #F09F2E;
+            border-radius: 50%;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+            z-index: 4;
+        }
+
+        .corgi .eye {
+            background-color: #3E3954;
+            height: 6%;
+            width: 6%;
+            position: absolute;
+            z-index: 6;
+            border-radius: 50%;
+            animation: corgi-eye-blink 2s infinite;
+        }
+
+        .corgi .eye--left {
+            left: 40%;
+            top: 43%;
+        }
+
+        .corgi .eye--right {
+            right: 13%;
+            top: 41%;
+        }
+
+        .corgi .face__white {
+            background-color: #FFFFFF;
+            width: 45%;
+            height: 77%;
+            top: -15%;
+            left: 29%;
+            transform: rotate(-25deg);
+        }
+
+        .corgi .face__orange {
+            background-color: #F09F2E;
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            display: block;
+            border-radius: 100%;
+        }
+
+        .corgi .face__orange--l {
+            right: 65%;
+        }
+
+        .corgi .face__orange--r {
+            left: 65%;
+        }
+
+        .corgi .face__curve {
+            background-color: #F09F2E;
+            width: 30%;
+            height: 20%;
+            right: -12%;
+            bottom: 42%;
+            overflow: hidden;
+        }
+
+        .corgi .mouth {
+            bottom: 0%;
+            width: 100%;
+            height: 50%;
+            left: 28%;
+            z-index: 5;
+            animation: corgi-mouth-shake 2s infinite;
+        }
+
+        .corgi .nose {
+            height: 36%;
+            width: 27%;
+            top: 0%;
+            background-color: #3E3954;
+            z-index: 1;
+            right: 0%;
+            border-bottom-right-radius: 50% 100%;
+            border-bottom-left-radius: 50% 100%;
+        }
+
+        .corgi .nose::after {
+            content: "";
+            width: 100%;
+            height: 30%;
+            display: block;
+            border-top-right-radius: 50% 100%;
+            border-top-left-radius: 50% 100%;
+            background-color: #3E3954;
+            position: absolute;
+            top: -25%;
+        }
+
+        .corgi .mouth__left {
+            background-color: #FFFFFF;
+            width: 50%;
+            height: 55%;
+        }
+
+        .corgi .mouth__left--round {
+            background-color: #F09F2E;
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+            left: -50%;
+            top: -50%;
+        }
+
+        .corgi .mouth__left--sharp {
+            background-color: #F09F2E;
+            width: 35%;
+            height: 50%;
+            bottom: 0px;
+            left: -20%;
+            transform: skewX(50deg);
+        }
+
+        .corgi .lowerjaw {
+            background-color: #FFFFFF;
+            width: 100%;
+            height: 80%;
+            border-radius: 50% / 100%;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            bottom: -9%;
+        }
+
+        .corgi .lips {
+            z-index: 2;
+            height: 25%;
+            width: 35%;
+            top: 19%;
+            right: 2%;
+        }
+
+        .corgi .lips::before,
+        .corgi .lips::after {
+            content: "";
+            display: block;
+            background: #FFFFFF;
+            width: 39%;
+            height: 100%;
+            border-color: #3E3954;
+            border-width: 3px;
+            border-style: solid;
+            border-bottom-right-radius: 50%;
+            border-bottom-left-radius: 50%;
+            border-top-left-radius: 40%;
+            border-top-right-radius: 20%;
+            border-top-color: transparent;
+            position: absolute;
+        }
+
+        .corgi .lips::before {
+            z-index: 1;
+        }
+
+        .corgi .lips::after {
+            transform: rotateY(180deg);
+            left: initial;
+            right: 9%;
+        }
+
+        .corgi .tongue {
+            width: 15%;
+            height: 60%;
+            background-color: #F15F55;
+            right: 14%;
+            top: 35%;
+            border-bottom-right-radius: 50% 50%;
+            border-bottom-left-radius: 50% 50%;
+            transform-origin: 50% 0%;
+            animation: corgi-tongue-stick 2s infinite;
+        }
+
+        .corgi .snout {
+            background-color: #FFFFFF;
+            right: 0%;
+            top: 0%;
+            width: 50%;
+            height: 36%;
+            border-top-right-radius: 35% 75%;
+        }
+
+        .corgi .neck__back {
+            height: 50%;
+            width: 20%;
+            transform: skewX(-20deg);
+            background-color: #F09F2E;
+            z-index: 2;
+            right: 24%;
+            top: 9%;
+            animation: corgi-neck-shake 2s infinite;
+        }
+
+        .corgi .neck__front {
+            height: 50%;
+            width: 20%;
+            right: 11%;
+            top: 20%;
+            background-color: #F09F2E;
+            z-index: 2;
+            transform: skewX(2deg);
+        }
+
+        .corgi .body {
+            height: 44%;
+            width: 77%;
+            background-color: #F09F2E;
+            right: 10.5%;
+            bottom: 12%;
+            border-top-left-radius: 20% 50%;
+            border-bottom-left-radius: 20% 50%;
+            border-top-right-radius: 20% 60%;
+            border-bottom-right-radius: 20% 40%;
+            z-index: 2;
+            overflow: hidden;
+            animation: corgi-body-shake 2s infinite;
+        }
+
+        .corgi .body__chest {
+            background-color: #FFFFFF;
+            height: 87%;
+            width: 29%;
+            right: 5%;
+            bottom: -3%;
+            border-top-left-radius: 50% 40%;
+            border-top-right-radius: 50% 40%;
+        }
+
+        .corgi .foot {
+            height: 35%;
+            width: 9.5%;
+            bottom: 0;
+        }
+
+        .corgi .foot__left {
+            z-index: 3;
+            background-color: #F09F2E;
+        }
+
+        .corgi .foot__left::after {
+            background-color: #FFFFFF;
+        }
+
+        .corgi .foot__left::before {
+            background-color: #F09F2E;
+        }
+
+        .corgi .foot__right {
+            z-index: 1;
+            background-color: #D27537;
+        }
+
+        .corgi .foot__right::after {
+            background-color: #F5E6D3;
+        }
+
+        .corgi .foot__right::before {
+            background-color: #D27537;
+        }
+
+        .corgi .foot__back::before {
+            transform: skewX(-10deg);
+            right: -25%;
+        }
+
+        .corgi .foot__front::before {
+            transform: skewX(10deg);
+            right: 25%;
+        }
+
+        .corgi .foot__1 {
+            right: 37%;
+        }
+
+        .corgi .foot__2 {
+            right: 15%;
+        }
+
+        .corgi .foot__2::before {
+            transform: skewX(-10deg);
+            right: -25%;
+        }
+
+        .corgi .foot__3 {
+            left: 12.65%;
+        }
+
+        .corgi .foot__4 {
+            left: 31%;
+        }
+
+        .corgi .foot::before {
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            display: block;
+        }
+
+        .corgi .foot::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 125%;
+            height: 18%;
+            border-top-left-radius: 50% 100%;
+            border-top-right-radius: 50% 100%;
+            animation: corgi-paw-press 2s infinite;
+        }
+
+        .corgi .tail {
+            width: 26%;
+            height: 13%;
+            background-color: #D27537;
+            border-top-left-radius: 50% 100%;
+            border-bottom-left-radius: 50% 100%;
+            border-top-right-radius: 50% 100%;
+            border-bottom-right-radius: 50% 100%;
+            bottom: 40%;
+            left: 1%;
+            transform-origin: 80% center;
+            animation: corgi-tail-wag 2s infinite;
+        }
+
+        @keyframes corgi-eye-blink {
+            0% { transform: scaleY(1); }
+            10% { transform: scaleY(0.1); }
+            20% { transform: scaleY(1); }
+            100% { transform: scaleY(1); }
+        }
+
+        @keyframes corgi-tail-wag {
+            0% { transform: rotate(-25deg); }
+            10% { transform: rotate(0deg); }
+            20% { transform: rotate(-25deg); }
+            30% { transform: rotate(0deg); }
+            40% { transform: rotate(-25deg); }
+            50% { transform: rotate(0deg); }
+            60% { transform: rotate(-25deg); }
+            70% { transform: rotate(0deg); }
+            100% { transform: rotate(-25deg); }
+        }
+
+        @keyframes corgi-tongue-stick {
+            0% { transform: scaleY(0.1) translateY(-20px); }
+            20% { transform: scaleY(0.1) translateY(-20px); }
+            30% { transform: scaleY(0.5) translateY(0px); }
+            40% { transform: scaleY(1) translateY(0px) rotate(0deg); }
+            50% { transform: scaleY(0.8) translateY(0px) rotate(15deg); }
+            60% { transform: scaleY(1) translateY(0px) rotate(0deg); }
+            70% { transform: scaleY(0.8) translateY(0px) rotate(-15deg); }
+            80% { transform: scaleY(1) translateY(0px) rotate(0deg); }
+            90% { transform: scaleY(0.8) translateY(0px) rotate(15deg); }
+            100% { transform: scaleY(0.1) translateY(-20px) rotate(0deg); }
+        }
+
+        @keyframes corgi-ear-shake-right {
+            0% { transform: rotate(70deg); }
+            10% { transform: rotate(80deg); }
+            30% { transform: rotate(70deg); }
+            40% { transform: rotate(80deg); }
+            100% { transform: rotate(70deg); }
+        }
+
+        @keyframes corgi-ear-shake-left {
+            0% { transform: rotate(-70deg); }
+            10% { transform: rotate(-80deg); }
+            30% { transform: rotate(-70deg); }
+            40% { transform: rotate(-80deg); }
+            100% { transform: rotate(-70deg); }
+        }
+
+        @keyframes corgi-body-shake {
+            0% { transform: translateY(0px); }
+            16.67% { transform: translateY(2%); }
+            33.33% { transform: translateY(0px); }
+            50% { transform: translateY(2%); }
+            66.67% { transform: translateY(0px); }
+            83.33% { transform: translateY(2%); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes corgi-paw-press {
+            0% { transform: scaleY(1.0) scaleX(1.0); }
+            16.67% { transform: scaleY(0.9) scaleX(1.05) translateY(10%); }
+            33.33% { transform: scaleY(1.0) scaleX(1.0); }
+            50% { transform: scaleY(0.9) scaleX(1.05) translateY(10%); }
+            66.67% { transform: scaleY(1.0) scaleX(1.0); }
+            83.33% { transform: scaleY(0.9) scaleX(1.05) translateY(10%); }
+            100% { transform: scaleY(1.0) scaleX(1.0); }
+        }
+
+        @keyframes corgi-neck-shake {
+            0% { top: 9%; }
+            16.67% { top: 11%; }
+            33.33% { top: 9%; }
+            50% { top: 11%; }
+            66.67% { top: 9%; }
+            83.33% { top: 11%; }
+            100% { top: 9%; }
+        }
+
+        @keyframes corgi-head-shake {
+            0% { top: 6%; }
+            16.67% { top: 8%; }
+            33.33% { top: 6%; }
+            50% { top: 8%; }
+            66.67% { top: 6%; }
+            83.33% { top: 8%; }
+            100% { top: 6%; }
+        }
+
+        @keyframes corgi-mouth-shake {
+            0% { bottom: 0%; }
+            16.67% { bottom: 2%; }
+            33.33% { bottom: 0%; }
+            50% { bottom: 2%; }
+            66.67% { bottom: 0%; }
+            83.33% { bottom: 2%; }
+            100% { bottom: 0%; }
+        }
+
+        /* ===================================
+           BUTTON RESET (For buttons styled as divs)
+           =================================== */
+        button.iron-mug {
+            border: none !important;
+            background: none;
+            font: inherit;
+            color: inherit;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        /* Reset button defaults but keep the decorative styling */
+        button.wifi-sign,
+        button.contact-info {
+            font: inherit;
+            color: inherit;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        /* Specific button overrides */
+        button.wifi-sign {
+            background: var(--chalkboard-bg);
+            border: 8px solid var(--wood-border);
+            padding: 20px;
+        }
+
+        button.wifi-sign.expanded {
+            padding: 24px;
+        }
+
+        button.contact-info {
+            background: var(--dark-bg);
+            border: 8px solid var(--wood-border);
+            padding: 22px;
+        }
+
+        button.contact-info.expanded {
+            padding: 26px;
+        }
+
+        /* Utility class for italic content */
+        .wifi-sign__section-content--italic {
+            font-style: italic;
+            text-align: center;
+            padding-top: 8px;
+        }
+
+        /* ===================================
+           NOTIFICATION MODAL
+           =================================== */
+        .notification-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-modal.active {
+            display: flex;
+        }
+
+        .notification-modal__content {
+            background: var(--bg-color);
+            border: 10px solid var(--wood-border);
+            padding: 32px;
+            max-width: 400px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            animation: fadeInShop 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .notification-modal__title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .notification-modal__message {
+            color: var(--text-dark);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .notification-modal__button {
+            width: 100%;
+            padding: 14px;
+            background: var(--counter-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .notification-modal__button:hover {
+            background: var(--counter-edge-color);
+        }
+
+        /* ===================================
+           FOCUS/HOVER STATES (Accessibility)
+           =================================== */
+        button:focus:not(.wifi-sign):not(.contact-info):not(.iron-mug) {
+            outline: none;
+        }
+
+        .wifi-sign:focus,
+        .contact-info:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Coffee shop scene - Visual illustration of Iron Pig Software Development -->
+    <main>
+    <!-- Pendant Lights -->
+    <div class="pendant-light pendant-light-1" role="presentation">
+        <div class="pendant-light__cord"></div>
+        <div class="pendant-light__shade"></div>
+        <div class="pendant-light__glow"></div>
+    </div>
+    <div class="pendant-light pendant-light-2" role="presentation">
+        <div class="pendant-light__cord"></div>
+        <div class="pendant-light__shade"></div>
+        <div class="pendant-light__glow"></div>
+    </div>
+
+    <!-- Neon Sign -->
+    <div class="neon-sign" role="presentation" aria-label="Iron Pig neon sign">
+        Iron Pig
+        <div class="neon-sign__est">
+            <span class="neon-sign__est-line"></span>
+            <span class="neon-sign__est-text">EST. 2025</span>
+            <span class="neon-sign__est-line"></span>
+        </div>
+    </div>
+
+    <!-- Floor -->
+    <div class="floor" role="presentation"></div>
+
+    <!-- Rug - Textured sage green rug in center -->
+    <div class="rug" role="presentation"></div>
+
+    <!-- Counter -->
+    <div class="counter" role="presentation"></div>
+
+    <!-- Counter Plant - Flowering plant on right side of counter -->
+    <button class="counter-plant" type="button" aria-label="Click to grow the plant">
+        <div class="counter-plant__stem"></div>
+        <div class="counter-plant__stem counter-plant__stem-2"></div>
+        <div class="counter-plant__stem counter-plant__stem-3"></div>
+
+        <div class="counter-plant__leaf counter-plant__leaf-1"></div>
+        <div class="counter-plant__leaf counter-plant__leaf-2"></div>
+        <div class="counter-plant__leaf counter-plant__leaf-3"></div>
+        <div class="counter-plant__leaf counter-plant__leaf-4"></div>
+
+        <div class="counter-plant__flower counter-plant__flower-1">
+            <div class="counter-plant__petal"></div>
+            <div class="counter-plant__petal"></div>
+            <div class="counter-plant__petal"></div>
+            <div class="counter-plant__petal"></div>
+            <div class="counter-plant__center"></div>
+        </div>
+
+        <div class="counter-plant__flower counter-plant__flower-2">
+            <div class="counter-plant__petal"></div>
+            <div class="counter-plant__petal"></div>
+            <div class="counter-plant__petal"></div>
+            <div class="counter-plant__petal"></div>
+            <div class="counter-plant__center"></div>
+        </div>
+
+        <div class="counter-plant__flower counter-plant__flower-3">
+            <div class="counter-plant__petal"></div>
+            <div class="counter-plant__petal"></div>
+            <div class="counter-plant__petal"></div>
+            <div class="counter-plant__petal"></div>
+            <div class="counter-plant__center"></div>
+        </div>
+
+        <div class="counter-plant__pot"></div>
+    </button>
+
+    <!-- Shelf 1 (top) -->
+    <div class="shelf shelf-1" role="presentation">
+        <div class="shelf-item coffee-bag bag-1"></div>
+        <div class="shelf-item coffee-bag bag-2"></div>
+        <div class="shelf-item coffee-bag bag-3"></div>
+        <div class="shelf-item plant-pot plant-1">
+            <div class="plant-pot__plant">
+                <div class="plant-pot__leaf plant-pot__leaf--left"></div>
+                <div class="plant-pot__leaf plant-pot__leaf--right"></div>
+            </div>
+            <div class="plant-pot__pot"></div>
+        </div>
+    </div>
+
+    <!-- Shelf 2 (bottom) -->
+    <div class="shelf shelf-2" role="presentation">
+        <div class="shelf-item cup-stack cups-1">
+            <div class="cup-stack__cup"></div>
+            <div class="cup-stack__cup"></div>
+            <div class="cup-stack__cup"></div>
+        </div>
+        <div class="shelf-item jar jar-1">
+            <div class="jar__lid"></div>
+            <div class="jar__body">
+                <div class="jar__content"></div>
+            </div>
+        </div>
+        <div class="shelf-item jar jar-2">
+            <div class="jar__lid"></div>
+            <div class="jar__body">
+                <div class="jar__content"></div>
+            </div>
+        </div>
+        <div class="shelf-item plant-pot plant-2">
+            <div class="plant-pot__plant">
+                <div class="plant-pot__leaf plant-pot__leaf--left"></div>
+                <div class="plant-pot__leaf plant-pot__leaf--right"></div>
+            </div>
+            <div class="plant-pot__pot"></div>
+        </div>
+    </div>
+
+    <!-- Product Engineering Sign -->
+    <button class="wifi-sign" type="button" aria-label="Product engineering approach - Click to expand" aria-expanded="false" id="tech-stack-btn">
+        <div class="wifi-sign__title">What I Build</div>
+        <div class="wifi-sign__content">
+            <span class="wifi-sign__label">What I do:</span>
+            <span class="wifi-sign__value">Full-stack product engineering</span>
+            <span class="wifi-sign__label">How I work:</span>
+            <span class="wifi-sign__value">Idea → Ship → Iterate</span>
+        </div>
+        <div class="wifi-sign__hint">More details →</div>
+
+        <div class="wifi-sign__extra">
+            <div class="wifi-sign__section">
+                <div class="wifi-sign__section-title">Full Stack</div>
+                <div class="wifi-sign__section-content">
+                    <div class="wifi-sign__rule">• Product thinking meets technical execution</div>
+                    <div class="wifi-sign__rule">• Frontend, backend, deployment—the lot</div>
+                    <div class="wifi-sign__rule">• User research to production monitoring</div>
+                    <div class="wifi-sign__rule">• Build what users need, not what they ask for</div>
+                    <div class="wifi-sign__rule">• Ship fast, iterate faster</div>
+                </div>
+            </div>
+
+            <div class="wifi-sign__section">
+                <div class="wifi-sign__section-title">How I Work</div>
+                <div class="wifi-sign__section-content">
+                    <div class="wifi-sign__rule">Speed: MVPs in weeks, polish as we go</div>
+                    <div class="wifi-sign__rule">Quality: Production-ready, not prototype-ready</div>
+                    <div class="wifi-sign__rule">Communication: You'll always know what's happening</div>
+                </div>
+            </div>
+
+            <div class="wifi-sign__section">
+                <div class="wifi-sign__section-content wifi-sign__section-content--italic">
+                    From napkin sketch to live product. I handle the whole stack, so you get something that actually works.
+                </div>
+            </div>
+        </div>
+    </button>
+
+    <!-- WiFi Information Sign -->
+    <button class="actual-wifi-sign wifi-sign" type="button" aria-label="WiFi information - Click to expand" id="wifi-sign-btn">
+        <div class="wifi-sign__title">Free WiFi</div>
+        <div class="wifi-sign__content">
+            <span class="wifi-sign__label">Network:</span>
+            <span class="wifi-sign__value">IRON_PIG_SECURE</span>
+            <span class="wifi-sign__label">Password:</span>
+            <span class="wifi-sign__value">build-in-2025</span>
+        </div>
+        <div class="wifi-sign__hint">Click for details →</div>
+
+        <div class="wifi-sign__extra">
+            <div class="wifi-sign__section">
+                <div class="wifi-sign__section-title">Network Guidelines</div>
+                <div class="wifi-sign__section-content">
+                    <div class="wifi-sign__rule">• No torrenting (we're watching)</div>
+                    <div class="wifi-sign__rule">• GitHub encouraged</div>
+                    <div class="wifi-sign__rule">• Deploy with confidence</div>
+                    <div class="wifi-sign__rule">• SSH tunneling welcome</div>
+                    <div class="wifi-sign__rule">• No crypto mining please</div>
+                </div>
+            </div>
+
+            <div class="wifi-sign__section">
+                <div class="wifi-sign__section-title">Connection Details</div>
+                <div class="wifi-sign__section-content">
+                    <div class="wifi-sign__rule">Speed: 1 Gbps symmetric fiber</div>
+                    <div class="wifi-sign__rule">Latency: &lt;5ms to major cloud providers</div>
+                    <div class="wifi-sign__rule">Uptime: 99.9% (better than most startups)</div>
+                </div>
+            </div>
+
+            <div class="wifi-sign__section">
+                <div class="wifi-sign__section-content wifi-sign__section-content--italic">
+                    Built for builders. Perfect for remote work, pair programming, or pretending to work while actually refactoring your entire codebase.
+                </div>
+            </div>
+        </div>
+    </button>
+
+    <!-- Services List -->
+    <div class="price-list" role="complementary" aria-label="Our services">
+        <div class="price-list__title">SERVICES</div>
+        <div class="price-list__item">
+            <span class="price-list__name">Need a landing page?</span>
+            <span class="price-list__price">☕</span>
+        </div>
+        <div class="price-list__item">
+            <span class="price-list__name">Building a web app?</span>
+            <span class="price-list__price">☕☕</span>
+        </div>
+        <div class="price-list__item">
+            <span class="price-list__name">Full product, start to finish?</span>
+            <span class="price-list__price">☕☕☕</span>
+        </div>
+        <div class="price-list__item">
+            <span class="price-list__name">Backend or API work?</span>
+            <span class="price-list__price">☕☕</span>
+        </div>
+        <div class="price-list__item">
+            <span class="price-list__name">Something custom?</span>
+            <span class="price-list__price">☕☕☕</span>
+        </div>
+        <div class="price-list__item">
+            <span class="price-list__name">Ongoing partnership?</span>
+            <span class="price-list__price">☕∞</span>
+        </div>
+    </div>
+
+    <!-- Contact Info -->
+    <button class="contact-info" type="button" aria-label="Contact information - Click to expand" aria-expanded="false" id="contact-info-btn">
+        <div class="contact-info__title">LET'S TALK</div>
+        <div class="contact-info__item">
+            <span class="contact-info__label">EMAIL</span>
+            hello@iron-pig.com
+        </div>
+        <div class="contact-info__item">
+            <span class="contact-info__label">LOCATION</span>
+            London
+        </div>
+        <div class="contact-info__hint">Click to learn more →</div>
+
+        <div class="contact-info__extra">
+            <div class="contact-info__section">
+                <div class="contact-info__section-title">About Us</div>
+                <div class="contact-info__section-content">
+                    Iron Pig is where exceptional code meets coffee culture. We're a software contracting company serving builders, startups, and businesses who need quality development work without the BS.
+                </div>
+            </div>
+
+            <div class="contact-info__section">
+                <div class="contact-info__section-title">Our Approach</div>
+                <div class="contact-info__section-content">
+                    Founded in 2025, we brew custom software solutions with the same care a barista pulls the perfect espresso shot. Every line of code is crafted with precision, every project delivered with transparency. No buzzwords, no fluff—just great software.
+                </div>
+            </div>
+        </div>
+    </button>
+
+    <!-- Iron Pig Mug on Table -->
+    <button class="iron-mug" type="button" aria-label="View Iron Pig merchandise" aria-expanded="false" id="mug-btn">
+        <div class="iron-mug__body">
+            <div class="iron-mug__logo">
+                <img src="logo.png" alt="Iron Pig Logo">
+            </div>
+        </div>
+        <div class="iron-mug__top"></div>
+        <div class="iron-mug__handle"></div>
+        <div class="iron-mug__steam iron-mug__steam-1"></div>
+        <div class="iron-mug__steam iron-mug__steam-2"></div>
+        <div class="iron-mug__steam iron-mug__steam-3"></div>
+    </button>
+
+    <!-- Mug Shop Popup -->
+    <div class="mug-shop__overlay" id="mug-overlay"></div>
+    <div class="mug-shop">
+        <div class="mug-shop__title">Iron Pig Mug</div>
+        <div class="mug-shop__subtitle">Take the experience home</div>
+
+        <div class="mug-shop__image">
+            <div class="iron-mug" style="position: relative; bottom: auto; right: auto; margin: 0 auto; transform: scale(1.5);">
+                <div class="iron-mug__body">
+                    <div class="iron-mug__logo">
+                        <img src="logo.png" alt="Iron Pig Logo">
+                    </div>
+                </div>
+                <div class="iron-mug__top"></div>
+                <div class="iron-mug__handle"></div>
+            </div>
+        </div>
+
+        <div class="mug-shop__description">
+            Premium ceramic mug with the Iron Pig logo. Fuel your morning standup or late-night debugging sessions. Dishwasher safe, holds 350ml of your favorite compiled beverage.
+        </div>
+
+        <div class="mug-shop__price">£12.00</div>
+
+        <button class="mug-shop__button" type="button" id="add-to-cart-btn">
+            Add to Cart
+        </button>
+        <button class="mug-shop__close" type="button" id="close-shop-btn">Close</button>
+    </div>
+
+    <!-- Coffee Machine -->
+    <div class="coffee-machine" role="presentation">
+        <div class="coffee-header">
+            <div class="coffee-header__buttons coffee-header__button-one"></div>
+            <div class="coffee-header__buttons coffee-header__button-two"></div>
+            <div class="coffee-header__display">
+                <img src="logo.png" alt="Iron Pig Logo">
+            </div>
+            <div class="coffee-header__details"></div>
+        </div>
+        <div class="coffee-medium">
+            <div class="coffee-medium__exit coffee-medium__exit-one"></div>
+            <div class="coffee-medium__exit coffee-medium__exit-two"></div>
+            <div class="coffee-medium__liquid coffee-medium__liquid-one"></div>
+            <div class="coffee-medium__liquid coffee-medium__liquid-two"></div>
+            <div class="coffee-medium__smoke coffee-medium__smoke-one"></div>
+            <div class="coffee-medium__smoke coffee-medium__smoke-two"></div>
+            <div class="coffee-medium__smoke coffee-medium__smoke-three"></div>
+            <div class="coffee-medium__smoke coffee-medium__smoke-four"></div>
+            <div class="coffee-medium__cup coffee-medium__cup-one"></div>
+            <div class="coffee-medium__cup coffee-medium__cup-two"></div>
+        </div>
+        <div class="coffee-footer"></div>
+    </div>
+
+    <!-- Table -->
+    <div class="table" role="presentation">
+        <div class="table-top"></div>
+        <div class="table-leg"></div>
+    </div>
+
+    <!-- Stool 1 -->
+    <div class="stool stool-1" role="presentation">
+        <div class="stool-seat"></div>
+        <div class="stool-leg"></div>
+    </div>
+
+    <!-- Stool 2 -->
+    <div class="stool stool-2" role="presentation">
+        <div class="stool-seat"></div>
+        <div class="stool-leg"></div>
+    </div>
+
+    <!-- Corgi -->
+    <div class="corgi-container" role="button" tabindex="0" aria-label="Click the corgi">
+        <div class="corgi-speech-bubble">Woof woof!</div>
+        <div class="corgi">
+            <div class="head">
+                <div class="ear ear--r"></div>
+                <div class="ear ear--l"></div>
+                <div class="eye eye--left"></div>
+                <div class="eye eye--right"></div>
+                <div class="face">
+                    <div class="face__white">
+                        <div class="face__orange face__orange--l"></div>
+                        <div class="face__orange face__orange--r"></div>
+                    </div>
+                </div>
+                <div class="face__curve"></div>
+                <div class="mouth">
+                    <div class="nose"></div>
+                    <div class="mouth__left">
+                        <div class="mouth__left--round"></div>
+                        <div class="mouth__left--sharp"></div>
+                    </div>
+                    <div class="lowerjaw">
+                        <div class="lips"></div>
+                        <div class="tongue"></div>
+                    </div>
+                    <div class="snout"></div>
+                </div>
+            </div>
+            <div class="neck__back"></div>
+            <div class="neck__front"></div>
+            <div class="body">
+                <div class="body__chest"></div>
+            </div>
+            <div class="foot foot__left foot__front foot__1"></div>
+            <div class="foot foot__right foot__front foot__2"></div>
+            <div class="foot foot__left foot__back foot__3"></div>
+            <div class="foot foot__right foot__back foot__4"></div>
+            <div class="tail"></div>
+        </div>
+    </div>
+
+    </main>
+
+    <!-- Custom notification modal for user feedback -->
+    <div class="notification-modal" id="notification-modal" role="alertdialog" aria-labelledby="notification-title" aria-describedby="notification-message">
+        <div class="notification-modal__content">
+            <h2 class="notification-modal__title" id="notification-title">Notice</h2>
+            <p class="notification-modal__message" id="notification-message"></p>
+            <button class="notification-modal__button" type="button" id="notification-close-btn">OK</button>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Iron Pig - Interactive Features
+         *
+         * This script manages all interactive elements on the page:
+         * - WiFi sign expansion
+         * - Tech stack sign expansion
+         * - Contact info expansion
+         * - Mug shop modal
+         * - Custom notification system
+         *
+         * Features:
+         * - Cached DOM queries for performance
+         * - Error handling
+         * - Keyboard accessibility
+         * - Proper state management
+         * - Debouncing for rapid clicks
+         */
+
+        (function() {
+            'use strict';
+
+            // ==========================================
+            // DOM CACHE - Query elements once on load
+            // ==========================================
+            const elements = {
+                wifiSignBtn: document.getElementById('wifi-sign-btn'),
+                techStackBtn: document.getElementById('tech-stack-btn'),
+                contactInfoBtn: document.getElementById('contact-info-btn'),
+                mugBtn: document.getElementById('mug-btn'),
+                mugShop: document.querySelector('.mug-shop'),
+                mugOverlay: document.getElementById('mug-overlay'),
+                addToCartBtn: document.getElementById('add-to-cart-btn'),
+                closeShopBtn: document.getElementById('close-shop-btn'),
+                notificationModal: document.getElementById('notification-modal'),
+                notificationMessage: document.getElementById('notification-message'),
+                notificationCloseBtn: document.getElementById('notification-close-btn'),
+                counterPlant: document.querySelector('.counter-plant'),
+                corgi: document.querySelector('.corgi-container')
+            };
+
+            // ==========================================
+            // STATE MANAGEMENT
+            // ==========================================
+            const state = {
+                shopOpen: false,
+                animating: false,
+                notificationOpen: false,
+                plantGrowing: false
+            };
+
+            // Configuration constants
+            const TIMING = {
+                MUG_FLOAT: 500,
+                SHOP_FADE: 300,
+                MUG_RETURN: 850
+            };
+
+            // Email contact (data attribute would be better, but keeping it simple)
+            const CONTACT_EMAIL = 'hello@iron-pig.com';
+
+            // ==========================================
+            // UTILITY FUNCTIONS
+            // ==========================================
+
+            /**
+             * Show custom notification modal (replaces alert())
+             * @param {string} message - Message to display
+             */
+            function showNotification(message) {
+                if (!elements.notificationModal || !elements.notificationMessage) {
+                    console.error('Notification elements not found');
+                    return;
+                }
+
+                try {
+                    state.notificationOpen = true;
+                    elements.notificationMessage.textContent = message;
+                    elements.notificationModal.classList.add('active');
+                    elements.notificationCloseBtn?.focus();
+                } catch (error) {
+                    console.error('Error showing notification:', error);
+                }
+            }
+
+            /**
+             * Hide notification modal
+             */
+            function hideNotification() {
+                if (!elements.notificationModal) return;
+
+                try {
+                    state.notificationOpen = false;
+                    elements.notificationModal.classList.remove('active');
+                } catch (error) {
+                    console.error('Error hiding notification:', error);
+                }
+            }
+
+            /**
+             * Close all expandable panels
+             */
+            function closeAllPanels() {
+                const panels = [
+                    elements.wifiSignBtn,
+                    elements.techStackBtn,
+                    elements.contactInfoBtn
+                ];
+
+                panels.forEach(panel => {
+                    if (panel) {
+                        panel.classList.remove('expanded');
+                        panel.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+
+            /**
+             * Toggle WiFi sign expansion
+             */
+            function toggleWifi() {
+                if (!elements.wifiSignBtn) {
+                    console.error('WiFi sign button not found');
+                    return;
+                }
+
+                try {
+                    const wasExpanded = elements.wifiSignBtn.classList.contains('expanded');
+
+                    // Close all panels first (accordion behavior)
+                    closeAllPanels();
+
+                    // If this panel wasn't expanded, expand it
+                    if (!wasExpanded) {
+                        elements.wifiSignBtn.classList.add('expanded');
+                        elements.wifiSignBtn.setAttribute('aria-expanded', 'true');
+                    }
+                } catch (error) {
+                    console.error('Error toggling WiFi sign:', error);
+                }
+            }
+
+            /**
+             * Toggle tech stack sign expansion
+             */
+            function toggleTechStack() {
+                if (!elements.techStackBtn) {
+                    console.error('Tech stack button not found');
+                    return;
+                }
+
+                try {
+                    const wasExpanded = elements.techStackBtn.classList.contains('expanded');
+
+                    // Close all panels first (accordion behavior)
+                    closeAllPanels();
+
+                    // If this panel wasn't expanded, expand it
+                    if (!wasExpanded) {
+                        elements.techStackBtn.classList.add('expanded');
+                        elements.techStackBtn.setAttribute('aria-expanded', 'true');
+                    }
+                } catch (error) {
+                    console.error('Error toggling tech stack sign:', error);
+                }
+            }
+
+            /**
+             * Toggle contact info expansion
+             */
+            function toggleContact() {
+                if (!elements.contactInfoBtn) {
+                    console.error('Contact info button not found');
+                    return;
+                }
+
+                try {
+                    const wasExpanded = elements.contactInfoBtn.classList.contains('expanded');
+
+                    // Close all panels first (accordion behavior)
+                    closeAllPanels();
+
+                    // If this panel wasn't expanded, expand it
+                    if (!wasExpanded) {
+                        elements.contactInfoBtn.classList.add('expanded');
+                        elements.contactInfoBtn.setAttribute('aria-expanded', 'true');
+                    }
+                } catch (error) {
+                    console.error('Error toggling contact info:', error);
+                }
+            }
+
+            /**
+             * Toggle mug shop modal with animations
+             */
+            function toggleMugShop() {
+                // Prevent rapid clicking during animations
+                if (state.animating) return;
+
+                if (!elements.mugBtn || !elements.mugShop || !elements.mugOverlay) {
+                    console.error('Mug shop elements not found');
+                    return;
+                }
+
+                // Set animating immediately to prevent race conditions
+                state.animating = true;
+
+                try {
+                    if (!state.shopOpen) {
+                        openMugShop();
+                    } else {
+                        closeMugShop();
+                    }
+                } catch (error) {
+                    console.error('Error toggling mug shop:', error);
+                    // Reset state on error
+                    state.animating = false;
+                    state.shopOpen = false;
+                }
+            }
+
+            /**
+             * Open mug shop with animation
+             */
+            function openMugShop() {
+                state.shopOpen = true;
+                state.animating = true;
+
+                // Get current mug position
+                const rect = elements.mugBtn.getBoundingClientRect();
+
+                // Convert to fixed positioning at current location
+                elements.mugBtn.style.top = rect.top + 'px';
+                elements.mugBtn.style.left = rect.left + 'px';
+                elements.mugBtn.style.right = 'auto';
+                elements.mugBtn.style.bottom = 'auto';
+                elements.mugBtn.classList.add('floating');
+
+                // Show overlay immediately
+                elements.mugOverlay.classList.add('active');
+
+                // Animate to center (using RAF for smooth animation)
+                requestAnimationFrame(() => {
+                    elements.mugBtn.classList.add('centered');
+                });
+
+                // Show shop after mug floats to center
+                setTimeout(() => {
+                    elements.mugShop.classList.add('active');
+                    state.animating = false;
+
+                    // Focus close button for accessibility
+                    elements.closeShopBtn?.focus();
+                }, TIMING.MUG_FLOAT);
+            }
+
+            /**
+             * Close mug shop with animation
+             */
+            function closeMugShop() {
+                state.shopOpen = false;
+                state.animating = true;
+
+                // Fade out shop and overlay
+                elements.mugShop.classList.add('closing');
+                elements.mugOverlay.classList.add('closing');
+
+                // Remove shop after fade out
+                setTimeout(() => {
+                    elements.mugShop.classList.remove('active', 'closing');
+                    elements.mugOverlay.classList.remove('active', 'closing');
+                    elements.mugBtn.classList.remove('centered');
+                }, TIMING.SHOP_FADE);
+
+                // Return mug to table
+                setTimeout(() => {
+                    elements.mugBtn.classList.remove('floating');
+                    elements.mugBtn.style.top = '';
+                    elements.mugBtn.style.left = '';
+                    elements.mugBtn.style.right = '';
+                    elements.mugBtn.style.bottom = '';
+                    state.animating = false;
+
+                    // Return focus to mug button
+                    elements.mugBtn?.focus();
+                }, TIMING.MUG_RETURN);
+            }
+
+            /**
+             * Handle "Add to Cart" button click
+             */
+            function handleAddToCart() {
+                showNotification(
+                    `Feature coming soon! Contact us at ${CONTACT_EMAIL} to pre-order.`
+                );
+            }
+
+            /**
+             * Toggle plant between grown and normal states
+             */
+            function handlePlantClick() {
+                if (!elements.counterPlant) return;
+
+                try {
+                    const isGrowing = elements.counterPlant.classList.contains('growing');
+
+                    if (isGrowing) {
+                        // Shrink it back
+                        elements.counterPlant.classList.remove('growing');
+                        state.plantGrowing = false;
+                    } else {
+                        // Grow it
+                        elements.counterPlant.classList.add('growing');
+                        state.plantGrowing = true;
+
+                        // Create sparkle effect
+                        createSparkles(elements.counterPlant);
+                    }
+                } catch (error) {
+                    console.error('Error toggling plant:', error);
+                    state.plantGrowing = false;
+                }
+            }
+
+            /**
+             * Handle corgi click - show speech bubble
+             */
+            const barkMessages = ['Woof woof!', 'Bark!', '*happy tail wag*', 'Arf arf!', '🐾 Bork!'];
+            let barkIndex = 0;
+
+            function handleCorgiClick() {
+                if (!elements.corgi) return;
+
+                const speechBubble = elements.corgi.querySelector('.corgi-speech-bubble');
+                if (!speechBubble) return;
+
+                // Cycle through bark messages
+                speechBubble.textContent = barkMessages[barkIndex];
+                barkIndex = (barkIndex + 1) % barkMessages.length;
+
+                // Show the speech bubble
+                elements.corgi.classList.add('barking');
+
+                // Hide after a delay
+                setTimeout(() => {
+                    elements.corgi.classList.remove('barking');
+                }, 1500);
+            }
+
+            /**
+             * Create sparkle effect around element
+             */
+            function createSparkles(element) {
+                const sparkleCount = 8;
+                for (let i = 0; i < sparkleCount; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.left = `${Math.random() * 100}%`;
+                    sparkle.style.top = `${Math.random() * 100}%`;
+                    sparkle.style.animationDelay = `${Math.random() * 0.3}s`;
+                    element.appendChild(sparkle);
+
+                    // Remove sparkle after animation
+                    setTimeout(() => {
+                        sparkle.remove();
+                    }, 1000);
+                }
+            }
+
+            // ==========================================
+            // EVENT LISTENERS
+            // ==========================================
+
+            /**
+             * Initialize all event listeners
+             */
+            function initEventListeners() {
+                // WiFi sign toggle
+                if (elements.wifiSignBtn) {
+                    elements.wifiSignBtn.addEventListener('click', toggleWifi);
+                    elements.wifiSignBtn.setAttribute('aria-expanded', 'false');
+                }
+
+                // Tech stack toggle
+                if (elements.techStackBtn) {
+                    elements.techStackBtn.addEventListener('click', toggleTechStack);
+                    elements.techStackBtn.setAttribute('aria-expanded', 'false');
+                }
+
+                // Contact info toggle
+                if (elements.contactInfoBtn) {
+                    elements.contactInfoBtn.addEventListener('click', toggleContact);
+                    elements.contactInfoBtn.setAttribute('aria-expanded', 'false');
+                }
+
+                // Mug shop
+                if (elements.mugBtn) {
+                    elements.mugBtn.addEventListener('click', toggleMugShop);
+                }
+
+                if (elements.mugOverlay) {
+                    elements.mugOverlay.addEventListener('click', toggleMugShop);
+                }
+
+                if (elements.closeShopBtn) {
+                    elements.closeShopBtn.addEventListener('click', toggleMugShop);
+                }
+
+                if (elements.addToCartBtn) {
+                    elements.addToCartBtn.addEventListener('click', handleAddToCart);
+                }
+
+                // Notification modal
+                if (elements.notificationCloseBtn) {
+                    elements.notificationCloseBtn.addEventListener('click', hideNotification);
+                }
+
+                if (elements.notificationModal) {
+                    elements.notificationModal.addEventListener('click', function(e) {
+                        // Close if clicking outside the content
+                        if (e.target === elements.notificationModal) {
+                            hideNotification();
+                        }
+                    });
+                }
+
+                // Keyboard support for ESC key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        if (state.notificationOpen) {
+                            hideNotification();
+                        } else if (state.shopOpen && !state.animating) {
+                            toggleMugShop();
+                        }
+                    }
+                });
+
+                // Plant click interaction
+                if (elements.counterPlant) {
+                    elements.counterPlant.addEventListener('click', handlePlantClick);
+                }
+
+                // Corgi click interaction
+                if (elements.corgi) {
+                    elements.corgi.addEventListener('click', handleCorgiClick);
+                }
+            }
+
+            // ==========================================
+            // INITIALIZATION
+            // ==========================================
+
+            /**
+             * Initialize the application
+             */
+            function init() {
+                try {
+                    // Verify critical elements exist
+                    const criticalElements = [
+                        'wifiSignBtn',
+                        'techStackBtn',
+                        'contactInfoBtn',
+                        'mugBtn',
+                        'mugShop',
+                        'mugOverlay'
+                    ];
+
+                    const missingElements = criticalElements.filter(
+                        el => !elements[el]
+                    );
+
+                    if (missingElements.length > 0) {
+                        console.warn('Missing elements:', missingElements);
+                    }
+
+                    // Initialize event listeners
+                    initEventListeners();
+
+                    // Performance: Pause animations when coffee machine is off-screen
+                    if ('IntersectionObserver' in window) {
+                        const coffeeMachine = document.querySelector('.coffee-machine');
+                        if (coffeeMachine) {
+                            const observer = new IntersectionObserver((entries) => {
+                                entries.forEach(entry => {
+                                    const animatedElements = entry.target.querySelectorAll('[class*="__liquid"], [class*="__smoke"]');
+                                    animatedElements.forEach(el => {
+                                        el.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+                                    });
+                                });
+                            }, { threshold: 0.1 });
+                            observer.observe(coffeeMachine);
+                        }
+                    }
+
+                    console.log('Iron Pig initialized successfully');
+                } catch (error) {
+                    console.error('Initialization error:', error);
+                }
+            }
+
+            // Run initialization when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="768" viewBox="0 0 1024 768">
+  <defs>
+    <style>
+      .line { fill: none; stroke: #2F5E3A; stroke-width: 16; stroke-linecap: round; stroke-linejoin: round; }
+      .fill { fill: #2F5E3A; }
+      .thin { stroke-width: 10; }
+    </style>
+  </defs>
+
+  <!-- Retro espresso machine - badge style, transparent background -->
+  <g id="espresso-machine" transform="translate(112,80)">
+    <!-- Outer rounded frame -->
+    <rect x="0" y="0" rx="28" ry="28" width="800" height="560" class="line"/>
+    <!-- Top panel with Iron Pig badge slot -->
+    <path d="M40 80 H760" class="line"/>
+    <circle cx="140" cy="40" r="14" class="fill"/>
+    <rect x="180" y="20" width="220" height="40" rx="8" class="line"/>
+    <!-- Gauges -->
+    <circle cx="520" cy="40" r="26" class="line"/>
+    <path d="M520 40 l0 -18" class="line thin"/>
+    <circle cx="600" cy="40" r="26" class="line"/>
+    <path d="M600 40 l14 -14" class="line thin"/>
+
+    <!-- Group head & portafilter -->
+    <rect x="320" y="140" width="160" height="40" rx="8" class="line"/>
+    <rect x="360" y="180" width="80" height="36" rx="8" class="line"/>
+    <path d="M400 216 v36" class="line"/>
+    <path d="M352 252 h96" class="line"/>
+    <path d="M448 252 l44 18" class="line"/>
+    <circle cx="494" cy="270" r="18" class="line"/>
+
+    <!-- Cup under spouts -->
+    <path d="M360 300 h80 v50 a30 30 0 0 1 -30 30 h-20 a30 30 0 0 1 -30 -30 z" class="line"/>
+    <path d="M390 330 h20" class="line thin"/>
+    <path d="M396 314 v30" class="line thin"/>
+
+    <!-- Steam wand -->
+    <path d="M520 180 h60 v40" class="line"/>
+    <path d="M580 220 v80" class="line"/>
+    <circle cx="580" cy="310" r="8" class="fill"/>
+
+    <!-- Drip tray -->
+    <rect x="260" y="380" width="280" height="40" rx="8" class="line"/>
+    <path d="M280 400 h240" class="line thin"/>
+
+    <!-- Side knobs -->
+    <circle cx="120" cy="220" r="18" class="line"/>
+    <circle cx="680" cy="220" r="18" class="line"/>
+
+    <!-- Feet -->
+    <rect x="120" y="520" width="80" height="20" rx="8" class="line"/>
+    <rect x="600" y="520" width="80" height="20" rx="8" class="line"/>
+
+    <!-- Text badge (optional) -->
+    <g transform="translate(196,24)">
+      <text x="0" y="26" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="22" fill="#2F5E3A">IRON PIG</text>
+    </g>
+  </g>
+</svg>
