@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <title>Iron Pig - Brewing Software Solutions</title>
-    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="icon" type="image/svg+xml" href="iron_pig_black_logo.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Allura&family=Pinyon+Script&family=Tangerine:wght@400;700&family=Mr+De+Haviland&family=Righteous&family=Pacifico&family=Sacramento&family=Inter:wght@400;500;600;700&display=block" rel="stylesheet">
@@ -1219,6 +1219,28 @@
             background-color: var(--machine-base);
         }
 
+        /* Coffee machine display - clickable */
+        .coffee-header__display {
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .coffee-header__display:hover {
+            transform: translate(-50%, -50%) scale(1.05);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .coffee-header__display:active {
+            transform: translate(-50%, -50%) scale(0.95);
+        }
+
+        /* Coffee machine paused state */
+        .coffee-machine--paused .coffee-medium__liquid,
+        .coffee-machine--paused .coffee-medium__smoke {
+            animation-play-state: paused;
+            opacity: 0 !important;
+        }
+
         /* ===================================
            ACCESSIBILITY - Reduced Motion
            =================================== */
@@ -1262,7 +1284,8 @@
             .iron-mug,
             .walking-cat,
             .corgi-container,
-            .pendant-light {
+            .pendant-light,
+            .actual-wifi-sign {
                 display: none !important;
             }
 
@@ -3458,7 +3481,7 @@
     <button class="iron-mug" type="button" aria-label="View Iron Pig merchandise" aria-expanded="false" id="mug-btn">
         <div class="iron-mug__body">
             <div class="iron-mug__logo">
-                <img src="logo.png" alt="Iron Pig Logo">
+                <img src="iron_pig_green_est.svg" alt="Iron Pig Logo">
             </div>
         </div>
         <div class="iron-mug__top"></div>
@@ -3478,7 +3501,7 @@
             <div class="iron-mug" style="position: relative; bottom: auto; right: auto; margin: 0 auto; transform: scale(1.5);">
                 <div class="iron-mug__body">
                     <div class="iron-mug__logo">
-                        <img src="logo.png" alt="Iron Pig Logo">
+                        <img src="iron_pig_green_est.svg" alt="Iron Pig Logo">
                     </div>
                 </div>
                 <div class="iron-mug__top"></div>
@@ -3504,7 +3527,7 @@
             <div class="coffee-header__buttons coffee-header__button-one"></div>
             <div class="coffee-header__buttons coffee-header__button-two"></div>
             <div class="coffee-header__display">
-                <img src="logo.png" alt="Iron Pig Logo">
+                <img src="iron_pig_green_est_no_border.svg" alt="Iron Pig Logo">
             </div>
             <div class="coffee-header__details"></div>
         </div>
@@ -3632,7 +3655,9 @@
                 notificationMessage: document.getElementById('notification-message'),
                 notificationCloseBtn: document.getElementById('notification-close-btn'),
                 counterPlant: document.querySelector('.counter-plant'),
-                corgi: document.querySelector('.corgi-container')
+                corgi: document.querySelector('.corgi-container'),
+                coffeeMachine: document.querySelector('.coffee-machine'),
+                coffeeDisplay: document.querySelector('.coffee-header__display')
             };
 
             // ==========================================
@@ -3642,7 +3667,8 @@
                 shopOpen: false,
                 animating: false,
                 notificationOpen: false,
-                plantGrowing: false
+                plantGrowing: false,
+                machineRunning: true
             };
 
             // Configuration constants
@@ -3944,6 +3970,30 @@
             }
 
             /**
+             * Toggle coffee machine on/off
+             */
+            function toggleCoffeeMachine() {
+                if (!elements.coffeeMachine) return;
+
+                state.machineRunning = !state.machineRunning;
+
+                // Get all animated elements
+                const animatedElements = elements.coffeeMachine.querySelectorAll('[class*="__liquid"], [class*="__smoke"]');
+
+                if (state.machineRunning) {
+                    elements.coffeeMachine.classList.remove('coffee-machine--paused');
+                    animatedElements.forEach(el => {
+                        el.style.animationPlayState = 'running';
+                    });
+                } else {
+                    elements.coffeeMachine.classList.add('coffee-machine--paused');
+                    animatedElements.forEach(el => {
+                        el.style.animationPlayState = 'paused';
+                    });
+                }
+            }
+
+            /**
              * Create sparkle effect around element
              */
             function createSparkles(element) {
@@ -4040,6 +4090,11 @@
                 if (elements.corgi) {
                     elements.corgi.addEventListener('click', handleCorgiClick);
                 }
+
+                // Coffee machine toggle
+                if (elements.coffeeDisplay) {
+                    elements.coffeeDisplay.addEventListener('click', toggleCoffeeMachine);
+                }
             }
 
             // ==========================================
@@ -4078,6 +4133,9 @@
                         if (coffeeMachine) {
                             const observer = new IntersectionObserver((entries) => {
                                 entries.forEach(entry => {
+                                    // Only control animations if machine is running
+                                    if (!state.machineRunning) return;
+
                                     const animatedElements = entry.target.querySelectorAll('[class*="__liquid"], [class*="__smoke"]');
                                     animatedElements.forEach(el => {
                                         el.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
