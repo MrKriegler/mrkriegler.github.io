@@ -1284,8 +1284,7 @@
             .iron-mug,
             .walking-cat,
             .corgi-container,
-            .pendant-light,
-            .actual-wifi-sign {
+            .pendant-light {
                 display: none !important;
             }
 
@@ -1837,7 +1836,24 @@
             padding-left: 8px;
         }
 
-        /* Actual WiFi Sign - positioned below tech stack */
+        .wifi-sign__link {
+            display: inline-block;
+            color: #7cb9e8;
+            font-size: 12px;
+            margin-top: 8px;
+            padding: 6px 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .wifi-sign__link:hover {
+            background: rgba(0, 0, 0, 0.5);
+            color: #a8d4f5;
+        }
+
+        /* Recent Builds Sign - positioned below tech stack */
         .actual-wifi-sign {
             position: absolute;
             top: 38%;
@@ -3364,7 +3380,7 @@
             <div class="wifi-sign__section">
                 <div class="wifi-sign__section-title">How I Work</div>
                 <div class="wifi-sign__section-content">
-                    <div class="wifi-sign__rule">Speed: MVPs in weeks, polish as we go</div>
+                    <div class="wifi-sign__rule">Speed: MVPs in weeks, polish as I go</div>
                     <div class="wifi-sign__rule">Quality: Production-ready, not prototype-ready</div>
                     <div class="wifi-sign__rule">Communication: You'll always know what's happening</div>
                 </div>
@@ -3378,48 +3394,46 @@
         </div>
     </button>
 
-    <!-- WiFi Information Sign -->
-    <button class="actual-wifi-sign wifi-sign" type="button" aria-label="WiFi information - Click to expand" id="wifi-sign-btn">
-        <div class="wifi-sign__title">Free WiFi</div>
+    <!-- Recent Builds Sign -->
+    <button class="actual-wifi-sign wifi-sign" type="button" aria-label="Recent projects - Click to expand" id="wifi-sign-btn">
+        <div class="wifi-sign__title">Recent Builds</div>
         <div class="wifi-sign__content">
-            <span class="wifi-sign__label">Network:</span>
-            <span class="wifi-sign__value">IRON_PIG_SECURE</span>
-            <span class="wifi-sign__label">Password:</span>
-            <span class="wifi-sign__value">build-in-2025</span>
+            <span class="wifi-sign__label">🍺</span>
+            <span class="wifi-sign__value">foamfinders.co.uk</span>
+            <span class="wifi-sign__label">🚇</span>
+            <span class="wifi-sign__value">londontubehacks.co.uk</span>
         </div>
         <div class="wifi-sign__hint">Click for details →</div>
 
         <div class="wifi-sign__extra">
             <div class="wifi-sign__section">
-                <div class="wifi-sign__section-title">Network Guidelines</div>
+                <div class="wifi-sign__section-title">Foam Finders</div>
                 <div class="wifi-sign__section-content">
-                    <div class="wifi-sign__rule">• No torrenting (we're watching)</div>
-                    <div class="wifi-sign__rule">• GitHub encouraged</div>
-                    <div class="wifi-sign__rule">• Deploy with confidence</div>
-                    <div class="wifi-sign__rule">• SSH tunneling welcome</div>
-                    <div class="wifi-sign__rule">• No crypto mining please</div>
+                    <div class="wifi-sign__rule">Find Your Perfect Pint of the Black Stuff</div>
+                    <div class="wifi-sign__rule">Rate and discover the best Guinness near you</div>
+                    <a href="https://foamfinders.co.uk" target="_blank" rel="noopener noreferrer" class="wifi-sign__link" onclick="event.stopPropagation()">Visit foamfinders.co.uk →</a>
                 </div>
             </div>
 
             <div class="wifi-sign__section">
-                <div class="wifi-sign__section-title">Connection Details</div>
+                <div class="wifi-sign__section-title">London Tube Hacks</div>
                 <div class="wifi-sign__section-content">
-                    <div class="wifi-sign__rule">Speed: 1 Gbps symmetric fiber</div>
-                    <div class="wifi-sign__rule">Latency: &lt;5ms to major cloud providers</div>
-                    <div class="wifi-sign__rule">Uptime: 99.9% (better than most startups)</div>
+                    <div class="wifi-sign__rule">TfL tips & tricks for smarter travel</div>
+                    <div class="wifi-sign__rule">Navigate the Underground like a local</div>
+                    <a href="https://londontubehacks.co.uk" target="_blank" rel="noopener noreferrer" class="wifi-sign__link" onclick="event.stopPropagation()">Visit londontubehacks.co.uk →</a>
                 </div>
             </div>
 
             <div class="wifi-sign__section">
                 <div class="wifi-sign__section-content wifi-sign__section-content--italic">
-                    Built for builders. Perfect for remote work, pair programming, or pretending to work while actually refactoring your entire codebase.
+                    Real projects, built and shipped. Check them out!
                 </div>
             </div>
         </div>
     </button>
 
     <!-- Services List -->
-    <div class="price-list" role="complementary" aria-label="Our services">
+    <div class="price-list" role="complementary" aria-label="My services">
         <div class="price-list__title">SERVICES</div>
         <div class="price-list__item">
             <span class="price-list__name">Need a landing page?</span>
@@ -3462,16 +3476,16 @@
 
         <div class="contact-info__extra">
             <div class="contact-info__section">
-                <div class="contact-info__section-title">About Us</div>
+                <div class="contact-info__section-title">About Me</div>
                 <div class="contact-info__section-content">
-                    Iron Pig is where exceptional code meets coffee culture. We're a software contracting company serving builders, startups, and businesses who need quality development work without the BS.
+                    Iron Pig is where exceptional code meets coffee culture. I'm a software contractor serving builders, startups, and businesses who need quality development work without the BS.
                 </div>
             </div>
 
             <div class="contact-info__section">
-                <div class="contact-info__section-title">Our Approach</div>
+                <div class="contact-info__section-title">My Approach</div>
                 <div class="contact-info__section-content">
-                    Founded in 2025, we brew custom software solutions with the same care a barista pulls the perfect espresso shot. Every line of code is crafted with precision, every project delivered with transparency. No buzzwords, no fluff—just great software.
+                    Founded in 2025, I brew custom software solutions with the same care a barista pulls the perfect espresso shot. Every line of code is crafted with precision, every project delivered with transparency. No buzzwords, no fluff—just great software.
                 </div>
             </div>
         </div>
@@ -3738,11 +3752,11 @@
             }
 
             /**
-             * Toggle WiFi sign expansion
+             * Toggle Recent Builds sign expansion
              */
             function toggleWifi() {
                 if (!elements.wifiSignBtn) {
-                    console.error('WiFi sign button not found');
+                    console.error('Recent Builds sign button not found');
                     return;
                 }
 
@@ -4021,7 +4035,7 @@
              * Initialize all event listeners
              */
             function initEventListeners() {
-                // WiFi sign toggle
+                // Recent Builds sign toggle
                 if (elements.wifiSignBtn) {
                     elements.wifiSignBtn.addEventListener('click', toggleWifi);
                     elements.wifiSignBtn.setAttribute('aria-expanded', 'false');
