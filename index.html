@@ -3238,6 +3238,23 @@
         .contact-info:focus {
             outline: none;
         }
+
+        /* ===================================
+           RESPONSIVE - Scale for smaller screens
+           =================================== */
+        @media (max-width: 1800px) {
+            body {
+                zoom: 0.67;
+                min-height: calc(100vh / 0.67);
+            }
+
+            /* Hide last 3 service items */
+            .price-list__item:nth-last-child(1),
+            .price-list__item:nth-last-child(2),
+            .price-list__item:nth-last-child(3) {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
