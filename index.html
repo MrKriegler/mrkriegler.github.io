@@ -3259,6 +3259,23 @@
             outline: none;
         }
 
+        /* ===================================
+           RESPONSIVE - Scale for smaller screens
+           =================================== */
+        @media (max-width: 1600px) {
+            body {
+                zoom: 0.9;
+                min-height: calc(100vh / 0.9);
+            }
+        }
+
+        @media (max-width: 1400px) {
+            body {
+                zoom: 0.75;
+                min-height: calc(100vh / 0.75);
+            }
+        }
+
     </style>
 </head>
 <body>
