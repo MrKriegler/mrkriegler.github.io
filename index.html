@@ -1803,9 +1803,29 @@
         }
 
         .wifi-sign.expanded .wifi-sign__extra {
-            max-height: 500px;
+            max-height: 350px;
             opacity: 1;
             margin-top: 16px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(184, 150, 122, 0.5) transparent;
+        }
+
+        .wifi-sign.expanded .wifi-sign__extra::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .wifi-sign.expanded .wifi-sign__extra::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .wifi-sign.expanded .wifi-sign__extra::-webkit-scrollbar-thumb {
+            background: rgba(184, 150, 122, 0.5);
+            border-radius: 3px;
+        }
+
+        .wifi-sign.expanded .wifi-sign__extra::-webkit-scrollbar-thumb:hover {
+            background: rgba(184, 150, 122, 0.7);
         }
 
         .wifi-sign__section {
@@ -3372,7 +3392,7 @@
                     <div class="wifi-sign__rule">• Product thinking meets technical execution</div>
                     <div class="wifi-sign__rule">• Frontend, backend, deployment—the lot</div>
                     <div class="wifi-sign__rule">• User research to production monitoring</div>
-                    <div class="wifi-sign__rule">• Build what users need, not what they ask for</div>
+                    <div class="wifi-sign__rule">• Partner with you to build what users truly need</div>
                     <div class="wifi-sign__rule">• Ship fast, iterate faster</div>
                 </div>
             </div>
@@ -3402,6 +3422,8 @@
             <span class="wifi-sign__value">foamfinders.co.uk</span>
             <span class="wifi-sign__label">🚇</span>
             <span class="wifi-sign__value">londontubehacks.co.uk</span>
+            <span class="wifi-sign__label">🛡️</span>
+            <span class="wifi-sign__value">insurance.labs.iron-pig.com</span>
         </div>
         <div class="wifi-sign__hint">Click for details →</div>
 
@@ -3421,6 +3443,15 @@
                     <div class="wifi-sign__rule">TfL tips & tricks for smarter travel</div>
                     <div class="wifi-sign__rule">Navigate the Underground like a local</div>
                     <a href="https://londontubehacks.co.uk" target="_blank" rel="noopener noreferrer" class="wifi-sign__link" onclick="event.stopPropagation()">Visit londontubehacks.co.uk →</a>
+                </div>
+            </div>
+
+            <div class="wifi-sign__section">
+                <div class="wifi-sign__section-title">Insurance API</div>
+                <div class="wifi-sign__section-content">
+                    <div class="wifi-sign__rule">Tech demo built with Go</div>
+                    <div class="wifi-sign__rule">Insurance API showcase</div>
+                    <a href="https://insurance.labs.iron-pig.com/" target="_blank" rel="noopener noreferrer" class="wifi-sign__link" onclick="event.stopPropagation()">Visit insurance.labs.iron-pig.com →</a>
                 </div>
             </div>
 
