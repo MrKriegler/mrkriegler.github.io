@@ -1,0 +1,11 @@
+# Iron Pig - robots.txt
+# https://iron-pig.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://iron-pig.com/sitemap.xml
+
+# Crawl-delay (optional, respected by some bots)
+Crawl-delay: 1
