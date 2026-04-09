@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Iron Pig Showcase - Projects built and shipped. Full-stack product engineering from idea to production.">
+    <meta name="author" content="Iron Pig PTY">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline';">
+    <meta name="theme-color" content="#2a2220">
+    <meta property="og:title" content="Showcase | Iron Pig - Projects Built & Shipped">
+    <meta property="og:description" content="Portfolio of full-stack projects built by Iron Pig. From AI-powered tools to community platforms.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://iron-pig.com/showcase.html">
+    <meta property="og:site_name" content="Iron Pig">
+    <meta property="og:image" content="https://iron-pig.com/logo.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_GB">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Showcase | Iron Pig - Projects Built & Shipped">
+    <meta name="twitter:description" content="Portfolio of full-stack projects built by Iron Pig. From AI-powered tools to community platforms.">
+    <meta name="twitter:image" content="https://iron-pig.com/logo.png">
+    <link rel="canonical" href="https://iron-pig.com/showcase.html">
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content="software portfolio, full-stack projects, product engineering, Iron Pig showcase, web applications, London developer portfolio">
+    <link rel="apple-touch-icon" href="logo.png">
+    <title>Showcase | Iron Pig - Projects Built & Shipped</title>
+    <link rel="icon" type="image/svg+xml" href="iron_pig_black_logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;600;700&display=block" rel="stylesheet">
+    <style>
+        /* ===================================
+           CSS CUSTOM PROPERTIES
+           =================================== */
+        :root {
+            --counter-color: #2a2220;
+            --text-light: #f5f5f5;
+            --iron-pig-green: #355e3b;
+            --floor-height: 80px;
+        }
+
+        /* ===================================
+           RESET & BASE
+           =================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 30px,
+                    rgba(190, 180, 165, 0.8) 30px,
+                    rgba(190, 180, 165, 0.8) 32px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 118px,
+                    rgba(190, 180, 165, 0.7) 118px,
+                    rgba(190, 180, 165, 0.7) 120px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent 60px,
+                    transparent 178px,
+                    rgba(190, 180, 165, 0.7) 178px,
+                    rgba(190, 180, 165, 0.7) 180px
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.03) 0px,
+                    rgba(0, 0, 0, 0.01) 15px,
+                    rgba(0, 0, 0, 0.03) 30px,
+                    transparent 32px
+                ),
+                linear-gradient(180deg, #ddd0bc 0%, #d1c4af 100%);
+            overflow-x: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===================================
+           NAVIGATION BAR
+           =================================== */
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            height: 56px;
+            background:
+                linear-gradient(180deg,
+                    #8B6F47 0%,
+                    #7a6030 40%,
+                    #6d5838 100%
+                );
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+            border-bottom: 3px solid #5a4828;
+        }
+
+        .nav-bar__back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            opacity: 0.9;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-bar__back:hover {
+            opacity: 1;
+        }
+
+        .nav-bar__back-arrow {
+            font-size: 1.1rem;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-bar__back:hover .nav-bar__back-arrow {
+            transform: translateX(-3px);
+        }
+
+        .nav-bar__brand {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.2rem;
+            color: #f5f5dc;
+            text-shadow:
+                0 0 6px rgba(255, 255, 255, 0.3),
+                0 0 12px rgba(181, 201, 154, 0.2);
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        /* ===================================
+           PAGE HEADING
+           =================================== */
+        .page-heading {
+            text-align: center;
+            padding: 80px 24px 60px;
+            position: relative;
+        }
+
+        .page-heading__title {
+            font-family: 'Pacifico', cursive;
+            font-size: 72px;
+            font-weight: 400;
+            color: #f5f5dc;
+            letter-spacing: 4px;
+            text-shadow:
+                0 0 10px #fff,
+                0 0 20px #b5c99a,
+                0 0 30px #97a97c,
+                0 0 40px #7d8a5e;
+            animation: neonFlicker 4s infinite alternate;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-heading__title::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 160%;
+            height: 250%;
+            background: radial-gradient(ellipse at center,
+                rgba(181, 201, 154, 0.35) 0%,
+                rgba(151, 169, 124, 0.2) 30%,
+                rgba(125, 138, 94, 0.1) 60%,
+                transparent 100%);
+            z-index: -1;
+            border-radius: 50%;
+            filter: blur(25px);
+            animation: neonGlowPulse 4s infinite alternate;
+        }
+
+        .page-heading__subtitle {
+            font-size: 1rem;
+            color: rgba(245, 245, 220, 0.7);
+            margin-top: 16px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 500;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+        }
+
+        @keyframes neonFlicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow:
+                    0 0 10px #fff,
+                    0 0 20px #b5c99a,
+                    0 0 30px #97a97c,
+                    0 0 40px #7d8a5e;
+            }
+            20%, 24%, 55% {
+                text-shadow:
+                    0 0 6px #fff,
+                    0 0 12px #b5c99a,
+                    0 0 18px #97a97c,
+                    0 0 24px #7d8a5e;
+            }
+        }
+
+        @keyframes neonGlowPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ===================================
+           SHOWCASE GRID
+           =================================== */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 32px 80px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===================================
+           PROJECT CARDS - Chalkboard style
+           =================================== */
+        .project-card {
+            position: relative;
+            background:
+                radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.02) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 80%, rgba(255,255,255,0.015) 0%, transparent 50%),
+                linear-gradient(160deg, #2d2824 0%, #252120 50%, #2a2520 100%);
+            border: 7px solid;
+            border-color: #9d8055 #7a6030 #6a5028 #8B6F47;
+            border-radius: 2px;
+            padding: 36px 28px 28px;
+            box-shadow:
+                0 8px 24px rgba(0, 0, 0, 0.4),
+                0 2px 6px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardFadeIn 0.6s ease forwards;
+        }
+
+        .project-card:nth-child(1) { animation-delay: 0.1s; }
+        .project-card:nth-child(2) { animation-delay: 0.2s; }
+        .project-card:nth-child(3) { animation-delay: 0.3s; }
+        .project-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes cardFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Nail */
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -11px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle at 40% 35%, #888, #555);
+            border-radius: 50%;
+            box-shadow:
+                0 1px 3px rgba(0, 0, 0, 0.5),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.3);
+            z-index: 3;
+        }
+
+        /* Wire from nail to frame */
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: -7px;
+            left: calc(50% - 20px);
+            width: 40px;
+            height: 12px;
+            border-bottom: 1.5px solid #666;
+            border-radius: 0 0 50% 50% / 0 0 100% 100%;
+            z-index: 2;
+        }
+
+        .project-card__icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            line-height: 1;
+        }
+
+        .project-card__name {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.5rem;
+            color: #f5f5dc;
+            margin-bottom: 4px;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.08);
+            letter-spacing: 0.5px;
+        }
+
+        .project-card__url {
+            font-size: 0.75rem;
+            color: rgba(181, 201, 154, 0.6);
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .project-card__divider {
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(245, 245, 220, 0.3), transparent);
+            margin-bottom: 16px;
+        }
+
+        .project-card__description {
+            font-size: 0.88rem;
+            line-height: 1.65;
+            color: rgba(245, 245, 220, 0.8);
+            margin-bottom: 20px;
+        }
+
+        .project-card__features {
+            margin-bottom: 24px;
+        }
+
+        .project-card__feature {
+            font-size: 0.8rem;
+            color: rgba(245, 245, 220, 0.65);
+            padding: 4px 0;
+            padding-left: 16px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .project-card__feature::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: rgba(181, 201, 154, 0.5);
+        }
+
+        .project-card__link {
+            display: inline-block;
+            padding: 10px 24px;
+            background: var(--iron-pig-green);
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card__link:hover,
+        .project-card__link:focus-visible {
+            background: #3d6e45;
+            box-shadow: 0 4px 12px rgba(53, 94, 59, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .project-card__link:focus-visible {
+            outline: 2px solid #b5c99a;
+            outline-offset: 2px;
+        }
+
+        .nav-bar__back:focus-visible,
+        .nav-bar__brand:focus-visible {
+            outline: 2px solid rgba(181, 201, 154, 0.6);
+            outline-offset: 4px;
+            border-radius: 2px;
+        }
+
+        .page-footer__link:focus-visible {
+            outline: 2px solid rgba(181, 201, 154, 0.6);
+            outline-offset: 2px;
+        }
+
+        .project-card__screenshot {
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            box-shadow:
+                0 3px 10px rgba(0, 0, 0, 0.4),
+                inset 0 1px 3px rgba(0, 0, 0, 0.3);
+            position: relative;
+            background: #1a1816;
+        }
+
+        .project-card__screenshot img {
+            width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0.9;
+            transition: opacity 0.3s ease, transform 0.4s ease;
+        }
+
+        .project-card__screenshot:hover img {
+            opacity: 1;
+            transform: scale(1.02);
+        }
+
+        /* ===================================
+           FLOOR
+           =================================== */
+        .floor {
+            width: 100%;
+            height: var(--floor-height);
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    #d4b398 0px,
+                    #d4b398 80px,
+                    #c9a888 80px,
+                    #c9a888 81px
+                );
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15);
+            margin-top: auto;
+            flex-shrink: 0;
+        }
+
+        /* ===================================
+           FOOTER
+           =================================== */
+        .page-footer {
+            background: var(--counter-color);
+            padding: 24px 32px;
+            text-align: center;
+            border-top: 3px solid #3a3230;
+        }
+
+        .page-footer__text {
+            font-size: 0.78rem;
+            color: rgba(245, 245, 220, 0.5);
+            letter-spacing: 0.5px;
+        }
+
+        .page-footer__link {
+            color: rgba(181, 201, 154, 0.6);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .page-footer__link:hover {
+            color: rgba(181, 201, 154, 0.9);
+        }
+
+        /* ===================================
+           RESPONSIVE
+           =================================== */
+        @media (max-width: 768px) {
+            .showcase-grid {
+                grid-template-columns: 1fr;
+                gap: 36px;
+                padding: 0 20px 60px;
+            }
+
+            .page-heading {
+                padding: 60px 20px 40px;
+            }
+
+            .page-heading__title {
+                font-size: 48px;
+            }
+
+            .page-heading__subtitle {
+                font-size: 0.85rem;
+            }
+
+            .nav-bar {
+                padding: 0 20px;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+            .page-heading__title {
+                font-size: 36px;
+                letter-spacing: 2px;
+            }
+
+            .page-heading {
+                padding: 48px 16px 32px;
+            }
+
+            .showcase-grid {
+                padding: 0 16px 48px;
+                gap: 32px;
+            }
+
+            .project-card {
+                padding: 32px 20px 24px;
+            }
+
+            .project-card__name {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="visually-hidden">Iron Pig Showcase - Full-Stack Projects Built & Shipped</h1>
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <a href="index.html" class="nav-bar__back">
+            <span class="nav-bar__back-arrow">&larr;</span>
+            Back to Caf&eacute;
+        </a>
+        <a href="index.html" class="nav-bar__brand">Iron Pig</a>
+    </nav>
+
+    <!-- Page Heading -->
+    <header class="page-heading">
+        <div class="page-heading__title">Showcase</div>
+        <div class="page-heading__subtitle">Real projects, built and shipped</div>
+    </header>
+
+    <!-- Project Grid -->
+    <main class="showcase-grid">
+
+        <!-- What Is This Mark? -->
+        <article class="project-card">
+            <div class="project-card__icon">&#x231A;</div>
+            <h2 class="project-card__name">What Is This Mark?</h2>
+            <div class="project-card__url">whatisthismark.com</div>
+            <div class="project-card__divider"></div>
+            <div class="project-card__screenshot">
+                <img src="screenshots/whatisthismark.png" alt="What Is This Mark homepage screenshot" loading="lazy">
+            </div>
+            <p class="project-card__description">
+                A free reference guide for identifying hallmarks, serial numbers, brand stamps, and case-back codes on watches and jewelry. Upload a photo and get an AI-powered identification report.
+            </p>
+            <div class="project-card__features">
+                <div class="project-card__feature">13 watch brand guides &amp; 34 marks decoded</div>
+                <div class="project-card__feature">AI-powered photo analysis with red flag detection</div>
+                <div class="project-card__feature">25+ jewelry hallmarks catalogued</div>
+            </div>
+            <a href="https://whatisthismark.com/" target="_blank" rel="noopener noreferrer" class="project-card__link">Visit site &rarr;</a>
+        </article>
+
+        <!-- Visa Requirements -->
+        <article class="project-card">
+            <div class="project-card__icon">&#x2708;&#xFE0F;</div>
+            <h2 class="project-card__name">Visa Requirements</h2>
+            <div class="project-card__url">visa-requirements.io</div>
+            <div class="project-card__divider"></div>
+            <div class="project-card__screenshot">
+                <img src="screenshots/visa-requirements.png" alt="Visa Requirements homepage screenshot" loading="lazy">
+            </div>
+            <p class="project-card__description">
+                A visa requirements checker and application toolkit covering 9+ countries. AI-powered document generation with instant PDF downloads &mdash; no sign-up required.
+            </p>
+            <div class="project-card__features">
+                <div class="project-card__feature">AI cover letter drafting &amp; sponsor letters</div>
+                <div class="project-card__feature">Trip planner &amp; Schengen 90/180-day calculator</div>
+                <div class="project-card__feature">Passport score comparison across countries</div>
+            </div>
+            <a href="https://www.visa-requirements.io/" target="_blank" rel="noopener noreferrer" class="project-card__link">Visit site &rarr;</a>
+        </article>
+
+        <!-- Foam Finders -->
+        <article class="project-card">
+            <div class="project-card__icon">&#x1F37A;</div>
+            <h2 class="project-card__name">Foam Finders</h2>
+            <div class="project-card__url">foamfinders.co.uk</div>
+            <div class="project-card__divider"></div>
+            <div class="project-card__screenshot">
+                <img src="screenshots/foamfinders.png" alt="Foam Finders homepage screenshot" loading="lazy">
+            </div>
+            <p class="project-card__description">
+                A community-driven platform for discovering and rating Guinness pubs across the UK and Ireland. Find your perfect pint of the black stuff, rated by Guinness lovers.
+            </p>
+            <div class="project-card__features">
+                <div class="project-card__feature">100+ pubs listed with 187+ community ratings</div>
+                <div class="project-card__feature">Filter by dog-friendly, child-friendly &amp; sports pubs</div>
+                <div class="project-card__feature">Top-rated rankings with community scores</div>
+            </div>
+            <a href="https://foamfinders.co.uk/" target="_blank" rel="noopener noreferrer" class="project-card__link">Visit site &rarr;</a>
+        </article>
+
+        <!-- Thames Paddle Planner -->
+        <article class="project-card">
+            <div class="project-card__icon">&#x1F6A3;</div>
+            <h2 class="project-card__name">Thames Paddle Planner</h2>
+            <div class="project-card__url">thamespaddleplanner.com</div>
+            <div class="project-card__divider"></div>
+            <div class="project-card__screenshot">
+                <img src="screenshots/thamespaddleplanner.png" alt="Thames Paddle Planner homepage screenshot" loading="lazy">
+            </div>
+            <p class="project-card__description">
+                Tide-aware paddle planning for kayaking and SUP on London's tidal Thames. Live conditions, forecasts, and safety guidance across 12 launch points from Teddington to Greenwich.
+            </p>
+            <div class="project-card__features">
+                <div class="project-card__feature">Live tide windows &amp; 7-day forecasts</div>
+                <div class="project-card__feature">12 launch points with current speed &amp; wind data</div>
+                <div class="project-card__feature">Route planning with beginner/pro skill levels</div>
+            </div>
+            <a href="https://www.thamespaddleplanner.com/" target="_blank" rel="noopener noreferrer" class="project-card__link">Visit site &rarr;</a>
+        </article>
+
+    </main>
+
+    <!-- Floor -->
+    <div class="floor" aria-hidden="true"></div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <p class="page-footer__text">
+            &copy; 2025 Iron Pig &middot; <a href="index.html" class="page-footer__link">Back to Caf&eacute;</a>
+        </p>
+    </footer>
+</body>
+</html>

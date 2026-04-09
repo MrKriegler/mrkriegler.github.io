@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Iron Pig - Brewing custom software solutions. Where exceptional code meets coffee culture.">
+    <meta name="description" content="Iron Pig - Software consultant in London. I build products, fix broken processes, and lead teams. Full-stack engineering, operations, and technical leadership.">
     <meta name="author" content="Iron Pig PTY">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline';">
     <meta name="theme-color" content="#2a2220">
-    <meta property="og:title" content="Iron Pig - Brewing Software Solutions">
-    <meta property="og:description" content="Iron Pig - Brewing custom software solutions. Where exceptional code meets coffee culture.">
+    <meta property="og:title" content="Iron Pig - Software, Teams & Operations">
+    <meta property="og:description" content="Software consultant in London. I build products, fix broken processes, and lead teams through the hard parts.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://iron-pig.com/">
     <meta property="og:site_name" content="Iron Pig">
@@ -17,16 +17,16 @@
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="en_GB">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Iron Pig - Brewing Software Solutions">
-    <meta name="twitter:description" content="Custom software development in London. Full-stack product engineering from idea to ship.">
+    <meta name="twitter:title" content="Iron Pig - Software, Teams & Operations">
+    <meta name="twitter:description" content="Software consultant in London. I build products, fix broken processes, and lead teams through the hard parts.">
     <meta name="twitter:image" content="https://iron-pig.com/logo.png">
     <link rel="canonical" href="https://iron-pig.com/">
     <meta name="robots" content="index, follow">
-    <meta name="keywords" content="software development, full-stack developer, product engineering, London software contractor, web development, custom software, freelance developer">
+    <meta name="keywords" content="software consultant, technical leadership, full-stack developer, operations consulting, London software contractor, team transformation, product engineering">
     <meta name="geo.region" content="GB-LND">
     <meta name="geo.placename" content="London">
     <link rel="apple-touch-icon" href="logo.png">
-    <title>Iron Pig - Brewing Software Solutions | London Software Development</title>
+    <title>Iron Pig | Software Consultant - Build, Fix, Lead | London</title>
     <link rel="icon" type="image/svg+xml" href="iron_pig_black_logo.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -774,6 +774,44 @@
             outline: none;
         }
 
+        /* Ni! easter egg speech bubble */
+        .counter-plant__ni {
+            position: absolute;
+            top: -45px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            background: #2a2520;
+            color: #f5f5dc;
+            font-family: 'Pacifico', cursive;
+            font-size: 18px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 200;
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .counter-plant__ni::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #2a2520;
+        }
+
+        .counter-plant__ni.visible {
+            transform: translateX(-50%) scale(1);
+            opacity: 1;
+        }
+
         .counter-plant__pot {
             position: absolute;
             bottom: 0;
@@ -1283,6 +1321,13 @@
             }
         }
 
+        /* Ensure enough vertical space for scene on desktop/tablet */
+        @media (min-width: 769px) {
+            body {
+                min-height: max(100vh, 1000px);
+            }
+        }
+
         /* ===================================
            RESPONSIVE DESIGN - Mobile Layout
            =================================== */
@@ -1633,6 +1678,49 @@
                 border-right-width: 125px;
                 border-bottom-width: 250px;
                 left: -125px;
+            }
+        }
+
+        /* ===================================
+           RESPONSIVE - Medium Desktop (1201px - 1500px)
+           =================================== */
+        @media (min-width: 1201px) and (max-width: 1500px) {
+            .neon-sign {
+                font-size: 85px;
+            }
+
+            .price-list {
+                width: 340px;
+            }
+
+            .wifi-sign {
+                width: 260px;
+                right: 10%;
+            }
+
+            .wifi-sign.expanded {
+                width: 340px;
+            }
+
+            .actual-wifi-sign {
+                width: 260px;
+                right: 10%;
+            }
+
+            .actual-wifi-sign.expanded {
+                width: 380px;
+            }
+
+            .contact-info {
+                width: 240px;
+            }
+
+            .coffee-machine {
+                transform: scale(0.5);
+            }
+
+            .corgi-container {
+                display: none;
             }
         }
 
@@ -3278,31 +3366,33 @@
         /* ===================================
            FOCUS/HOVER STATES (Accessibility)
            =================================== */
-        button:focus:not(.wifi-sign):not(.contact-info):not(.iron-mug) {
+        button:focus:not(.wifi-sign):not(.contact-info):not(.iron-mug):not(.counter-plant) {
             outline: none;
         }
 
-        .wifi-sign:focus,
-        .contact-info:focus {
+        .wifi-sign:focus-visible,
+        .contact-info:focus-visible {
             outline: none;
+            box-shadow: 0 0 0 3px rgba(181, 201, 154, 0.6);
         }
 
-        /* ===================================
-           RESPONSIVE - Scale for smaller screens
-           =================================== */
-        @media (max-width: 1600px) {
-            body {
-                zoom: 0.9;
-                min-height: calc(100vh / 0.9);
-            }
+        .counter-plant:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(181, 201, 154, 0.6);
+            border-radius: 4px;
         }
 
-        @media (max-width: 1400px) {
-            body {
-                zoom: 0.75;
-                min-height: calc(100vh / 0.75);
-            }
+        .iron-mug:focus-visible {
+            outline: none;
+            filter: drop-shadow(0 0 6px rgba(181, 201, 154, 0.6));
         }
+
+        .corgi-container:focus-visible {
+            outline: none;
+            filter: drop-shadow(0 0 6px rgba(181, 201, 154, 0.6));
+        }
+
+        /* Desktop min-height is handled by the (min-width: 769px) query above */
 
     </style>
     <script type="application/ld+json">
@@ -3318,7 +3408,7 @@
                     "@type": "ImageObject",
                     "url": "https://iron-pig.com/logo.png"
                 },
-                "description": "Iron Pig - Brewing custom software solutions. Where exceptional code meets coffee culture.",
+                "description": "Software consultant in London. I build products, fix broken processes, and lead teams.",
                 "email": "hello@iron-pig.com",
                 "foundingDate": "2025",
                 "areaServed": "GB",
@@ -3351,8 +3441,8 @@
                 "@type": "WebPage",
                 "@id": "https://iron-pig.com/#webpage",
                 "url": "https://iron-pig.com",
-                "name": "Iron Pig - Brewing Software Solutions | London Software Development",
-                "description": "Iron Pig - Brewing custom software solutions. Where exceptional code meets coffee culture.",
+                "name": "Iron Pig | Software Consultant - Build, Fix, Lead | London",
+                "description": "Software consultant in London. I build products, fix broken processes, and lead teams.",
                 "isPartOf": {
                     "@id": "https://iron-pig.com/#website"
                 },
@@ -3362,7 +3452,7 @@
             },
             {
                 "@type": "Service",
-                "serviceType": "Software Development",
+                "serviceType": "Software Consulting",
                 "provider": {
                     "@id": "https://iron-pig.com/#organization"
                 },
@@ -3372,20 +3462,20 @@
                 },
                 "hasOfferCatalog": {
                     "@type": "OfferCatalog",
-                    "name": "Software Development Services",
+                    "name": "Consulting & Engineering Services",
                     "itemListElement": [
                         {
                             "@type": "Offer",
                             "itemOffered": {
                                 "@type": "Service",
-                                "name": "Landing Page Development"
+                                "name": "Technical Leadership"
                             }
                         },
                         {
                             "@type": "Offer",
                             "itemOffered": {
                                 "@type": "Service",
-                                "name": "Web Application Development"
+                                "name": "Operations Consulting"
                             }
                         },
                         {
@@ -3399,14 +3489,14 @@
                             "@type": "Offer",
                             "itemOffered": {
                                 "@type": "Service",
-                                "name": "Backend & API Development"
+                                "name": "Team Transformation"
                             }
                         },
                         {
                             "@type": "Offer",
                             "itemOffered": {
                                 "@type": "Service",
-                                "name": "Custom Software Solutions"
+                                "name": "Full-Stack Software Engineering"
                             }
                         }
                     ]
@@ -3419,7 +3509,7 @@
 <body>
     <!-- Coffee shop scene - Visual illustration of Iron Pig Software Development -->
     <main>
-    <h1 class="visually-hidden">Iron Pig - Full-Stack Software Development & Product Engineering in London</h1>
+    <h1 class="visually-hidden">Iron Pig - Software Consultant in London | Build, Fix & Lead</h1>
     <!-- Pendant Lights -->
     <div class="pendant-light pendant-light-1" role="presentation">
         <div class="pendant-light__cord"></div>
@@ -3531,41 +3621,46 @@
         </div>
     </div>
 
-    <!-- Product Engineering Sign -->
-    <button class="wifi-sign" type="button" aria-label="Product engineering approach - Click to expand" aria-expanded="false" id="tech-stack-btn">
-        <div class="wifi-sign__title">What I Build</div>
+    <!-- How I Help Sign -->
+    <button class="wifi-sign" type="button" aria-label="How I help - Click to expand" aria-expanded="false" id="tech-stack-btn">
+        <div class="wifi-sign__title">How I Help</div>
         <div class="wifi-sign__content">
             <span class="wifi-sign__label">What I do:</span>
-            <span class="wifi-sign__value">Full-stack product engineering</span>
+            <span class="wifi-sign__value">Software, teams & operations</span>
             <span class="wifi-sign__label">How I work:</span>
-            <span class="wifi-sign__value">Idea → Ship → Iterate</span>
+            <span class="wifi-sign__value">Find the problem. Fix it. Move on.</span>
         </div>
         <div class="wifi-sign__hint">More details →</div>
 
         <div class="wifi-sign__extra">
             <div class="wifi-sign__section">
-                <div class="wifi-sign__section-title">Full Stack</div>
+                <div class="wifi-sign__section-title">Build</div>
                 <div class="wifi-sign__section-content">
-                    <div class="wifi-sign__rule">• Product thinking meets technical execution</div>
-                    <div class="wifi-sign__rule">• Frontend, backend, deployment—the lot</div>
-                    <div class="wifi-sign__rule">• User research to production monitoring</div>
-                    <div class="wifi-sign__rule">• Partner with you to build what users truly need</div>
-                    <div class="wifi-sign__rule">• Ship fast, iterate faster</div>
+                    <div class="wifi-sign__rule">I write code. Products, tools, internal systems.</div>
+                    <div class="wifi-sign__rule">Full stack, start to finish.</div>
+                    <div class="wifi-sign__rule">Frontend, backend, infrastructure—the lot.</div>
                 </div>
             </div>
 
             <div class="wifi-sign__section">
-                <div class="wifi-sign__section-title">How I Work</div>
+                <div class="wifi-sign__section-title">Fix</div>
                 <div class="wifi-sign__section-content">
-                    <div class="wifi-sign__rule">Speed: MVPs in weeks, polish as I go</div>
-                    <div class="wifi-sign__rule">Quality: Production-ready, not prototype-ready</div>
-                    <div class="wifi-sign__rule">Communication: You'll always know what's happening</div>
+                    <div class="wifi-sign__rule">Slow teams, broken processes, tech that's holding you back.</div>
+                    <div class="wifi-sign__rule">I find the bottleneck and sort it out.</div>
+                </div>
+            </div>
+
+            <div class="wifi-sign__section">
+                <div class="wifi-sign__section-title">Lead</div>
+                <div class="wifi-sign__section-content">
+                    <div class="wifi-sign__rule">I embed with your team. Set direction, unblock people, ship the thing.</div>
+                    <div class="wifi-sign__rule">Hands-on leadership, not meetings about meetings.</div>
                 </div>
             </div>
 
             <div class="wifi-sign__section">
                 <div class="wifi-sign__section-content wifi-sign__section-content--italic">
-                    From napkin sketch to live product. I handle the whole stack, so you get something that actually works.
+                    I've done the startup grind and the enterprise slog. I know what actually moves the needle.
                 </div>
             </div>
         </div>
@@ -3581,6 +3676,8 @@
             <span class="wifi-sign__value">visa-requirements.io</span>
             <span class="wifi-sign__label">🍺</span>
             <span class="wifi-sign__value">foamfinders.co.uk</span>
+            <span class="wifi-sign__label">🚣</span>
+            <span class="wifi-sign__value">thamespaddleplanner.com</span>
         </div>
         <div class="wifi-sign__hint">Click for details →</div>
 
@@ -3613,8 +3710,18 @@
             </div>
 
             <div class="wifi-sign__section">
+                <div class="wifi-sign__section-title">Thames Paddle Planner</div>
+                <div class="wifi-sign__section-content">
+                    <div class="wifi-sign__rule">Tide-aware paddle planning for kayaking & SUP on the Thames</div>
+                    <div class="wifi-sign__rule">Live tide windows, 7-day forecasts & 12 launch points</div>
+                    <a href="https://www.thamespaddleplanner.com/" target="_blank" rel="noopener noreferrer" class="wifi-sign__link" onclick="event.stopPropagation()">Visit thamespaddleplanner.com →</a>
+                </div>
+            </div>
+
+            <div class="wifi-sign__section">
                 <div class="wifi-sign__section-content wifi-sign__section-content--italic">
-                    Real projects, built and shipped. Check them out!
+                    Real projects, built and shipped.
+                    <a href="showcase.html" class="wifi-sign__link" onclick="event.stopPropagation()">See full showcase →</a>
                 </div>
             </div>
         </div>
@@ -3624,27 +3731,27 @@
     <div class="price-list" role="complementary" aria-label="My services">
         <div class="price-list__title">SERVICES</div>
         <div class="price-list__item">
-            <span class="price-list__name">Need a landing page?</span>
+            <span class="price-list__name">Your dev team is stuck</span>
             <span class="price-list__price">☕</span>
         </div>
         <div class="price-list__item">
-            <span class="price-list__name">Building a web app?</span>
+            <span class="price-list__name">Operations need untangling</span>
             <span class="price-list__price">☕☕</span>
         </div>
         <div class="price-list__item">
-            <span class="price-list__name">Full product, start to finish?</span>
+            <span class="price-list__name">Build something from scratch</span>
             <span class="price-list__price">☕☕☕</span>
         </div>
         <div class="price-list__item">
-            <span class="price-list__name">Backend or API work?</span>
+            <span class="price-list__name">Need a tech lead, not a manager</span>
             <span class="price-list__price">☕☕</span>
         </div>
         <div class="price-list__item">
-            <span class="price-list__name">Something custom?</span>
+            <span class="price-list__name">Fire drill? Something's broken?</span>
             <span class="price-list__price">☕☕☕</span>
         </div>
         <div class="price-list__item">
-            <span class="price-list__name">Ongoing partnership?</span>
+            <span class="price-list__name">Ongoing partnership</span>
             <span class="price-list__price">☕∞</span>
         </div>
     </div>
@@ -3666,14 +3773,14 @@
             <div class="contact-info__section">
                 <div class="contact-info__section-title">About Me</div>
                 <div class="contact-info__section-content">
-                    Iron Pig is where exceptional code meets coffee culture. I'm a software contractor serving builders, startups, and businesses who need quality development work without the BS.
+                    I'm a software consultant based in London. I build things, fix things, and lead teams through the hard parts. I've shipped products from scratch, turned around struggling teams, and streamlined operations at companies that had outgrown their processes.
                 </div>
             </div>
 
             <div class="contact-info__section">
                 <div class="contact-info__section-title">My Approach</div>
                 <div class="contact-info__section-content">
-                    Founded in 2025, I brew custom software solutions with the same care a barista pulls the perfect espresso shot. Every line of code is crafted with precision, every project delivered with transparency. No buzzwords, no fluff—just great software.
+                    I work out what's actually going wrong, then I fix it. No decks, no discovery phases that last longer than the actual work. You get someone who can write the code, make the calls, and get it done.
                 </div>
             </div>
         </div>
@@ -4288,15 +4395,52 @@
                     elements.counterPlant.addEventListener('click', handlePlantClick);
                 }
 
-                // Corgi click interaction
+                // Corgi click + keyboard interaction
                 if (elements.corgi) {
                     elements.corgi.addEventListener('click', handleCorgiClick);
+                    elements.corgi.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            handleCorgiClick();
+                        }
+                    });
                 }
 
                 // Coffee machine toggle
                 if (elements.coffeeDisplay) {
                     elements.coffeeDisplay.addEventListener('click', toggleCoffeeMachine);
                 }
+
+                // 🥥 "Are you suggesting coconuts migrate?"
+                // The shrubbery demands a word...
+                (function() {
+                    var seq = '';
+                    var niMessages = ['Ni!', 'Ni! Ni!', 'We are the Knights Who Say... Ni!', 'We want... a shrubbery!', 'One that looks nice... and not too expensive.'];
+                    var niIndex = 0;
+                    document.addEventListener('keypress', function(e) {
+                        seq += e.key.toLowerCase();
+                        if (seq.length > 10) seq = seq.slice(-10);
+                        if (seq.endsWith('ni')) {
+                            seq = '';
+                            if (elements.counterPlant) {
+                                elements.counterPlant.classList.add('growing');
+                                var bubble = elements.counterPlant.querySelector('.counter-plant__ni');
+                                if (!bubble) {
+                                    bubble = document.createElement('div');
+                                    bubble.className = 'counter-plant__ni';
+                                    elements.counterPlant.appendChild(bubble);
+                                }
+                                bubble.textContent = niMessages[niIndex];
+                                niIndex = (niIndex + 1) % niMessages.length;
+                                bubble.classList.add('visible');
+                                createSparkles(elements.counterPlant);
+                                setTimeout(function() {
+                                    bubble.classList.remove('visible');
+                                }, 4000);
+                            }
+                        }
+                    });
+                })();
             }
 
             // ==========================================
@@ -4348,7 +4492,8 @@
                         }
                     }
 
-                    console.log('Iron Pig initialized successfully');
+                    console.log('%c☕ Iron Pig', 'font-size: 20px; font-weight: bold; color: #355e3b;');
+                    console.log('%cWelcome to the source! Curious minds are always welcome here.\nTry typing "ni" while on the page... the shrubbery demands it. 🌿', 'font-size: 13px; color: #8B6F47;');
                 } catch (error) {
                     console.error('Initialization error:', error);
                 }
