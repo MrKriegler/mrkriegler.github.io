@@ -1626,119 +1626,156 @@
             }
 
             :root {
-                --floor-height: 65px;
-                --counter-height: 170px;
+                --floor-height: 60px;
+                --counter-height: 160px;
+                --table-size: 130px;
+                --stool-height: 85px;
+            }
+
+            .neon-sign {
+                font-size: 55px;
+                top: 35%;
+            }
+
+            .neon-sign__est-text { font-size: 10px; }
+            .neon-sign__est-line { width: 35px; }
+
+            /* 3 across the top, all compact */
+            .price-list {
+                width: 210px;
+                left: 3%;
+                top: 3%;
+                padding: 12px 14px;
+            }
+
+            .price-list__title { font-size: 16px; }
+            .price-list__name, .price-list__price { font-size: 11px; }
+
+            .contact-info {
+                width: 175px;
+                top: 3%;
+                padding: 12px;
+            }
+
+            .contact-info__title { font-size: 16px; }
+            .contact-info.expanded { width: 270px; }
+
+            .wifi-sign {
+                width: 200px;
+                right: 3%;
+                top: 3%;
+                padding: 12px;
+            }
+
+            .wifi-sign__title { font-size: 16px; }
+            .wifi-sign.expanded { width: 300px; }
+
+            .actual-wifi-sign {
+                width: 200px;
+                right: 3%;
+                top: 42%;
+            }
+
+            .actual-wifi-sign.expanded { width: 320px; }
+
+            /* Scene */
+            .coffee-machine { transform: scale(0.35); }
+            .table { right: 120px; }
+            .stool-1 { right: 225px; }
+            .stool-2 { right: 95px; }
+            .corgi-container { display: none; }
+            .counter-plant { transform: scale(0.65); transform-origin: bottom right; }
+
+            .pendant-light__glow {
+                border-left-width: 150px;
+                border-right-width: 150px;
+                border-bottom-width: 250px;
+            }
+
+            .pendant-light__glow::before {
+                border-left-width: 110px;
+                border-right-width: 110px;
+                border-bottom-width: 200px;
+                left: -110px;
+            }
+
+            .pendant-light__glow::after {
+                border-left-width: 75px;
+                border-right-width: 75px;
+                border-bottom-width: 150px;
+                left: -75px;
+            }
+        }
+
+        /* ===================================
+           RESPONSIVE - Medium Desktop (1201px - 1500px)
+           =================================== */
+        @media (min-width: 1201px) and (max-width: 1500px) {
+            body {
+                min-height: 100vh;
+            }
+
+            :root {
+                --floor-height: 70px;
+                --counter-height: 175px;
                 --table-size: 140px;
                 --stool-height: 90px;
             }
 
-            /* Neon sign - clear center */
             .neon-sign {
-                font-size: 45px;
-                top: 16%;
+                font-size: 65px;
+                top: 35%;
             }
 
-            .neon-sign__est-text {
-                font-size: 10px;
-            }
+            .neon-sign__est-text { font-size: 12px; }
+            .neon-sign__est-line { width: 50px; }
 
-            .neon-sign__est-line {
-                width: 35px;
-            }
-
-            /* Left column */
+            /* 3 across the top, all compact */
             .price-list {
-                width: 210px;
-                left: 2%;
+                width: 240px;
+                left: 3%;
                 top: 3%;
-                padding: 14px 16px;
+                padding: 14px 18px;
             }
 
-            .price-list__title {
-                font-size: 16px;
-            }
-
-            .price-list__name,
-            .price-list__price {
-                font-size: 11px;
-            }
+            .price-list__title { font-size: 18px; }
+            .price-list__name, .price-list__price { font-size: 12px; }
 
             .contact-info {
-                width: 190px;
-                top: auto;
-                bottom: calc(var(--floor-height) + var(--counter-height) + 25px);
-                left: 2%;
-                transform: none;
-                padding: 12px;
-            }
-
-            .contact-info__title {
-                font-size: 16px;
-            }
-
-            .contact-info.expanded {
-                width: 270px;
-            }
-
-            /* Right column */
-            .wifi-sign {
-                width: 200px;
-                right: 2%;
+                width: 195px;
                 top: 3%;
-                padding: 12px;
+                padding: 14px;
             }
 
-            .wifi-sign__title {
-                font-size: 16px;
+            .contact-info__title { font-size: 18px; }
+            .contact-info.expanded { width: 300px; }
+
+            .wifi-sign {
+                width: 220px;
+                right: 3%;
+                top: 3%;
+                padding: 14px;
             }
 
-            .wifi-sign.expanded {
-                width: 300px;
-            }
+            .wifi-sign__title { font-size: 18px; }
+            .wifi-sign.expanded { width: 340px; }
 
             .actual-wifi-sign {
-                width: 200px;
-                right: 2%;
-                top: auto;
-                bottom: calc(var(--floor-height) + var(--counter-height) + 25px);
+                width: 220px;
+                right: 3%;
+                top: 45%;
             }
 
-            .actual-wifi-sign.expanded {
-                width: 320px;
-            }
+            .actual-wifi-sign.expanded { width: 380px; }
 
             /* Scene */
-            .coffee-machine {
-                transform: scale(0.35);
-                bottom: 280px;
-            }
+            .coffee-machine { transform: scale(0.4); }
+            .table { right: 140px; }
+            .stool-1 { right: 260px; }
+            .stool-2 { right: 115px; }
+            .corgi-container { display: none; }
+            .counter-plant { transform: scale(0.75); transform-origin: bottom right; }
 
-            .iron-mug {
-                right: 145px;
-            }
-
-            .table {
-                right: 115px;
-            }
-
-            .stool-1 {
-                right: 230px;
-            }
-
-            .stool-2 {
-                right: 90px;
-            }
-
-            .corgi-container {
-                display: none;
-            }
-
-            .counter-plant {
-                transform: scale(0.65);
-                transform-origin: bottom right;
-            }
-
-            /* Reduce pendant light glow */
             .pendant-light__glow {
                 border-left-width: 180px;
                 border-right-width: 180px;
@@ -1757,158 +1794,6 @@
                 border-right-width: 90px;
                 border-bottom-width: 180px;
                 left: -90px;
-            }
-        }
-
-        /* ===================================
-           RESPONSIVE - Medium Desktop (1201px - 1500px)
-           =================================== */
-        @media (min-width: 1201px) and (max-width: 1500px) {
-            body {
-                min-height: 100vh;
-            }
-
-            /* Neon sign - clear center */
-            .neon-sign {
-                font-size: 60px;
-                top: 18%;
-            }
-
-            .neon-sign__est-text {
-                font-size: 12px;
-            }
-
-            .neon-sign__est-line {
-                width: 50px;
-            }
-
-            /*
-             * Two signs per side, neon sign owns the center:
-             *   [Services]                        [How I Help]
-             *   [Let's Talk]    Iron Pig          [Recent Builds]
-             *                   EST. 2025
-             *            [ café scene ]
-             */
-
-            /* Left column */
-            .price-list {
-                width: 240px;
-                top: 3%;
-                left: 3%;
-                padding: 16px 20px;
-            }
-
-            .price-list__title {
-                font-size: 18px;
-            }
-
-            .price-list__name,
-            .price-list__price {
-                font-size: 12px;
-            }
-
-            .contact-info {
-                width: 210px;
-                top: auto;
-                bottom: calc(var(--floor-height) + var(--counter-height) + 30px);
-                left: 3%;
-                transform: none;
-                padding: 14px;
-            }
-
-            .contact-info__title {
-                font-size: 18px;
-            }
-
-            .contact-info.expanded {
-                width: 300px;
-            }
-
-            /* Right column */
-            .wifi-sign {
-                width: 230px;
-                right: 3%;
-                top: 3%;
-                padding: 14px;
-            }
-
-            .wifi-sign__title {
-                font-size: 18px;
-            }
-
-            .wifi-sign.expanded {
-                width: 340px;
-            }
-
-            .actual-wifi-sign {
-                width: 230px;
-                right: 3%;
-                top: auto;
-                bottom: calc(var(--floor-height) + var(--counter-height) + 30px);
-            }
-
-            .actual-wifi-sign.expanded {
-                width: 380px;
-            }
-
-            /* Scale scene via CSS variables */
-            :root {
-                --floor-height: 70px;
-                --counter-height: 180px;
-                --table-size: 150px;
-                --stool-height: 95px;
-            }
-
-            .coffee-machine {
-                transform: scale(0.42);
-                bottom: 320px;
-            }
-
-            .iron-mug {
-                right: 190px;
-            }
-
-            .table {
-                right: 150px;
-            }
-
-            .stool-1 {
-                right: 275px;
-            }
-
-            .stool-2 {
-                right: 125px;
-            }
-
-            .corgi-container {
-                transform: scale(0.45);
-                transform-origin: bottom center;
-            }
-
-            .counter-plant {
-                transform: scale(0.8);
-                transform-origin: bottom right;
-            }
-
-            /* Reduce pendant light glow */
-            .pendant-light__glow {
-                border-left-width: 200px;
-                border-right-width: 200px;
-                border-bottom-width: 350px;
-            }
-
-            .pendant-light__glow::before {
-                border-left-width: 150px;
-                border-right-width: 150px;
-                border-bottom-width: 280px;
-                left: -150px;
-            }
-
-            .pendant-light__glow::after {
-                border-left-width: 100px;
-                border-right-width: 100px;
-                border-bottom-width: 200px;
-                left: -100px;
             }
         }
 
