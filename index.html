@@ -30,7 +30,7 @@
     <link rel="icon" type="image/svg+xml" href="iron_pig_black_logo.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Pinyon+Script&family=Tangerine:wght@400;700&family=Mr+De+Haviland&family=Righteous&family=Pacifico&family=Sacramento&family=Inter:wght@400;500;600;700&display=block" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* ===================================
            CSS CUSTOM PROPERTIES
@@ -1014,7 +1014,7 @@
             left: 50px;
         }
 
-        /* Display screen */
+        /* Display screen - clickable to toggle machine */
         .coffee-header__display {
             width: 50px;
             height: 50px;
@@ -1030,18 +1030,14 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
 
         .coffee-header__display img {
             width: 36px;
             height: 36px;
             object-fit: contain;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
-            image-rendering: auto;
-            -webkit-backface-visibility: hidden;
-            -webkit-transform: translateZ(0) scale(1.0, 1.0);
-            transform: translateZ(0);
         }
 
         /* Detail indicators */
@@ -1285,12 +1281,6 @@
             background-color: var(--machine-base);
         }
 
-        /* Coffee machine display - clickable */
-        .coffee-header__display {
-            cursor: pointer;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
-        }
-
         .coffee-header__display:hover {
             transform: translate(-50%, -50%) scale(1.05);
             box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
@@ -1514,51 +1504,6 @@
             }
         }
 
-
-        /* ===================================
-           NAV BAR - Shown on mid-size screens
-           =================================== */
-        .nav-bar {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 200;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 32px;
-            height: 48px;
-            background:
-                linear-gradient(180deg,
-                    #8B6F47 0%,
-                    #7a6030 40%,
-                    #6d5838 100%
-                );
-            box-shadow:
-                0 4px 12px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.15),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
-            border-bottom: 3px solid #5a4828;
-        }
-
-        .nav-bar__brand {
-            font-family: 'Pacifico', cursive;
-            font-size: 1.2rem;
-            color: #f5f5dc;
-            text-shadow:
-                0 0 6px rgba(255, 255, 255, 0.3),
-                0 0 12px rgba(181, 201, 154, 0.2);
-            letter-spacing: 1px;
-        }
-
-        .nav-bar__est {
-            font-family: 'Pacifico', cursive;
-            font-size: 0.75rem;
-            color: #f5f5dc;
-            opacity: 0.7;
-            letter-spacing: 2px;
-        }
 
         /* ===================================
            WALL DECORATIONS
@@ -3243,6 +3188,7 @@
                 height: calc(100vh / 0.77);
             }
             .price-list { display: none; }
+            .corgi-container { display: none; }
             .actual-wifi-sign {
                 top: 8%;
                 left: 22%;
@@ -3258,6 +3204,7 @@
                 width: calc(100vw / 0.55);
                 height: calc(100vh / 0.55);
             }
+            .corgi-container { display: none; }
         }
 
     </style>
@@ -3377,12 +3324,6 @@
     <main>
     <h1 class="visually-hidden">Iron Pig - Software Consultant in London | Build, Fix & Lead</h1>
 
-    <!-- Compact nav bar - shown on mid-size screens where neon sign is hidden -->
-    <nav class="nav-bar" aria-label="Main navigation">
-        <span class="nav-bar__brand">Iron Pig</span>
-        <span class="nav-bar__est">EST. 2025</span>
-    </nav>
-
     <!-- Pendant Lights -->
     <div class="pendant-light pendant-light-1" role="presentation">
         <div class="pendant-light__cord"></div>
@@ -3396,7 +3337,7 @@
     </div>
 
     <!-- Neon Sign -->
-    <div class="neon-sign" role="presentation" aria-label="Iron Pig neon sign">
+    <div class="neon-sign" role="img" aria-label="Iron Pig neon sign">
         Iron Pig
         <div class="neon-sign__est">
             <span class="neon-sign__est-line"></span>
@@ -3673,36 +3614,6 @@
         <div class="iron-mug__steam iron-mug__steam-3"></div>
     </button>
 
-    <!-- Mug Shop Popup -->
-    <div class="mug-shop__overlay" id="mug-overlay"></div>
-    <div class="mug-shop">
-        <div class="mug-shop__title">Iron Pig Mug</div>
-        <div class="mug-shop__subtitle">Take the experience home</div>
-
-        <div class="mug-shop__image">
-            <div class="iron-mug" style="position: relative; bottom: auto; right: auto; margin: 0 auto; transform: scale(1.5);">
-                <div class="iron-mug__body">
-                    <div class="iron-mug__logo">
-                        <img src="iron_pig_green_est.svg" alt="Iron Pig Logo">
-                    </div>
-                </div>
-                <div class="iron-mug__top"></div>
-                <div class="iron-mug__handle"></div>
-            </div>
-        </div>
-
-        <div class="mug-shop__description">
-            Premium ceramic mug with the Iron Pig logo. Fuel your morning standup or late-night debugging sessions. Dishwasher safe, holds 350ml of your favorite compiled beverage.
-        </div>
-
-        <div class="mug-shop__price">£12.00</div>
-
-        <button class="mug-shop__button" type="button" id="add-to-cart-btn">
-            Add to Cart
-        </button>
-        <button class="mug-shop__close" type="button" id="close-shop-btn">Close</button>
-    </div>
-
     <!-- Coffee Machine -->
     <div class="coffee-machine" role="presentation">
         <div class="coffee-header">
@@ -3789,6 +3700,36 @@
     </div>
 
     </main>
+
+    <!-- Mug Shop Popup - outside main to avoid zoom affecting fixed positioning -->
+    <div class="mug-shop__overlay" id="mug-overlay"></div>
+    <div class="mug-shop">
+        <div class="mug-shop__title">Iron Pig Mug</div>
+        <div class="mug-shop__subtitle">Take the experience home</div>
+
+        <div class="mug-shop__image">
+            <div class="iron-mug" style="position: relative; bottom: auto; right: auto; margin: 0 auto; transform: scale(1.5);">
+                <div class="iron-mug__body">
+                    <div class="iron-mug__logo">
+                        <img src="iron_pig_green_est.svg" alt="Iron Pig Logo">
+                    </div>
+                </div>
+                <div class="iron-mug__top"></div>
+                <div class="iron-mug__handle"></div>
+            </div>
+        </div>
+
+        <div class="mug-shop__description">
+            Premium ceramic mug with the Iron Pig logo. Fuel your morning standup or late-night debugging sessions. Dishwasher safe, holds 350ml of your favorite compiled beverage.
+        </div>
+
+        <div class="mug-shop__price">£12.00</div>
+
+        <button class="mug-shop__button" type="button" id="add-to-cart-btn">
+            Add to Cart
+        </button>
+        <button class="mug-shop__close" type="button" id="close-shop-btn">Close</button>
+    </div>
 
     <!-- Custom notification modal for user feedback -->
     <div class="notification-modal" id="notification-modal" role="alertdialog" aria-labelledby="notification-title" aria-describedby="notification-message">
@@ -4131,12 +4072,15 @@
              */
             const barkMessages = ['Woof woof!', 'Bark!', '*happy tail wag*', 'Arf arf!', '🐾 Bork!'];
             let barkIndex = 0;
+            let barkTimeout = null;
 
             function handleCorgiClick() {
                 if (!elements.corgi) return;
 
                 const speechBubble = elements.corgi.querySelector('.corgi-speech-bubble');
                 if (!speechBubble) return;
+
+                if (barkTimeout) clearTimeout(barkTimeout);
 
                 // Cycle through bark messages
                 speechBubble.textContent = barkMessages[barkIndex];
@@ -4146,8 +4090,9 @@
                 elements.corgi.classList.add('barking');
 
                 // Hide after a delay
-                setTimeout(() => {
+                barkTimeout = setTimeout(() => {
                     elements.corgi.classList.remove('barking');
+                    barkTimeout = null;
                 }, 1500);
             }
 
@@ -4287,9 +4232,10 @@
                 // 🥥 "Are you suggesting coconuts migrate?"
                 // The shrubbery demands a word...
                 (function() {
-                    var seq = '';
-                    var niMessages = ['Ni!', 'Ni! Ni!', 'We are the Knights Who Say... Ni!', 'We want... a shrubbery!', 'One that looks nice... and not too expensive.'];
-                    var niIndex = 0;
+                    let seq = '';
+                    const niMessages = ['Ni!', 'Ni! Ni!', 'We are the Knights Who Say... Ni!', 'We want... a shrubbery!', 'One that looks nice... and not too expensive.'];
+                    let niIndex = 0;
+                    let niTimeout = null;
                     document.addEventListener('keypress', function(e) {
                         seq += e.key.toLowerCase();
                         if (seq.length > 10) seq = seq.slice(-10);
@@ -4297,18 +4243,20 @@
                             seq = '';
                             if (elements.counterPlant) {
                                 elements.counterPlant.classList.add('growing');
-                                var bubble = elements.counterPlant.querySelector('.counter-plant__ni');
+                                let bubble = elements.counterPlant.querySelector('.counter-plant__ni');
                                 if (!bubble) {
                                     bubble = document.createElement('div');
                                     bubble.className = 'counter-plant__ni';
                                     elements.counterPlant.appendChild(bubble);
                                 }
+                                if (niTimeout) clearTimeout(niTimeout);
                                 bubble.textContent = niMessages[niIndex];
                                 niIndex = (niIndex + 1) % niMessages.length;
                                 bubble.classList.add('visible');
                                 createSparkles(elements.counterPlant);
-                                setTimeout(function() {
+                                niTimeout = setTimeout(function() {
                                     bubble.classList.remove('visible');
+                                    niTimeout = null;
                                 }, 4000);
                             }
                         }
