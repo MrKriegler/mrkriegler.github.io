@@ -12,32 +12,54 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://iron-pig.com/">
     <meta property="og:site_name" content="Iron Pig">
-    <meta property="og:image" content="https://iron-pig.com/logo.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:image" content="https://iron-pig.com/iron_pig_social.jpg">
+    <meta property="og:image:width" content="1280">
+    <meta property="og:image:height" content="1280">
     <meta property="og:locale" content="en_GB">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Iron Pig - Software, Teams & Operations">
     <meta name="twitter:description" content="Software consultant in London. I build products, fix broken processes, and lead teams through the hard parts.">
-    <meta name="twitter:image" content="https://iron-pig.com/logo.png">
+    <meta name="twitter:image" content="https://iron-pig.com/iron_pig_social.jpg">
     <link rel="canonical" href="https://iron-pig.com/">
     <meta name="robots" content="index, follow">
     <meta name="keywords" content="software consultant, technical leadership, full-stack developer, operations consulting, London software contractor, team transformation, product engineering">
     <meta name="geo.region" content="GB-LND">
     <meta name="geo.placename" content="London">
-    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="apple-touch-icon" href="iron_pig_mark.svg">
     <title>Iron Pig | Software Consultant - Build, Fix, Lead | London</title>
-    <link rel="icon" type="image/svg+xml" href="iron_pig_black_logo.svg">
+    <link rel="icon" type="image/svg+xml" href="iron_pig_mark.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'adineue PRO';
+            src: url('fonts/adineue-pro-regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'adineue PRO';
+            src: url('fonts/adineue-pro-bold.otf') format('opentype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'adineue PRO';
+            src: url('fonts/adineue-pro-black.ttf') format('truetype');
+            font-weight: 900;
+            font-style: normal;
+            font-display: swap;
+        }
+
         /* ===================================
            CSS CUSTOM PROPERTIES
            =================================== */
         :root {
             /* Colors */
-            --bg-color: #f5e6d3;
+            --bg-color: #EDE4CC;
             --floor-color: #d4b398;
             --counter-color: #2a2220;
             --counter-edge-color: #3a3230;
@@ -76,7 +98,7 @@
             --machine-base: #000000;
 
             /* Iron Pig brand */
-            --iron-pig-green: #355e3b;
+            --iron-pig-green: #2E5E3F;
 
             /* Rug colors */
             --rug-sage-lightest: #a3b5a4;
@@ -129,7 +151,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'adineue PRO', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
             background:
                 /* Horizontal mortar lines */
@@ -3216,10 +3238,11 @@
                 "@type": "Organization",
                 "@id": "https://iron-pig.com/#organization",
                 "name": "Iron Pig",
+                "legalName": "Iron Pig Ltd",
                 "url": "https://iron-pig.com",
                 "logo": {
                     "@type": "ImageObject",
-                    "url": "https://iron-pig.com/logo.png"
+                    "url": "https://iron-pig.com/iron_pig.svg"
                 },
                 "description": "Software consultant in London. I build products, fix broken processes, and lead teams.",
                 "email": "hello@iron-pig.com",
@@ -3604,7 +3627,7 @@
     <button class="iron-mug" type="button" aria-label="View Iron Pig merchandise" aria-expanded="false" id="mug-btn">
         <div class="iron-mug__body">
             <div class="iron-mug__logo">
-                <img src="iron_pig_green_est.svg" alt="Iron Pig Logo">
+                <img src="iron_pig_mark.svg" alt="Iron Pig Logo">
             </div>
         </div>
         <div class="iron-mug__top"></div>
@@ -3620,7 +3643,7 @@
             <div class="coffee-header__buttons coffee-header__button-one"></div>
             <div class="coffee-header__buttons coffee-header__button-two"></div>
             <div class="coffee-header__display">
-                <img src="iron_pig_green_est_no_border.svg" alt="Iron Pig Logo">
+                <img src="iron_pig_mark.svg" alt="Iron Pig Logo">
             </div>
             <div class="coffee-header__details"></div>
         </div>
@@ -3711,7 +3734,7 @@
             <div class="iron-mug" style="position: relative; bottom: auto; right: auto; margin: 0 auto; transform: scale(1.5);">
                 <div class="iron-mug__body">
                     <div class="iron-mug__logo">
-                        <img src="iron_pig_green_est.svg" alt="Iron Pig Logo">
+                        <img src="iron_pig_mark.svg" alt="Iron Pig Logo">
                     </div>
                 </div>
                 <div class="iron-mug__top"></div>
@@ -4315,7 +4338,7 @@
                         }
                     }
 
-                    console.log('%c☕ Iron Pig', 'font-size: 20px; font-weight: bold; color: #355e3b;');
+                    console.log('%c☕ Iron Pig', 'font-size: 20px; font-weight: bold; color: #2E5E3F;');
                     console.log('%cWelcome to the source! Curious minds are always welcome here.\nTry typing "ni" while on the page... the shrubbery demands it. 🌿', 'font-size: 13px; color: #8B6F47;');
                 } catch (error) {
                     console.error('Initialization error:', error);

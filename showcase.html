@@ -12,31 +12,53 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://iron-pig.com/showcase.html">
     <meta property="og:site_name" content="Iron Pig">
-    <meta property="og:image" content="https://iron-pig.com/logo.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:image" content="https://iron-pig.com/iron_pig_social.jpg">
+    <meta property="og:image:width" content="1280">
+    <meta property="og:image:height" content="1280">
     <meta property="og:locale" content="en_GB">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Showcase | Iron Pig - Projects Built & Shipped">
     <meta name="twitter:description" content="Portfolio of full-stack projects built by Iron Pig. From AI-powered tools to community platforms.">
-    <meta name="twitter:image" content="https://iron-pig.com/logo.png">
+    <meta name="twitter:image" content="https://iron-pig.com/iron_pig_social.jpg">
     <link rel="canonical" href="https://iron-pig.com/showcase.html">
     <meta name="robots" content="index, follow">
     <meta name="keywords" content="software portfolio, full-stack projects, product engineering, Iron Pig showcase, web applications, London developer portfolio">
-    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="apple-touch-icon" href="iron_pig_mark.svg">
     <title>Showcase | Iron Pig - Projects Built & Shipped</title>
-    <link rel="icon" type="image/svg+xml" href="iron_pig_black_logo.svg">
+    <link rel="icon" type="image/svg+xml" href="iron_pig_mark.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;600;700&display=block" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=block" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'adineue PRO';
+            src: url('fonts/adineue-pro-regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'adineue PRO';
+            src: url('fonts/adineue-pro-bold.otf') format('opentype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'adineue PRO';
+            src: url('fonts/adineue-pro-black.ttf') format('truetype');
+            font-weight: 900;
+            font-style: normal;
+            font-display: swap;
+        }
+
         /* ===================================
            CSS CUSTOM PROPERTIES
            =================================== */
         :root {
             --counter-color: #2a2220;
             --text-light: #f5f5f5;
-            --iron-pig-green: #355e3b;
+            --iron-pig-green: #2E5E3F;
             --floor-height: 80px;
         }
 
@@ -62,7 +84,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'adineue PRO', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
             background:
                 repeating-linear-gradient(
@@ -152,12 +174,10 @@
         }
 
         .nav-bar__brand {
-            font-family: 'Pacifico', cursive;
+            font-family: 'adineue PRO', sans-serif;
+            font-weight: 700;
             font-size: 1.2rem;
             color: #f5f5dc;
-            text-shadow:
-                0 0 6px rgba(255, 255, 255, 0.3),
-                0 0 12px rgba(181, 201, 154, 0.2);
             letter-spacing: 1px;
             text-decoration: none;
         }
@@ -323,11 +343,11 @@
         }
 
         .project-card__name {
-            font-family: 'Pacifico', cursive;
+            font-family: 'adineue PRO', sans-serif;
+            font-weight: 700;
             font-size: 1.5rem;
             color: #f5f5dc;
             margin-bottom: 4px;
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.08);
             letter-spacing: 0.5px;
         }
 
