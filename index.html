@@ -834,6 +834,10 @@
             opacity: 1;
         }
 
+        .counter-plant:has(.counter-plant__ni.visible) {
+            z-index: calc(var(--z-sign) + 10);
+        }
+
         .counter-plant__pot {
             position: absolute;
             bottom: 0;
