@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Iron Pig - Software consultant in London. I build products, fix broken processes, and lead teams. Full-stack engineering, operations, and technical leadership.">
-    <meta name="author" content="Iron Pig PTY">
+    <meta name="author" content="Iron Pig Ltd">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline';">
     <meta name="theme-color" content="#2a2220">
     <meta property="og:title" content="Iron Pig - Software, Teams & Operations">
@@ -22,12 +22,13 @@
     <meta name="twitter:image" content="https://iron-pig.com/iron_pig_social.jpg">
     <link rel="canonical" href="https://iron-pig.com/">
     <meta name="robots" content="index, follow">
-    <meta name="keywords" content="software consultant, technical leadership, full-stack developer, operations consulting, London software contractor, team transformation, product engineering">
     <meta name="geo.region" content="GB-LND">
     <meta name="geo.placename" content="London">
-    <link rel="apple-touch-icon" href="iron_pig_mark.svg">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <title>Iron Pig | Software Consultant - Build, Fix, Lead | London</title>
     <link rel="icon" type="image/svg+xml" href="iron_pig_mark.svg">
+    <link rel="preload" href="fonts/adineue-pro-regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="fonts/adineue-pro-bold.otf" as="font" type="font/otf" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
@@ -46,14 +47,6 @@
             font-style: normal;
             font-display: swap;
         }
-        @font-face {
-            font-family: 'adineue PRO';
-            src: url('fonts/adineue-pro-black.ttf') format('truetype');
-            font-weight: 900;
-            font-style: normal;
-            font-display: swap;
-        }
-
         /* ===================================
            CSS CUSTOM PROPERTIES
            =================================== */
@@ -123,9 +116,6 @@
             --z-machine: 20;
             --z-mug: 50;
             --z-sign: 100;
-            --z-overlay: 999;
-            --z-modal: 1000;
-            --z-modal-mug: 1001;
         }
 
         /* ===================================
@@ -1056,6 +1046,7 @@
             background-color: var(--machine-display);
             border: 5px solid var(--machine-display-border);
             box-sizing: border-box;
+            padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1349,193 +1340,6 @@
         }
 
         /* ===================================
-           RESPONSIVE DESIGN - Mobile Layout
-           =================================== */
-        @media (max-width: 768px) {
-            body {
-                overflow-y: auto;
-                overflow-x: hidden;
-            }
-
-            main {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                padding: 12px 0 24px;
-                min-height: 100vh;
-                gap: 0;
-            }
-
-            /* Hide scene elements on mobile */
-            .floor,
-            .rug,
-            .counter,
-            .table,
-            .stool,
-            .counter-plant,
-            .shelf,
-            .iron-mug,
-            .walking-cat,
-            .corgi-container,
-            .pendant-light {
-                display: none !important;
-            }
-
-            /* Coffee machine - display between sign and boards */
-            .coffee-machine {
-                position: static !important;
-                transform: scale(0.65);
-                transform-origin: center top;
-                margin: 0 auto -8px;
-                padding-bottom: 16px;
-                order: 1;
-                z-index: 10;
-            }
-
-            /* Neon sign - compact header style */
-            .neon-sign {
-                position: static !important;
-                transform: none !important;
-                font-size: 42px;
-                margin: 0 auto 8px;
-                padding: 24px 16px 16px;
-                order: 0;
-                text-align: center;
-                letter-spacing: 2px;
-            }
-
-            .neon-sign::before {
-                display: none !important;
-            }
-
-            .neon-sign__est {
-                gap: 8px;
-                margin-top: 4px;
-            }
-
-            .neon-sign__est-text {
-                font-size: 11px;
-                letter-spacing: 2px;
-            }
-
-            .neon-sign__est-line {
-                width: 35px;
-            }
-
-            /* All boards - consistent width, spacing, and appearance */
-            .price-list,
-            .wifi-sign,
-            .actual-wifi-sign,
-            .contact-info {
-                position: static !important;
-                width: calc(100% - 32px) !important;
-                max-width: none !important;
-                margin: 0 16px 16px !important;
-                transform: none !important;
-                /* Consistent chalkboard background */
-                background:
-                    radial-gradient(circle at 30% 40%, rgba(255,255,255,0.03) 0%, transparent 50%),
-                    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.02) 0%, transparent 50%),
-                    linear-gradient(135deg, #2a2520 0%, #1f1d1a 100%) !important;
-                border: 6px solid var(--wood-border) !important;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
-            }
-
-            .price-list { order: 2; }
-            .wifi-sign:not(.actual-wifi-sign) { order: 3; }
-            .actual-wifi-sign { order: 4; }
-            .contact-info { order: 5; }
-
-            /* Expanded states - same width */
-            .wifi-sign.expanded,
-            .actual-wifi-sign.expanded,
-            .contact-info.expanded {
-                width: calc(100% - 32px) !important;
-                max-width: none !important;
-            }
-
-            /* Disable hover transforms */
-            .wifi-sign:hover,
-            .actual-wifi-sign:hover,
-            .contact-info:hover {
-                transform: none !important;
-            }
-
-            /* Mug shop modal - fit small screens */
-            .mug-shop {
-                width: calc(100% - 32px) !important;
-                max-width: 350px;
-                padding: 24px;
-            }
-
-            .mug-shop__image {
-                transform: scale(0.8);
-                margin: -10px 0;
-            }
-
-            .mug-shop__title {
-                font-size: 24px;
-            }
-
-            .mug-shop__description {
-                font-size: 13px;
-            }
-
-            /* Notification modal - fit small screens */
-            .notification-modal__content {
-                width: calc(100% - 32px);
-                max-width: 350px;
-                padding: 24px;
-            }
-        }
-
-        /* ===================================
-           RESPONSIVE - Small phones (max-width: 380px)
-           =================================== */
-        @media (max-width: 380px) {
-            .neon-sign {
-                font-size: 32px;
-                padding: 16px 12px 12px;
-            }
-
-            .neon-sign__est-text {
-                font-size: 9px;
-            }
-
-            .neon-sign__est-line {
-                width: 25px;
-            }
-
-            /* Tighter margins on small phones */
-            .price-list,
-            .wifi-sign,
-            .actual-wifi-sign,
-            .contact-info {
-                width: calc(100% - 24px) !important;
-                margin: 0 12px 12px !important;
-                padding: 14px;
-            }
-
-            .price-list__title,
-            .wifi-sign__title,
-            .contact-info__title {
-                font-size: 18px;
-                letter-spacing: 1px;
-            }
-
-            .price-list__name,
-            .price-list__price {
-                font-size: 12px;
-            }
-
-            .wifi-sign__content,
-            .contact-info__item {
-                font-size: 13px;
-            }
-        }
-
-
-        /* ===================================
            WALL DECORATIONS
            =================================== */
 
@@ -1712,7 +1516,7 @@
         .wifi-sign__hint {
             text-align: center;
             color: var(--green-accent);
-            font-size: 11px;
+            font-size: 12px;
             margin-top: 12px;
             opacity: 0.8;
             font-style: italic;
@@ -1721,16 +1525,23 @@
         .wifi-sign__extra {
             max-height: 0;
             opacity: 0;
+            visibility: hidden;
             overflow: hidden;
             transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
                         opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s,
-                        margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                        margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        visibility 0s linear 0.5s;
             margin-top: 0;
         }
 
         .wifi-sign.expanded .wifi-sign__extra {
-            max-height: 350px;
+            max-height: min(360px, 42vh);
             opacity: 1;
+            visibility: visible;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s,
+                        margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        visibility 0s;
             margin-top: 16px;
             overflow-y: auto;
             scrollbar-width: thin;
@@ -1799,6 +1610,41 @@
             color: #a8d4f5;
         }
 
+        .wifi-sign__link:focus-visible {
+            outline: 2px solid rgba(181, 201, 154, 0.8);
+            outline-offset: 2px;
+        }
+
+        /* Always-visible showcase link in the Recent Builds board */
+        .wifi-sign__link--showcase {
+            display: block;
+            text-align: center;
+            font-size: 13px;
+            margin-top: 12px;
+        }
+
+        /* Toggle button inside each expandable board's title */
+        .board-toggle {
+            display: block;
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            font: inherit;
+            color: inherit;
+            letter-spacing: inherit;
+            text-transform: inherit;
+            text-shadow: inherit;
+            text-align: inherit;
+            cursor: pointer;
+        }
+
+        .board-toggle:focus-visible {
+            outline: 2px solid rgba(181, 201, 154, 0.8);
+            outline-offset: 4px;
+        }
+
         /* Recent Builds Sign - positioned below tech stack */
         .actual-wifi-sign {
             position: absolute;
@@ -1812,6 +1658,7 @@
             z-index: var(--z-sign);
             cursor: pointer;
             transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        top 0.5s cubic-bezier(0.4, 0, 0.2, 1),
                         box-shadow 0.3s ease,
                         transform 0.3s ease,
                         z-index 0s;
@@ -1823,9 +1670,11 @@
             transform: translateY(-2px);
         }
 
+        /* Rides up on expansion so the extra content stays on screen */
         .actual-wifi-sign.expanded {
             width: 380px;
             padding: 24px;
+            top: 26%;
             z-index: calc(var(--z-sign) + 10);
         }
 
@@ -1959,25 +1808,48 @@
         .contact-info__hint {
             text-align: center;
             color: var(--green-accent);
-            font-size: 11px;
+            font-size: 12px;
             margin-top: 12px;
             opacity: 0.8;
             font-style: italic;
         }
 
+        .contact-info__mail {
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            text-decoration-color: rgba(181, 201, 154, 0.6);
+        }
+
+        .contact-info__mail:hover {
+            color: var(--green-accent);
+        }
+
+        .contact-info__mail:focus-visible {
+            outline: 2px solid rgba(181, 201, 154, 0.8);
+            outline-offset: 2px;
+        }
+
         .contact-info__extra {
             max-height: 0;
             opacity: 0;
+            visibility: hidden;
             overflow: hidden;
             transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
                         opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s,
-                        margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                        margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        visibility 0s linear 0.5s;
             margin-top: 0;
         }
 
         .contact-info.expanded .contact-info__extra {
             max-height: 600px;
             opacity: 1;
+            visibility: visible;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s,
+                        margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        visibility 0s;
             margin-top: 16px;
         }
 
@@ -2003,43 +1875,16 @@
             text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
         }
 
-        /* Iron Pig Mug - On table with shop expansion */
+        /* Iron Pig Mug - steaming on the counter */
         .iron-mug {
             position: absolute;
-            bottom: calc(var(--floor-height) + var(--table-size));
-            right: 240px;
+            bottom: calc(var(--floor-height) + var(--counter-height) + 18px);
+            left: 47%;
             width: 80px;
             height: 90px;
-            cursor: pointer;
             z-index: var(--z-mug);
-            transition: transform 0.3s ease;
             -webkit-font-smoothing: antialiased;
             backface-visibility: hidden;
-        }
-
-        .iron-mug:hover {
-            transform: scale(1.05);
-        }
-
-        .iron-mug:focus {
-            outline: none;
-            transform: scale(1.05);
-        }
-
-        .iron-mug.floating {
-            position: fixed;
-            z-index: var(--z-modal-mug);
-            transition: top 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                        left 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                        transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .iron-mug.centered {
-            top: 50% !important;
-            left: 50% !important;
-            right: auto !important;
-            bottom: auto !important;
-            transform: translate(-50%, calc(-50% - 120px)) scale(1.5);
         }
 
         .iron-mug__body {
@@ -2204,166 +2049,6 @@
             bottom: 69px;
             left: 54%;
             animation: steamSwirl3 4.2s ease-in-out 1.4s infinite;
-        }
-
-        /* Shop popup */
-        .mug-shop {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            padding: 32px;
-            background: var(--bg-color);
-            border: 10px solid var(--wood-border);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-            z-index: var(--z-modal);
-            opacity: 0;
-        }
-
-        .mug-shop.active {
-            display: block;
-            animation: fadeInShop 0.35s 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .mug-shop.closing {
-            animation: fadeOutShop 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        @keyframes fadeInShop {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.98);
-            }
-            100% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-        }
-
-        @keyframes fadeOutShop {
-            0% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.98);
-            }
-        }
-
-        .mug-shop__overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: var(--z-overlay);
-            opacity: 0;
-        }
-
-        .mug-shop__overlay.active {
-            display: block;
-            animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .mug-shop__overlay.closing {
-            animation: fadeOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-            }
-        }
-
-        .mug-shop__title {
-            font-size: 32px;
-            font-weight: bold;
-            color: var(--text-dark);
-            text-align: center;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .mug-shop__subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 20px;
-            font-style: italic;
-        }
-
-        .mug-shop__image {
-            width: 120px;
-            height: 140px;
-            margin: 0 auto 24px;
-            position: relative;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .mug-shop__description {
-            color: var(--text-dark);
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .mug-shop__price {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--text-dark);
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .mug-shop__button {
-            width: 100%;
-            padding: 14px;
-            background: var(--counter-color);
-            color: var(--bg-color);
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            margin-bottom: 10px;
-        }
-
-        .mug-shop__button:hover {
-            background: var(--counter-edge-color);
-        }
-
-        .mug-shop__close {
-            width: 100%;
-            padding: 10px;
-            background: transparent;
-            color: var(--text-muted);
-            border: 2px solid var(--text-muted);
-            border-radius: 8px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .mug-shop__close:hover {
-            background: var(--text-muted);
-            color: var(--bg-color);
         }
 
         /* ===================================
@@ -2540,15 +2225,22 @@
            CORGI
            =================================== */
         .corgi-container {
-            position: fixed;
+            position: absolute;
             bottom: var(--floor-height);
-            left: 62%;
+            left: 58%;
             width: 200px;
             height: 150px;
             z-index: calc(var(--z-mug) + 2);
             transform: scale(0.6);
             transform-origin: bottom center;
             cursor: pointer;
+            /* Button reset - it's a real <button> for keyboard access */
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            font: inherit;
+            color: inherit;
         }
 
         .corgi-speech-bubble {
@@ -3056,50 +2748,6 @@
             100% { bottom: 0%; }
         }
 
-        /* ===================================
-           BUTTON RESET (For buttons styled as divs)
-           =================================== */
-        button.iron-mug {
-            border: none !important;
-            background: none;
-            font: inherit;
-            color: inherit;
-            padding: 0;
-            margin: 0;
-            text-align: left;
-            cursor: pointer;
-        }
-
-        /* Reset button defaults but keep the decorative styling */
-        button.wifi-sign,
-        button.contact-info {
-            font: inherit;
-            color: inherit;
-            margin: 0;
-            cursor: pointer;
-        }
-
-        /* Specific button overrides */
-        button.wifi-sign {
-            background: var(--chalkboard-bg);
-            border: 8px solid var(--wood-border);
-            padding: 20px;
-        }
-
-        button.wifi-sign.expanded {
-            padding: 24px;
-        }
-
-        button.contact-info {
-            background: var(--dark-bg);
-            border: 8px solid var(--wood-border);
-            padding: 22px;
-        }
-
-        button.contact-info.expanded {
-            padding: 26px;
-        }
-
         /* Utility class for italic content */
         .wifi-sign__section-content--italic {
             font-style: italic;
@@ -3108,98 +2756,22 @@
         }
 
         /* ===================================
-           NOTIFICATION MODAL
+           FOCUS STATES (Accessibility)
            =================================== */
-        .notification-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .notification-modal.active {
-            display: flex;
-        }
-
-        .notification-modal__content {
-            background: var(--bg-color);
-            border: 10px solid var(--wood-border);
-            padding: 32px;
-            max-width: 400px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-            animation: fadeInShop 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .notification-modal__title {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--text-dark);
-            margin-bottom: 16px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .notification-modal__message {
-            color: var(--text-dark);
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 24px;
-        }
-
-        .notification-modal__button {
-            width: 100%;
-            padding: 14px;
-            background: var(--counter-color);
-            color: var(--bg-color);
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .notification-modal__button:hover {
-            background: var(--counter-edge-color);
-        }
-
-        /* ===================================
-           FOCUS/HOVER STATES (Accessibility)
-           =================================== */
-        button:focus:not(.wifi-sign):not(.contact-info):not(.iron-mug):not(.counter-plant) {
-            outline: none;
-        }
-
-        .wifi-sign:focus-visible,
-        .contact-info:focus-visible {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(181, 201, 154, 0.6);
-        }
-
         .counter-plant:focus-visible {
             outline: none;
             box-shadow: 0 0 0 3px rgba(181, 201, 154, 0.6);
             border-radius: 4px;
         }
 
-        .iron-mug:focus-visible {
+        .corgi-container:focus-visible {
             outline: none;
             filter: drop-shadow(0 0 6px rgba(181, 201, 154, 0.6));
         }
 
-        .corgi-container:focus-visible {
-            outline: none;
-            filter: drop-shadow(0 0 6px rgba(181, 201, 154, 0.6));
+        .coffee-header__display:focus-visible {
+            outline: 3px solid rgba(255, 255, 255, 0.8);
+            outline-offset: 3px;
         }
 
         /* Desktop min-height is handled by the (min-width: 769px) query above */
@@ -3216,13 +2788,6 @@
                 width: calc(100vw / 0.77);
                 height: calc(100vh / 0.77);
             }
-            .price-list { display: none; }
-            .corgi-container { display: none; }
-            .actual-wifi-sign {
-                top: 8%;
-                left: 22%;
-                right: auto;
-            }
         }
 
         @media (min-width: 769px) and (max-width: 1199px) {
@@ -3233,7 +2798,179 @@
                 width: calc(100vw / 0.55);
                 height: calc(100vh / 0.55);
             }
-            .corgi-container { display: none; }
+        }
+
+        /* ===================================
+           RESPONSIVE DESIGN - Mobile Layout
+           (Kept at the end of the stylesheet: these override the
+           base component rules above, which share their specificity)
+           =================================== */
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            main {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 12px 0 24px;
+                min-height: 100vh;
+                gap: 0;
+            }
+
+            /* Hide scene elements on mobile */
+            .floor,
+            .rug,
+            .counter,
+            .table,
+            .stool,
+            .counter-plant,
+            .shelf,
+            .iron-mug,
+            .pendant-light {
+                display: none !important;
+            }
+
+            /* Neon sign - compact header style */
+            .neon-sign {
+                position: static !important;
+                transform: none !important;
+                font-size: 42px;
+                margin: 0 auto 8px;
+                padding: 24px 16px 16px;
+                order: 0;
+                text-align: center;
+                letter-spacing: 2px;
+            }
+
+            .neon-sign::before {
+                display: none !important;
+            }
+
+            .neon-sign__est {
+                gap: 8px;
+                margin-top: 4px;
+            }
+
+            .neon-sign__est-text {
+                font-size: 11px;
+                letter-spacing: 2px;
+            }
+
+            .neon-sign__est-line {
+                width: 35px;
+            }
+
+            /* All boards - consistent width, spacing, and appearance */
+            .price-list,
+            .wifi-sign,
+            .actual-wifi-sign,
+            .contact-info {
+                position: static !important;
+                width: calc(100% - 32px) !important;
+                max-width: none !important;
+                margin: 0 16px 16px !important;
+                transform: none !important;
+                background:
+                    radial-gradient(circle at 30% 40%, rgba(255,255,255,0.03) 0%, transparent 50%),
+                    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.02) 0%, transparent 50%),
+                    linear-gradient(135deg, #2a2520 0%, #1f1d1a 100%) !important;
+                border: 6px solid var(--wood-border) !important;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+            }
+
+            /* Content first, decoration after */
+            .wifi-sign:not(.actual-wifi-sign) { order: 1; }
+            .price-list { order: 2; }
+            .actual-wifi-sign { order: 3; }
+            .coffee-machine { order: 4; }
+            .contact-info { order: 5; }
+            .corgi-container { order: 6; }
+
+            /* Coffee machine - decorative break before contact */
+            .coffee-machine {
+                position: static !important;
+                transform: scale(0.65);
+                transform-origin: center top;
+                margin: 0 auto -8px;
+                padding-bottom: 16px;
+                z-index: 10;
+            }
+
+            /* Corgi - little mascot at the end */
+            .corgi-container {
+                position: static !important;
+                transform: scale(0.55);
+                transform-origin: top center;
+                margin: 4px auto -56px;
+            }
+
+            /* Expanded states - same width, no inner scrollbars on touch */
+            .wifi-sign.expanded,
+            .actual-wifi-sign.expanded,
+            .contact-info.expanded {
+                width: calc(100% - 32px) !important;
+                max-width: none !important;
+            }
+
+            .wifi-sign.expanded .wifi-sign__extra {
+                max-height: 2000px;
+                overflow-y: visible;
+            }
+
+            /* Disable hover transforms */
+            .wifi-sign:hover,
+            .actual-wifi-sign:hover,
+            .contact-info:hover {
+                transform: none !important;
+            }
+        }
+
+        /* ===================================
+           RESPONSIVE - Small phones (max-width: 380px)
+           =================================== */
+        @media (max-width: 380px) {
+            .neon-sign {
+                font-size: 32px;
+                padding: 16px 12px 12px;
+            }
+
+            .neon-sign__est-text {
+                font-size: 9px;
+            }
+
+            .neon-sign__est-line {
+                width: 25px;
+            }
+
+            /* Tighter margins on small phones */
+            .price-list,
+            .wifi-sign,
+            .actual-wifi-sign,
+            .contact-info {
+                width: calc(100% - 24px) !important;
+                margin: 0 12px 12px !important;
+                padding: 14px;
+            }
+
+            .price-list__title,
+            .wifi-sign__title,
+            .contact-info__title {
+                font-size: 18px;
+                letter-spacing: 1px;
+            }
+
+            .price-list__name,
+            .price-list__price {
+                font-size: 12px;
+            }
+
+            .wifi-sign__content,
+            .contact-info__item {
+                font-size: 13px;
+            }
         }
 
     </style>
@@ -3255,7 +2992,7 @@
                 "email": "hello@iron-pig.com",
                 "foundingDate": "2025",
                 "areaServed": "GB",
-                "sameAs": []
+                "sameAs": ["https://github.com/MrKriegler"]
             },
             {
                 "@type": "LocalBusiness",
@@ -3466,17 +3203,19 @@
     </div>
 
     <!-- How I Help Sign -->
-    <button class="wifi-sign" type="button" aria-label="How I help - Click to expand" aria-expanded="false" id="tech-stack-btn">
-        <div class="wifi-sign__title">How I Help</div>
+    <div class="wifi-sign" id="tech-stack-btn">
+        <h2 class="wifi-sign__title">
+            <button class="board-toggle" type="button" aria-expanded="false" aria-controls="tech-stack-panel">How I Help</button>
+        </h2>
         <div class="wifi-sign__content">
             <span class="wifi-sign__label">What I do:</span>
             <span class="wifi-sign__value">Software, teams & operations</span>
             <span class="wifi-sign__label">How I work:</span>
             <span class="wifi-sign__value">Find the problem. Fix it. Move on.</span>
         </div>
-        <div class="wifi-sign__hint">More details →</div>
+        <div class="wifi-sign__hint" aria-hidden="true">More details →</div>
 
-        <div class="wifi-sign__extra">
+        <div class="wifi-sign__extra" id="tech-stack-panel">
             <div class="wifi-sign__section">
                 <div class="wifi-sign__section-title">Build</div>
                 <div class="wifi-sign__section-content">
@@ -3508,11 +3247,13 @@
                 </div>
             </div>
         </div>
-    </button>
+    </div>
 
     <!-- Recent Builds Sign -->
-    <button class="actual-wifi-sign wifi-sign" type="button" aria-label="Recent projects - Click to expand" id="wifi-sign-btn">
-        <div class="wifi-sign__title">Recent Builds</div>
+    <div class="actual-wifi-sign wifi-sign" id="wifi-sign-btn">
+        <h2 class="wifi-sign__title">
+            <button class="board-toggle" type="button" aria-expanded="false" aria-controls="recent-builds-panel">Recent Builds</button>
+        </h2>
         <div class="wifi-sign__content">
             <span class="wifi-sign__label">⌚</span>
             <span class="wifi-sign__value">whatisthismark.com</span>
@@ -3523,15 +3264,16 @@
             <span class="wifi-sign__label">🚣</span>
             <span class="wifi-sign__value">thamespaddleplanner.com</span>
         </div>
-        <div class="wifi-sign__hint">Click for details →</div>
+        <div class="wifi-sign__hint" aria-hidden="true">Click for details →</div>
+        <a href="showcase.html" class="wifi-sign__link wifi-sign__link--showcase">See full showcase →</a>
 
-        <div class="wifi-sign__extra">
+        <div class="wifi-sign__extra" id="recent-builds-panel">
             <div class="wifi-sign__section">
                 <div class="wifi-sign__section-title">What Is This Mark?</div>
                 <div class="wifi-sign__section-content">
                     <div class="wifi-sign__rule">Identify watch markings, serial numbers & case-back codes</div>
                     <div class="wifi-sign__rule">AI-powered photo analysis across 13+ brands</div>
-                    <a href="https://whatisthismark.com/" target="_blank" rel="noopener noreferrer" class="wifi-sign__link" onclick="event.stopPropagation()">Visit whatisthismark.com →</a>
+                    <a href="https://whatisthismark.com/" target="_blank" rel="noopener noreferrer" class="wifi-sign__link">Visit whatisthismark.com →</a>
                 </div>
             </div>
 
@@ -3540,7 +3282,7 @@
                 <div class="wifi-sign__section-content">
                     <div class="wifi-sign__rule">Free visa application tools & requirements guides</div>
                     <div class="wifi-sign__rule">Cover letters, trip planners & sponsor letters for 9+ countries</div>
-                    <a href="https://www.visa-requirements.io/" target="_blank" rel="noopener noreferrer" class="wifi-sign__link" onclick="event.stopPropagation()">Visit visa-requirements.io →</a>
+                    <a href="https://www.visa-requirements.io/" target="_blank" rel="noopener noreferrer" class="wifi-sign__link">Visit visa-requirements.io →</a>
                 </div>
             </div>
 
@@ -3549,7 +3291,7 @@
                 <div class="wifi-sign__section-content">
                     <div class="wifi-sign__rule">Find Your Perfect Pint of the Black Stuff</div>
                     <div class="wifi-sign__rule">Rate and discover the best Guinness near you</div>
-                    <a href="https://foamfinders.co.uk" target="_blank" rel="noopener noreferrer" class="wifi-sign__link" onclick="event.stopPropagation()">Visit foamfinders.co.uk →</a>
+                    <a href="https://foamfinders.co.uk" target="_blank" rel="noopener noreferrer" class="wifi-sign__link">Visit foamfinders.co.uk →</a>
                 </div>
             </div>
 
@@ -3558,22 +3300,21 @@
                 <div class="wifi-sign__section-content">
                     <div class="wifi-sign__rule">Tide-aware paddle planning for kayaking & SUP on the Thames</div>
                     <div class="wifi-sign__rule">Live tide windows, 7-day forecasts & 12 launch points</div>
-                    <a href="https://www.thamespaddleplanner.com/" target="_blank" rel="noopener noreferrer" class="wifi-sign__link" onclick="event.stopPropagation()">Visit thamespaddleplanner.com →</a>
+                    <a href="https://www.thamespaddleplanner.com/" target="_blank" rel="noopener noreferrer" class="wifi-sign__link">Visit thamespaddleplanner.com →</a>
                 </div>
             </div>
 
             <div class="wifi-sign__section">
                 <div class="wifi-sign__section-content wifi-sign__section-content--italic">
                     Real projects, built and shipped.
-                    <a href="showcase.html" class="wifi-sign__link" onclick="event.stopPropagation()">See full showcase →</a>
                 </div>
             </div>
         </div>
-    </button>
+    </div>
 
     <!-- Services List -->
     <div class="price-list" role="complementary" aria-label="My services">
-        <div class="price-list__title">SERVICES</div>
+        <h2 class="price-list__title">SERVICES</h2>
         <div class="price-list__item">
             <span class="price-list__name">Your dev team is stuck</span>
             <span class="price-list__price">☕</span>
@@ -3601,19 +3342,21 @@
     </div>
 
     <!-- Contact Info -->
-    <button class="contact-info" type="button" aria-label="Contact information - Click to expand" aria-expanded="false" id="contact-info-btn">
-        <div class="contact-info__title">LET'S TALK</div>
+    <div class="contact-info" id="contact-info-btn">
+        <h2 class="contact-info__title">
+            <button class="board-toggle" type="button" aria-expanded="false" aria-controls="contact-info-panel">LET'S TALK</button>
+        </h2>
         <div class="contact-info__item">
             <span class="contact-info__label">EMAIL</span>
-            hello@iron-pig.com
+            <a href="mailto:hello@iron-pig.com" class="contact-info__mail">hello@iron-pig.com</a>
         </div>
         <div class="contact-info__item">
             <span class="contact-info__label">LOCATION</span>
             London
         </div>
-        <div class="contact-info__hint">Click to learn more →</div>
+        <div class="contact-info__hint" aria-hidden="true">Click to learn more →</div>
 
-        <div class="contact-info__extra">
+        <div class="contact-info__extra" id="contact-info-panel">
             <div class="contact-info__section">
                 <div class="contact-info__section-title">About Me</div>
                 <div class="contact-info__section-content">
@@ -3628,13 +3371,13 @@
                 </div>
             </div>
         </div>
-    </button>
+    </div>
 
-    <!-- Iron Pig Mug on Table -->
-    <button class="iron-mug" type="button" aria-label="View Iron Pig merchandise" aria-expanded="false" id="mug-btn">
+    <!-- Iron Pig Mug on Counter (decorative) -->
+    <div class="iron-mug" aria-hidden="true">
         <div class="iron-mug__body">
             <div class="iron-mug__logo">
-                <img src="iron_pig_mark.svg" alt="Iron Pig Logo">
+                <img src="iron_pig_mark.svg" alt="">
             </div>
         </div>
         <div class="iron-mug__top"></div>
@@ -3642,16 +3385,16 @@
         <div class="iron-mug__steam iron-mug__steam-1"></div>
         <div class="iron-mug__steam iron-mug__steam-2"></div>
         <div class="iron-mug__steam iron-mug__steam-3"></div>
-    </button>
+    </div>
 
     <!-- Coffee Machine -->
     <div class="coffee-machine" role="presentation">
         <div class="coffee-header">
             <div class="coffee-header__buttons coffee-header__button-one"></div>
             <div class="coffee-header__buttons coffee-header__button-two"></div>
-            <div class="coffee-header__display">
-                <img src="iron_pig_mark.svg" alt="Iron Pig Logo">
-            </div>
+            <button class="coffee-header__display" type="button" aria-label="Toggle coffee machine animation">
+                <img src="iron_pig_mark.svg" alt="">
+            </button>
             <div class="coffee-header__details"></div>
         </div>
         <div class="coffee-medium">
@@ -3688,7 +3431,7 @@
     </div>
 
     <!-- Corgi -->
-    <div class="corgi-container" role="button" tabindex="0" aria-label="Click the corgi">
+    <button class="corgi-container" type="button" aria-label="Say hello to the corgi">
         <div class="corgi-speech-bubble">Woof woof!</div>
         <div class="corgi">
             <div class="head">
@@ -3727,66 +3470,16 @@
             <div class="foot foot__right foot__back foot__4"></div>
             <div class="tail"></div>
         </div>
-    </div>
+    </button>
 
     </main>
-
-    <!-- Mug Shop Popup - outside main to avoid zoom affecting fixed positioning -->
-    <div class="mug-shop__overlay" id="mug-overlay"></div>
-    <div class="mug-shop">
-        <div class="mug-shop__title">Iron Pig Mug</div>
-        <div class="mug-shop__subtitle">Take the experience home</div>
-
-        <div class="mug-shop__image">
-            <div class="iron-mug" style="position: relative; bottom: auto; right: auto; margin: 0 auto; transform: scale(1.5);">
-                <div class="iron-mug__body">
-                    <div class="iron-mug__logo">
-                        <img src="iron_pig_mark.svg" alt="Iron Pig Logo">
-                    </div>
-                </div>
-                <div class="iron-mug__top"></div>
-                <div class="iron-mug__handle"></div>
-            </div>
-        </div>
-
-        <div class="mug-shop__description">
-            Premium ceramic mug with the Iron Pig logo. Fuel your morning standup or late-night debugging sessions. Dishwasher safe, holds 350ml of your favorite compiled beverage.
-        </div>
-
-        <div class="mug-shop__price">£12.00</div>
-
-        <button class="mug-shop__button" type="button" id="add-to-cart-btn">
-            Add to Cart
-        </button>
-        <button class="mug-shop__close" type="button" id="close-shop-btn">Close</button>
-    </div>
-
-    <!-- Custom notification modal for user feedback -->
-    <div class="notification-modal" id="notification-modal" role="alertdialog" aria-labelledby="notification-title" aria-describedby="notification-message">
-        <div class="notification-modal__content">
-            <h2 class="notification-modal__title" id="notification-title">Notice</h2>
-            <p class="notification-modal__message" id="notification-message"></p>
-            <button class="notification-modal__button" type="button" id="notification-close-btn">OK</button>
-        </div>
-    </div>
 
     <script>
         /**
          * Iron Pig - Interactive Features
          *
-         * This script manages all interactive elements on the page:
-         * - WiFi sign expansion
-         * - Tech stack sign expansion
-         * - Contact info expansion
-         * - Mug shop modal
-         * - Custom notification system
-         *
-         * Features:
-         * - Cached DOM queries for performance
-         * - Error handling
-         * - Keyboard accessibility
-         * - Proper state management
-         * - Debouncing for rapid clicks
+         * - Expandable chalkboard panels (accordion, keyboard accessible)
+         * - Counter plant, corgi & coffee machine easter eggs
          */
 
         (function() {
@@ -3796,280 +3489,42 @@
             // DOM CACHE - Query elements once on load
             // ==========================================
             const elements = {
-                wifiSignBtn: document.getElementById('wifi-sign-btn'),
-                techStackBtn: document.getElementById('tech-stack-btn'),
-                contactInfoBtn: document.getElementById('contact-info-btn'),
-                mugBtn: document.getElementById('mug-btn'),
-                mugShop: document.querySelector('.mug-shop'),
-                mugOverlay: document.getElementById('mug-overlay'),
-                addToCartBtn: document.getElementById('add-to-cart-btn'),
-                closeShopBtn: document.getElementById('close-shop-btn'),
-                notificationModal: document.getElementById('notification-modal'),
-                notificationMessage: document.getElementById('notification-message'),
-                notificationCloseBtn: document.getElementById('notification-close-btn'),
+                boards: [
+                    document.getElementById('tech-stack-btn'),
+                    document.getElementById('wifi-sign-btn'),
+                    document.getElementById('contact-info-btn')
+                ].filter(Boolean),
                 counterPlant: document.querySelector('.counter-plant'),
                 corgi: document.querySelector('.corgi-container'),
                 coffeeMachine: document.querySelector('.coffee-machine'),
                 coffeeDisplay: document.querySelector('.coffee-header__display')
             };
 
-            // ==========================================
-            // STATE MANAGEMENT
-            // ==========================================
             const state = {
-                shopOpen: false,
-                animating: false,
-                notificationOpen: false,
-                plantGrowing: false,
                 machineRunning: true
             };
 
-            // Configuration constants
-            const TIMING = {
-                MUG_FLOAT: 500,
-                SHOP_FADE: 300,
-                MUG_RETURN: 850
-            };
-
-            // Email contact (data attribute would be better, but keeping it simple)
-            const CONTACT_EMAIL = 'hello@iron-pig.com';
-
             // ==========================================
-            // UTILITY FUNCTIONS
+            // EXPANDABLE BOARDS
             // ==========================================
 
-            /**
-             * Show custom notification modal (replaces alert())
-             * @param {string} message - Message to display
-             */
-            function showNotification(message) {
-                if (!elements.notificationModal || !elements.notificationMessage) {
-                    console.error('Notification elements not found');
-                    return;
-                }
-
-                try {
-                    state.notificationOpen = true;
-                    elements.notificationMessage.textContent = message;
-                    elements.notificationModal.classList.add('active');
-                    elements.notificationCloseBtn?.focus();
-                } catch (error) {
-                    console.error('Error showing notification:', error);
-                }
+            function setExpanded(board, expanded) {
+                board.classList.toggle('expanded', expanded);
+                const toggle = board.querySelector('.board-toggle');
+                if (toggle) toggle.setAttribute('aria-expanded', String(expanded));
             }
 
-            /**
-             * Hide notification modal
-             */
-            function hideNotification() {
-                if (!elements.notificationModal) return;
-
-                try {
-                    state.notificationOpen = false;
-                    elements.notificationModal.classList.remove('active');
-                } catch (error) {
-                    console.error('Error hiding notification:', error);
-                }
-            }
-
-            /**
-             * Close all expandable panels
-             */
             function closeAllPanels() {
-                const panels = [
-                    elements.wifiSignBtn,
-                    elements.techStackBtn,
-                    elements.contactInfoBtn
-                ];
-
-                panels.forEach(panel => {
-                    if (panel) {
-                        panel.classList.remove('expanded');
-                        panel.setAttribute('aria-expanded', 'false');
-                    }
-                });
+                elements.boards.forEach(board => setExpanded(board, false));
             }
 
             /**
-             * Toggle Recent Builds sign expansion
+             * Accordion behavior: opening one board closes the others
              */
-            function toggleWifi() {
-                if (!elements.wifiSignBtn) {
-                    console.error('Recent Builds sign button not found');
-                    return;
-                }
-
-                try {
-                    const wasExpanded = elements.wifiSignBtn.classList.contains('expanded');
-
-                    // Close all panels first (accordion behavior)
-                    closeAllPanels();
-
-                    // If this panel wasn't expanded, expand it
-                    if (!wasExpanded) {
-                        elements.wifiSignBtn.classList.add('expanded');
-                        elements.wifiSignBtn.setAttribute('aria-expanded', 'true');
-                    }
-                } catch (error) {
-                    console.error('Error toggling WiFi sign:', error);
-                }
-            }
-
-            /**
-             * Toggle tech stack sign expansion
-             */
-            function toggleTechStack() {
-                if (!elements.techStackBtn) {
-                    console.error('Tech stack button not found');
-                    return;
-                }
-
-                try {
-                    const wasExpanded = elements.techStackBtn.classList.contains('expanded');
-
-                    // Close all panels first (accordion behavior)
-                    closeAllPanels();
-
-                    // If this panel wasn't expanded, expand it
-                    if (!wasExpanded) {
-                        elements.techStackBtn.classList.add('expanded');
-                        elements.techStackBtn.setAttribute('aria-expanded', 'true');
-                    }
-                } catch (error) {
-                    console.error('Error toggling tech stack sign:', error);
-                }
-            }
-
-            /**
-             * Toggle contact info expansion
-             */
-            function toggleContact() {
-                if (!elements.contactInfoBtn) {
-                    console.error('Contact info button not found');
-                    return;
-                }
-
-                try {
-                    const wasExpanded = elements.contactInfoBtn.classList.contains('expanded');
-
-                    // Close all panels first (accordion behavior)
-                    closeAllPanels();
-
-                    // If this panel wasn't expanded, expand it
-                    if (!wasExpanded) {
-                        elements.contactInfoBtn.classList.add('expanded');
-                        elements.contactInfoBtn.setAttribute('aria-expanded', 'true');
-                    }
-                } catch (error) {
-                    console.error('Error toggling contact info:', error);
-                }
-            }
-
-            /**
-             * Toggle mug shop modal with animations
-             */
-            function toggleMugShop() {
-                // Disabled for now
-                return;
-                // Prevent rapid clicking during animations
-                if (state.animating) return;
-
-                if (!elements.mugBtn || !elements.mugShop || !elements.mugOverlay) {
-                    console.error('Mug shop elements not found');
-                    return;
-                }
-
-                // Set animating immediately to prevent race conditions
-                state.animating = true;
-
-                try {
-                    if (!state.shopOpen) {
-                        openMugShop();
-                    } else {
-                        closeMugShop();
-                    }
-                } catch (error) {
-                    console.error('Error toggling mug shop:', error);
-                    // Reset state on error
-                    state.animating = false;
-                    state.shopOpen = false;
-                }
-            }
-
-            /**
-             * Open mug shop with animation
-             */
-            function openMugShop() {
-                state.shopOpen = true;
-                state.animating = true;
-
-                // Get current mug position
-                const rect = elements.mugBtn.getBoundingClientRect();
-
-                // Convert to fixed positioning at current location
-                elements.mugBtn.style.top = rect.top + 'px';
-                elements.mugBtn.style.left = rect.left + 'px';
-                elements.mugBtn.style.right = 'auto';
-                elements.mugBtn.style.bottom = 'auto';
-                elements.mugBtn.classList.add('floating');
-
-                // Show overlay immediately
-                elements.mugOverlay.classList.add('active');
-
-                // Animate to center (using RAF for smooth animation)
-                requestAnimationFrame(() => {
-                    elements.mugBtn.classList.add('centered');
-                });
-
-                // Show shop after mug floats to center
-                setTimeout(() => {
-                    elements.mugShop.classList.add('active');
-                    state.animating = false;
-
-                    // Focus close button for accessibility
-                    elements.closeShopBtn?.focus();
-                }, TIMING.MUG_FLOAT);
-            }
-
-            /**
-             * Close mug shop with animation
-             */
-            function closeMugShop() {
-                state.shopOpen = false;
-                state.animating = true;
-
-                // Fade out shop and overlay
-                elements.mugShop.classList.add('closing');
-                elements.mugOverlay.classList.add('closing');
-
-                // Remove shop after fade out
-                setTimeout(() => {
-                    elements.mugShop.classList.remove('active', 'closing');
-                    elements.mugOverlay.classList.remove('active', 'closing');
-                    elements.mugBtn.classList.remove('centered');
-                }, TIMING.SHOP_FADE);
-
-                // Return mug to table
-                setTimeout(() => {
-                    elements.mugBtn.classList.remove('floating');
-                    elements.mugBtn.style.top = '';
-                    elements.mugBtn.style.left = '';
-                    elements.mugBtn.style.right = '';
-                    elements.mugBtn.style.bottom = '';
-                    state.animating = false;
-
-                    // Return focus to mug button
-                    elements.mugBtn?.focus();
-                }, TIMING.MUG_RETURN);
-            }
-
-            /**
-             * Handle "Add to Cart" button click
-             */
-            function handleAddToCart() {
-                showNotification(
-                    `Feature coming soon! Contact us at ${CONTACT_EMAIL} to pre-order.`
-                );
+            function toggleBoard(board) {
+                const wasExpanded = board.classList.contains('expanded');
+                closeAllPanels();
+                if (!wasExpanded) setExpanded(board, true);
             }
 
             /**
@@ -4078,25 +3533,9 @@
             function handlePlantClick() {
                 if (!elements.counterPlant) return;
 
-                try {
-                    const isGrowing = elements.counterPlant.classList.contains('growing');
-
-                    if (isGrowing) {
-                        // Shrink it back
-                        elements.counterPlant.classList.remove('growing');
-                        state.plantGrowing = false;
-                    } else {
-                        // Grow it
-                        elements.counterPlant.classList.add('growing');
-                        state.plantGrowing = true;
-
-                        // Create sparkle effect
-                        createSparkles(elements.counterPlant);
-                    }
-                } catch (error) {
-                    console.error('Error toggling plant:', error);
-                    state.plantGrowing = false;
-                }
+                const isGrowing = elements.counterPlant.classList.contains('growing');
+                elements.counterPlant.classList.toggle('growing', !isGrowing);
+                if (!isGrowing) createSparkles(elements.counterPlant);
             }
 
             /**
@@ -4180,63 +3619,26 @@
              * Initialize all event listeners
              */
             function initEventListeners() {
-                // Recent Builds sign toggle
-                if (elements.wifiSignBtn) {
-                    elements.wifiSignBtn.addEventListener('click', toggleWifi);
-                    elements.wifiSignBtn.setAttribute('aria-expanded', 'false');
-                }
-
-                // Tech stack toggle
-                if (elements.techStackBtn) {
-                    elements.techStackBtn.addEventListener('click', toggleTechStack);
-                    elements.techStackBtn.setAttribute('aria-expanded', 'false');
-                }
-
-                // Contact info toggle
-                if (elements.contactInfoBtn) {
-                    elements.contactInfoBtn.addEventListener('click', toggleContact);
-                    elements.contactInfoBtn.setAttribute('aria-expanded', 'false');
-                }
-
-                // Mug shop
-                if (elements.mugBtn) {
-                    elements.mugBtn.addEventListener('click', toggleMugShop);
-                }
-
-                if (elements.mugOverlay) {
-                    elements.mugOverlay.addEventListener('click', toggleMugShop);
-                }
-
-                if (elements.closeShopBtn) {
-                    elements.closeShopBtn.addEventListener('click', toggleMugShop);
-                }
-
-                if (elements.addToCartBtn) {
-                    elements.addToCartBtn.addEventListener('click', handleAddToCart);
-                }
-
-                // Notification modal
-                if (elements.notificationCloseBtn) {
-                    elements.notificationCloseBtn.addEventListener('click', hideNotification);
-                }
-
-                if (elements.notificationModal) {
-                    elements.notificationModal.addEventListener('click', function(e) {
-                        // Close if clicking outside the content
-                        if (e.target === elements.notificationModal) {
-                            hideNotification();
-                        }
+                // Expandable boards: click anywhere on the board toggles it,
+                // except on links (they should just navigate)
+                elements.boards.forEach(board => {
+                    board.addEventListener('click', function(e) {
+                        if (e.target.closest('a')) return;
+                        toggleBoard(board);
                     });
-                }
+                });
 
-                // Keyboard support for ESC key
+                // Escape collapses any open board
                 document.addEventListener('keydown', function(e) {
                     if (e.key === 'Escape') {
-                        if (state.notificationOpen) {
-                            hideNotification();
-                        } else if (state.shopOpen && !state.animating) {
-                            toggleMugShop();
-                        }
+                        closeAllPanels();
+                    }
+                });
+
+                // Clicking elsewhere on the page collapses open boards
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.wifi-sign, .contact-info')) {
+                        closeAllPanels();
                     }
                 });
 
@@ -4245,15 +3647,9 @@
                     elements.counterPlant.addEventListener('click', handlePlantClick);
                 }
 
-                // Corgi click + keyboard interaction
+                // Corgi interaction (real <button>, so keyboard comes free)
                 if (elements.corgi) {
                     elements.corgi.addEventListener('click', handleCorgiClick);
-                    elements.corgi.addEventListener('keydown', function(e) {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            handleCorgiClick();
-                        }
-                    });
                 }
 
                 // Coffee machine toggle
@@ -4268,7 +3664,8 @@
                     const niMessages = ['Ni!', 'Ni! Ni!', 'We are the Knights Who Say... Ni!', 'We want... a shrubbery!', 'One that looks nice... and not too expensive.'];
                     let niIndex = 0;
                     let niTimeout = null;
-                    document.addEventListener('keypress', function(e) {
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key.length !== 1) return;
                         seq += e.key.toLowerCase();
                         if (seq.length > 10) seq = seq.slice(-10);
                         if (seq.endsWith('ni')) {
@@ -4305,24 +3702,6 @@
              */
             function init() {
                 try {
-                    // Verify critical elements exist
-                    const criticalElements = [
-                        'wifiSignBtn',
-                        'techStackBtn',
-                        'contactInfoBtn',
-                        'mugBtn',
-                        'mugShop',
-                        'mugOverlay'
-                    ];
-
-                    const missingElements = criticalElements.filter(
-                        el => !elements[el]
-                    );
-
-                    if (missingElements.length > 0) {
-                        console.warn('Missing elements:', missingElements);
-                    }
-
                     // Initialize event listeners
                     initEventListeners();
 
