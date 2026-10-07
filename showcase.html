@@ -436,6 +436,37 @@
             background: #1a1816;
         }
 
+        /* Poster art for client work (no public screenshots) */
+        .project-card__art {
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            box-shadow:
+                0 3px 10px rgba(0, 0, 0, 0.4),
+                inset 0 1px 3px rgba(0, 0, 0, 0.3);
+            background: #1a1816;
+        }
+
+        .project-card__art svg {
+            display: block;
+            width: 100%;
+            height: auto;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card__art:hover svg {
+            transform: scale(1.02);
+        }
+
+        .project-card__note {
+            margin-top: auto;
+            font-size: 13px;
+            font-style: italic;
+            color: #b8967a;
+        }
+
         .project-card__screenshot img {
             width: 100%;
             height: auto;
@@ -570,11 +601,131 @@
     <!-- Page Heading -->
     <header class="page-heading">
         <h1 class="page-heading__title">Showcase</h1>
-        <p class="page-heading__subtitle">Real projects, built and shipped</p>
+        <p class="page-heading__subtitle">Client platforms and side projects, built and shipped</p>
     </header>
 
     <!-- Project Grid -->
     <main class="showcase-grid">
+
+        <!-- SIX -->
+        <article class="project-card">
+            <div class="project-card__icon">&#x2733;&#xFE0F;</div>
+            <h2 class="project-card__name">SIX</h2>
+            <div class="project-card__url">sixnetwork.co &middot; Vecto Ventures</div>
+            <div class="project-card__divider"></div>
+            <div class="project-card__art">
+                <svg viewBox="0 0 900 500" role="img" aria-label="SIX network mark on charcoal">
+                    <defs>
+                        <radialGradient id="six-glow" cx="62%" cy="40%" r="55%">
+                            <stop offset="0" stop-color="#c84a3d" stop-opacity="0.55"/>
+                            <stop offset="1" stop-color="#c84a3d" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <rect width="900" height="500" fill="#151617"/>
+                    <rect width="900" height="500" fill="url(#six-glow)"/>
+                    <g fill="none" stroke="#dee9e9" stroke-opacity="0.15" stroke-width="1.5">
+                        <path d="M90 90 L260 160 L180 330 L400 410 L620 120 L780 260 L700 430 L520 300 L260 160 M620 120 L520 300 M90 90 L180 330 M780 260 L860 70"/>
+                    </g>
+                    <g fill="#dee9e9" fill-opacity="0.7">
+                        <circle cx="90" cy="90" r="4"/><circle cx="180" cy="330" r="4"/><circle cx="400" cy="410" r="4"/>
+                        <circle cx="780" cy="260" r="4"/><circle cx="700" cy="430" r="4"/><circle cx="860" cy="70" r="4"/>
+                    </g>
+                    <g fill="#c84a3d"><circle cx="260" cy="160" r="8"/><circle cx="620" cy="120" r="8"/><circle cx="520" cy="300" r="8"/></g>
+                    <g transform="translate(380 105) scale(6.6)">
+                        <path d="M20.2309 6.89387L18.4095 3.7351L11.9368 7.4739V0H8.29407V9.57605L0 14.3641L1.82137 17.5228L8.29407 13.784V21.2579H11.9368V13.784L18.4095 17.5228L20.2309 14.3641L13.7582 10.629L20.2309 6.89387Z" fill="#F7F6EF"/>
+                        <path d="M1.82137 3.73665L0 6.89136L4.56888 9.5292L6.39025 6.3745L1.82137 3.73665Z" fill="#F7F6EF" fill-opacity="0.55"/>
+                    </g>
+                    <text x="450" y="370" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="64" font-weight="600" letter-spacing="14" fill="#f8f7f2">SIX</text>
+                    <rect x="420" y="392" width="60" height="3" fill="#c84a3d"/>
+                </svg>
+            </div>
+            <p class="project-card__description">
+                An invitation-only network that matches experienced operator-investors with early-stage founders. AI-assisted matching, built for Vecto Ventures from first commit to production.
+            </p>
+            <div class="project-card__features">
+                <div class="project-card__feature">Claude + Cohere embeddings on Amazon Bedrock, served in the EU</div>
+                <div class="project-card__feature">Multi-region AWS with Terraform, Postgres + pgvector</div>
+                <div class="project-card__feature">108 architecture decisions &amp; its own WCAG AA design system</div>
+            </div>
+            <a href="https://sixnetwork.co" target="_blank" rel="noopener noreferrer" class="project-card__link">Visit site &rarr;</a>
+        </article>
+
+        <!-- Merlin -->
+        <article class="project-card">
+            <div class="project-card__icon">&#x1F3A2;</div>
+            <h2 class="project-card__name">Merlin &middot; Neo</h2>
+            <div class="project-card__url">Merlin Entertainments</div>
+            <div class="project-card__divider"></div>
+            <div class="project-card__art">
+                <svg viewBox="0 0 900 500" role="img" aria-label="A rollercoaster loop and big wheel against a night sky">
+                    <defs>
+                        <linearGradient id="merlin-sky" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0" stop-color="#120c2e"/>
+                            <stop offset="0.6" stop-color="#3b1d5e"/>
+                            <stop offset="1" stop-color="#f08a4b"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="900" height="500" fill="url(#merlin-sky)"/>
+                    <g fill="#fffbe8" fill-opacity="0.8">
+                        <circle cx="60" cy="40" r="2"/><circle cx="210" cy="90" r="1.5"/><circle cx="330" cy="30" r="2"/><circle cx="480" cy="70" r="1.5"/>
+                        <circle cx="610" cy="35" r="2"/><circle cx="760" cy="80" r="1.5"/><circle cx="840" cy="25" r="2"/><circle cx="130" cy="150" r="1.5"/>
+                    </g>
+                    <path d="M-20 400 C150 410 240 120 400 130 C560 140 580 330 440 330 C310 330 350 170 490 200 C660 240 690 420 920 390" fill="none" stroke="#ffd36e" stroke-width="8" stroke-linecap="round"/>
+                    <g stroke="#ffd36e" stroke-opacity="0.4" stroke-width="2">
+                        <path d="M60 480 L70 405 M140 480 L150 395 M560 480 L570 360 M640 480 L650 300 M720 480 L730 320"/>
+                    </g>
+                    <g fill="none" stroke="#0d0820" stroke-width="5">
+                        <circle cx="760" cy="360" r="80"/>
+                        <path d="M760 280 V440 M680 360 H840 M703 303 L817 417 M817 303 L703 417"/>
+                    </g>
+                    <path d="M0 470 L60 420 L90 380 L120 420 L200 450 L260 380 L300 450 L900 460 L900 500 L0 500 Z" fill="#0d0820"/>
+                    <text x="48" y="90" font-family="'adineue PRO', sans-serif" font-size="58" font-weight="700" fill="#ffffff">Neo</text>
+                    <text x="50" y="122" font-family="'adineue PRO', sans-serif" font-size="18" letter-spacing="2" fill="#ffd36e">GUEST ENTITLEMENTS LEDGER</text>
+                </svg>
+            </div>
+            <p class="project-card__description">
+                Guest entitlement and membership architecture for Merlin Entertainments' move to one attractions app: what every guest has, had and will have, across every ticketing system.
+            </p>
+            <div class="project-card__features">
+                <div class="project-card__feature">Event-sourced, bi-temporal ledger with idempotent ingest</div>
+                <div class="project-card__feature">Membership sagas across billing, passes and the ledger</div>
+                <div class="project-card__feature">Azure Functions, Cosmos DB change feed &amp; Terraform</div>
+            </div>
+            <div class="project-card__note">Client platform, not publicly browsable</div>
+        </article>
+
+        <!-- Throughline -->
+        <article class="project-card">
+            <div class="project-card__icon">&#x1F4C8;</div>
+            <h2 class="project-card__name">Throughline</h2>
+            <div class="project-card__url">Iron Pig Labs</div>
+            <div class="project-card__divider"></div>
+            <div class="project-card__art">
+                <svg viewBox="0 0 900 500" role="img" aria-label="Three pipelines braiding into one, with a score dial">
+                    <rect width="900" height="500" fill="#f3efe4"/>
+                    <g fill="none" stroke-linecap="round" opacity="0.85">
+                        <path d="M-40 150 C280 80 420 440 940 330" stroke="#7a9a7c" stroke-width="40"/>
+                        <path d="M-40 210 C280 190 420 380 940 320" stroke="#b0844a" stroke-width="32"/>
+                        <path d="M-40 270 C280 300 420 320 940 310" stroke="#2E5E3F" stroke-width="24"/>
+                    </g>
+                    <g fill="none" stroke-width="14" stroke-linecap="round">
+                        <path d="M640 160 A70 70 0 1 1 760 160" stroke="#2a2220" stroke-opacity="0.12"/>
+                        <path d="M640 160 A70 70 0 0 1 755 108" stroke="#2E5E3F"/>
+                    </g>
+                    <text x="700" y="145" text-anchor="middle" font-family="'adineue PRO', sans-serif" font-size="40" font-weight="700" fill="#2a2220">72</text>
+                    <text x="50" y="460" font-family="Pacifico, cursive" font-size="48" fill="#2a2220">Throughline</text>
+                </svg>
+            </div>
+            <p class="project-card__description">
+                A founder diagnostic. A short AI interview builds the founder's sales, fundraising and marketing pipelines, scores each one, shows where things are stuck and offers a playbook for every blocker.
+            </p>
+            <div class="project-card__features">
+                <div class="project-card__feature">Live AI interviewer that captures facts as you talk</div>
+                <div class="project-card__feature">Deterministic scoring: the AI never produces a score</div>
+                <div class="project-card__feature">Reads straight from HubSpot and Attio</div>
+            </div>
+            <div class="project-card__note">Private demo, available on request</div>
+        </article>
 
         <!-- What Is This Mark? -->
         <article class="project-card">

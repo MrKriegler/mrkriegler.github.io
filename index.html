@@ -510,8 +510,9 @@
            =================================== */
         .shelf {
             position: absolute;
-            left: 8%;
-            width: 180px;
+            /* Centred in the gap between the Services board and Let's Talk */
+            left: calc(28% + 60px);
+            width: 150px;
             height: 8px;
             background: linear-gradient(180deg, var(--shelf-color) 0%, #7d6340 100%);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -530,11 +531,11 @@
 
 
         .shelf-1 {
-            bottom: 650px;
+            top: 17%;
         }
 
         .shelf-2 {
-            bottom: 560px;
+            top: 27%;
         }
 
         /* Shelf items */
@@ -565,15 +566,15 @@
         }
 
         .shelf-1 .bag-1 {
-            left: 15px;
+            left: 10px;
         }
 
         .shelf-1 .bag-2 {
-            left: 50px;
+            left: 42px;
         }
 
         .shelf-1 .bag-3 {
-            left: 85px;
+            left: 74px;
         }
 
         /* Plant pot */
@@ -624,7 +625,7 @@
         }
 
         .shelf-1 .plant-1 {
-            right: 15px;
+            right: 10px;
         }
 
         /* Stack of cups */
@@ -657,7 +658,7 @@
         }
 
         .shelf-2 .cups-1 {
-            right: 20px;
+            right: 8px;
         }
 
         /* Jar */
@@ -700,16 +701,16 @@
         }
 
         .shelf-2 .jar-1 {
-            left: 60px;
+            left: 42px;
         }
 
         .shelf-2 .jar-2 {
-            left: 95px;
+            left: 72px;
         }
 
         /* Small plant - More realistic pot plant styling */
         .shelf-2 .plant-2 {
-            left: 20px;
+            left: 10px;
         }
 
         /* Make plant-2 bushier and more compact */
@@ -1327,17 +1328,12 @@
             *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
+                animation-delay: 0s !important;
                 transition-duration: 0.01ms !important;
                 scroll-behavior: auto !important;
             }
         }
 
-        /* Ensure enough vertical space for scene on desktop/tablet */
-        @media (min-width: 769px) {
-            body {
-                min-height: max(100vh, 1000px);
-            }
-        }
 
         /* ===================================
            WALL DECORATIONS
@@ -1363,7 +1359,9 @@
                 0 0 20px #b5c99a,
                 0 0 30px #97a97c,
                 0 0 40px #7d8a5e;
-            animation: neonFlicker 4s infinite alternate;
+            animation:
+                neonPowerOn 1.6s linear 0.3s backwards,
+                neonFlicker 4s 1.9s infinite alternate;
         }
 
         /* Neon sign EST 2025 container */
@@ -1430,21 +1428,22 @@
             }
         }
 
+        /* Opacity only, so the flicker stays on the compositor */
         @keyframes neonFlicker {
-            0%, 18%, 22%, 25%, 53%, 57%, 100% {
-                text-shadow:
-                    0 0 10px #fff,
-                    0 0 20px #b5c99a,
-                    0 0 30px #97a97c,
-                    0 0 40px #7d8a5e;
-            }
-            20%, 24%, 55% {
-                text-shadow:
-                    0 0 6px #fff,
-                    0 0 12px #b5c99a,
-                    0 0 18px #97a97c,
-                    0 0 24px #7d8a5e;
-            }
+            0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+            20%, 24%, 55% { opacity: 0.82; }
+        }
+
+        /* The tube catching as it warms up */
+        /* Two catches spaced well apart: stays under three flashes a second */
+        @keyframes neonPowerOn {
+            0% { opacity: 0.08; }
+            12% { opacity: 0.08; }
+            15% { opacity: 0.85; }
+            22% { opacity: 0.2; }
+            44% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 1; }
         }
 
         /* WiFi Sign - Chalkboard style with expansion */
@@ -1481,7 +1480,7 @@
         .wifi-sign.expanded {
             width: 360px;
             padding: 24px;
-            z-index: calc(var(--z-sign) + 10);
+            z-index: calc(var(--z-sign) + 20);
         }
 
         .wifi-sign__title {
@@ -1535,7 +1534,7 @@
         }
 
         .wifi-sign.expanded .wifi-sign__extra {
-            max-height: min(360px, 42vh);
+            max-height: 300px;
             opacity: 1;
             visibility: visible;
             transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
@@ -1648,7 +1647,7 @@
         /* Recent Builds Sign - positioned below tech stack */
         .actual-wifi-sign {
             position: absolute;
-            top: 38%;
+            top: 36%;
             right: 12%;
             width: 280px;
             padding: 20px;
@@ -1675,7 +1674,7 @@
             width: 380px;
             padding: 24px;
             top: 26%;
-            z-index: calc(var(--z-sign) + 10);
+            z-index: calc(var(--z-sign) + 20);
         }
 
         /* Price List - Felt letter board style */
@@ -1684,7 +1683,7 @@
             top: 8%;
             left: 6%;
             width: 400px;
-            padding: 28px 32px;
+            padding: 24px 30px;
             background:
                 radial-gradient(circle at 20% 30%, rgba(255,255,255,0.02) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(255,255,255,0.01) 0%, transparent 50%),
@@ -1701,7 +1700,7 @@
             font-weight: bold;
             color: var(--text-light);
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 3px;
             text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
@@ -1711,7 +1710,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
             padding: 10px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
@@ -1773,7 +1771,7 @@
         .contact-info.expanded {
             width: 340px;
             padding: 26px;
-            z-index: calc(var(--z-sign) + 10);
+            z-index: calc(var(--z-sign) + 20);
         }
 
         .contact-info__title {
@@ -2146,13 +2144,13 @@
             left: 50%;
             transform: translateX(-50%);
             width: 2px;
-            height: 40px;
+            height: 22px;
             background: #3a3230;
         }
 
         .pendant-light__shade {
             position: absolute;
-            top: 40px;
+            top: 22px;
             left: 50%;
             transform: translateX(-50%);
             width: 50px;
@@ -2164,7 +2162,7 @@
 
         .pendant-light__glow {
             position: absolute;
-            top: 80px;
+            top: 62px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
@@ -2277,38 +2275,125 @@
         }
 
         .corgi {
+            /* Black-and-tan, grey in the muzzle: modelled on the real office dog */
+            --dog-coat: #2b2422;
+            --dog-coat-dark: #1c1817;
+            --dog-tan: #b98a5c;
+            --dog-tan-dark: #9c7149;
+            --dog-muzzle: #b9a68e;
+            --dog-ink: #0f0c0c;
             height: 100%;
             width: 100%;
             position: relative;
+        }
+
+        /* Scruffy grey beard: a soft whiskery tuft under the chin */
+        .corgi .lowerjaw::after {
+            content: '';
+            position: absolute;
+            left: 10%;
+            bottom: -30%;
+            width: 55%;
+            height: 45%;
+            background: var(--dog-muzzle);
+            border-radius: 0 0 50% 50%;
+        }
+
+        /* No cartoon smile or tongue: she was a dignified lady */
+        .corgi .lips,
+        .corgi .tongue {
+            display: none;
+        }
+
+        /* Tan cheek, under the eye */
+        .corgi .face::before {
+            content: '';
+            position: absolute;
+            right: -8%;
+            bottom: 2%;
+            width: 62%;
+            height: 46%;
+            background: radial-gradient(ellipse at 40% 40%, var(--dog-tan) 0%, var(--dog-tan) 55%, transparent 72%);
+        }
+
+        /* Tan eyebrow dots and a glint so the eyes read on a black face */
+        .corgi .eye::before {
+            content: '';
+            position: absolute;
+            left: 10%;
+            top: -160%;
+            width: 110%;
+            height: 90%;
+            background: var(--dog-tan);
+            border-radius: 50%;
+        }
+
+        .corgi .eye::after {
+            content: '';
+            position: absolute;
+            left: 25%;
+            top: 15%;
+            width: 40%;
+            height: 40%;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 50%;
+        }
+
+        /* Wispy, tan-fringed ears */
+        .corgi .ear {
+            background-image: linear-gradient(200deg, transparent 55%, rgba(185, 138, 92, 0.75) 80%, transparent 100%);
+        }
+
+        /* Woven collar and brass tag */
+        .corgi .collar {
+            z-index: 3;
+            left: 53%;
+            top: 45%;
+            width: 37%;
+            height: 6.5%;
+            transform: rotate(15deg);
+            border-radius: 3px;
+            background: repeating-linear-gradient(90deg, #6d4a86 0 5px, #b4485a 5px 9px, #4a68a0 9px 13px, #c9a46a 13px 16px);
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+        }
+
+        .corgi .collar__tag {
+            left: 84%;
+            top: 85%;
+            width: 9px;
+            height: 9px;
+            background: radial-gradient(circle at 35% 35%, #f0dc96, #b8963e 70%);
+            border: 1px solid #8a6d28;
+            border-radius: 50%;
         }
 
         .corgi div {
             position: absolute;
         }
 
+        /* Floppy ears that hang down beside her face */
         .corgi .ear {
-            background-color: #F09F2E;
-            height: 30%;
-            width: 55%;
-            top: 5%;
+            background-color: var(--dog-coat);
+            height: 34%;
+            width: 50%;
+            top: 6%;
             z-index: 3;
         }
 
         .corgi .ear--r {
-            right: 75%;
-            border-bottom-left-radius: 100% 90%;
-            border-top-left-radius: 10%;
-            transform-origin: 80% center;
-            animation: corgi-ear-shake-right 2s infinite;
+            right: 72%;
+            border-radius: 60% 20% 20% 60% / 50% 50% 50% 50%;
+            transform-origin: 85% center;
+            animation: corgi-ear-flop-back 2s infinite;
         }
 
         .corgi .ear--l {
-            left: 63%;
-            background-color: #D27537;
-            border-bottom-right-radius: 100% 90%;
-            border-top-right-radius: 10%;
-            transform-origin: 20% center;
-            animation: corgi-ear-shake-left 2s infinite;
+            left: 22%;
+            z-index: 6;
+            background-color: var(--dog-coat-dark);
+            border-radius: 20% 60% 60% 20% / 50% 50% 50% 50%;
+            transform-origin: 15% center;
+            animation: corgi-ear-flop-front 2s infinite;
         }
 
         .corgi .head {
@@ -2321,7 +2406,7 @@
         }
 
         .corgi .face {
-            background-color: #F09F2E;
+            background-color: var(--dog-coat);
             border-radius: 50%;
             overflow: hidden;
             height: 100%;
@@ -2330,7 +2415,7 @@
         }
 
         .corgi .eye {
-            background-color: #3E3954;
+            background-color: var(--dog-ink);
             height: 6%;
             width: 6%;
             position: absolute;
@@ -2350,7 +2435,7 @@
         }
 
         .corgi .face__white {
-            background-color: #FFFFFF;
+            background-color: var(--dog-coat);
             width: 45%;
             height: 77%;
             top: -15%;
@@ -2359,7 +2444,7 @@
         }
 
         .corgi .face__orange {
-            background-color: #F09F2E;
+            background-color: var(--dog-coat);
             position: absolute;
             width: 110%;
             height: 110%;
@@ -2376,7 +2461,7 @@
         }
 
         .corgi .face__curve {
-            background-color: #F09F2E;
+            background-color: var(--dog-coat);
             width: 30%;
             height: 20%;
             right: -12%;
@@ -2397,7 +2482,7 @@
             height: 36%;
             width: 27%;
             top: 0%;
-            background-color: #3E3954;
+            background-color: var(--dog-ink);
             z-index: 1;
             right: 0%;
             border-bottom-right-radius: 50% 100%;
@@ -2411,19 +2496,20 @@
             display: block;
             border-top-right-radius: 50% 100%;
             border-top-left-radius: 50% 100%;
-            background-color: #3E3954;
+            background-color: var(--dog-ink);
             position: absolute;
             top: -25%;
         }
 
         .corgi .mouth__left {
-            background-color: #FFFFFF;
+            background-color: var(--dog-tan);
+            border-radius: 50% 0 0 60%;
             width: 50%;
             height: 55%;
         }
 
         .corgi .mouth__left--round {
-            background-color: #F09F2E;
+            background-color: var(--dog-coat);
             width: 100%;
             height: 100%;
             border-radius: 100%;
@@ -2432,7 +2518,7 @@
         }
 
         .corgi .mouth__left--sharp {
-            background-color: #F09F2E;
+            background-color: var(--dog-coat);
             width: 35%;
             height: 50%;
             bottom: 0px;
@@ -2441,7 +2527,7 @@
         }
 
         .corgi .lowerjaw {
-            background-color: #FFFFFF;
+            background-color: var(--dog-muzzle);
             width: 100%;
             height: 80%;
             border-radius: 50% / 100%;
@@ -2462,10 +2548,10 @@
         .corgi .lips::after {
             content: "";
             display: block;
-            background: #FFFFFF;
+            background: var(--dog-coat);
             width: 39%;
             height: 100%;
-            border-color: #3E3954;
+            border-color: #6b5a4a;
             border-width: 3px;
             border-style: solid;
             border-bottom-right-radius: 50%;
@@ -2499,7 +2585,7 @@
         }
 
         .corgi .snout {
-            background-color: #FFFFFF;
+            background: linear-gradient(180deg, #8f7e6a, var(--dog-muzzle));
             right: 0%;
             top: 0%;
             width: 50%;
@@ -2511,7 +2597,7 @@
             height: 50%;
             width: 20%;
             transform: skewX(-20deg);
-            background-color: #F09F2E;
+            background-color: var(--dog-coat);
             z-index: 2;
             right: 24%;
             top: 9%;
@@ -2523,7 +2609,7 @@
             width: 20%;
             right: 11%;
             top: 20%;
-            background-color: #F09F2E;
+            background-color: var(--dog-coat);
             z-index: 2;
             transform: skewX(2deg);
         }
@@ -2531,7 +2617,7 @@
         .corgi .body {
             height: 44%;
             width: 77%;
-            background-color: #F09F2E;
+            background-color: var(--dog-coat);
             right: 10.5%;
             bottom: 12%;
             border-top-left-radius: 20% 50%;
@@ -2544,7 +2630,7 @@
         }
 
         .corgi .body__chest {
-            background-color: #FFFFFF;
+            background-color: var(--dog-tan);
             height: 87%;
             width: 29%;
             right: 5%;
@@ -2561,28 +2647,28 @@
 
         .corgi .foot__left {
             z-index: 3;
-            background-color: #F09F2E;
+            background-color: var(--dog-coat);
         }
 
         .corgi .foot__left::after {
-            background-color: #FFFFFF;
+            background-color: var(--dog-tan);
         }
 
         .corgi .foot__left::before {
-            background-color: #F09F2E;
+            background-color: var(--dog-coat);
         }
 
         .corgi .foot__right {
             z-index: 1;
-            background-color: #D27537;
+            background-color: var(--dog-coat-dark);
         }
 
         .corgi .foot__right::after {
-            background-color: #F5E6D3;
+            background-color: var(--dog-tan-dark);
         }
 
         .corgi .foot__right::before {
-            background-color: #D27537;
+            background-color: var(--dog-coat-dark);
         }
 
         .corgi .foot__back::before {
@@ -2639,7 +2725,7 @@
         .corgi .tail {
             width: 26%;
             height: 13%;
-            background-color: #D27537;
+            background-color: var(--dog-coat-dark);
             border-top-left-radius: 50% 100%;
             border-bottom-left-radius: 50% 100%;
             border-top-right-radius: 50% 100%;
@@ -2680,6 +2766,20 @@
             80% { transform: scaleY(1) translateY(0px) rotate(0deg); }
             90% { transform: scaleY(0.8) translateY(0px) rotate(15deg); }
             100% { transform: scaleY(0.1) translateY(-20px) rotate(0deg); }
+        }
+
+        @keyframes corgi-ear-flop-back {
+            0%, 100% { transform: rotate(-78deg); }
+            10% { transform: rotate(-70deg); }
+            30% { transform: rotate(-78deg); }
+            40% { transform: rotate(-72deg); }
+        }
+
+        @keyframes corgi-ear-flop-front {
+            0%, 100% { transform: rotate(98deg); }
+            10% { transform: rotate(90deg); }
+            30% { transform: rotate(98deg); }
+            40% { transform: rotate(92deg); }
         }
 
         @keyframes corgi-ear-shake-right {
@@ -2774,29 +2874,290 @@
             outline-offset: 3px;
         }
 
-        /* Desktop min-height is handled by the (min-width: 769px) query above */
+        /* ===================================
+           RECENT BUILDS - one line per project
+           =================================== */
+        .build-list {
+            list-style: none;
+            margin-top: 4px;
+        }
+
+        .build-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 0;
+            color: var(--white);
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .build-list__icon {
+            width: 1.4em;
+            text-align: center;
+            font-size: 17px;
+            flex-shrink: 0;
+        }
 
         /* ===================================
-           RESPONSIVE - Zoom the entire scene down for smaller screens.
-           Same layout as desktop, browser scales everything uniformly.
+           COPY EMAIL
            =================================== */
-        @media (min-width: 1200px) and (max-width: 1500px) {
-            body { min-height: 100vh; }
-            main {
-                position: relative;
-                zoom: 0.77;
-                width: calc(100vw / 0.77);
-                height: calc(100vh / 0.77);
+        .contact-info__copy {
+            margin-left: 6px;
+            padding: 2px 8px;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            color: var(--green-accent);
+            background: rgba(212, 225, 87, 0.08);
+            border: 1px solid rgba(212, 225, 87, 0.35);
+            border-radius: 999px;
+            cursor: pointer;
+            vertical-align: middle;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .contact-info__copy:hover {
+            background: rgba(212, 225, 87, 0.18);
+        }
+
+        .contact-info__copy:focus-visible {
+            outline: 2px solid rgba(181, 201, 154, 0.8);
+            outline-offset: 2px;
+        }
+
+        .contact-info__copy.copied {
+            color: #1a1a1a;
+            background: var(--green-accent);
+            border-color: var(--green-accent);
+        }
+
+        /* ===================================
+           CORGI HOP
+           =================================== */
+        @keyframes corgiHop {
+            0%, 100% { translate: 0 0; }
+            35% { translate: 0 -14%; }
+            60% { translate: 0 0; }
+            75% { translate: 0 -5%; }
+        }
+
+        .corgi-container.barking .corgi {
+            animation: corgiHop 0.6s ease-out;
+        }
+
+        /* ===================================
+           BOARDS - hung on the wall as the page loads
+           (uses the individual translate/rotate properties so it never
+           fights the transforms used for centring and hover)
+           =================================== */
+        @keyframes boardHang {
+            0% { opacity: 0; translate: 0 -36px; rotate: -2.5deg; }
+            55% { opacity: 1; translate: 0 4px; rotate: 1deg; }
+            78% { translate: 0 -1px; rotate: -0.4deg; }
+            100% { opacity: 1; translate: 0 0; rotate: 0deg; }
+        }
+
+        .price-list,
+        .wifi-sign,
+        .contact-info {
+            transform-origin: 50% 0;
+            animation: boardHang 0.9s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+        }
+
+        .price-list { animation-delay: 0.15s; }
+        .contact-info { animation-delay: 0.25s; }
+        .wifi-sign { animation-delay: 0.35s; }
+        .actual-wifi-sign { animation-delay: 0.45s; }
+
+        /* ===================================
+           STEP INSIDE - the door to the 3D café
+           (hidden until JS confirms WebGL2)
+           =================================== */
+        .step-inside {
+            display: none;
+            position: absolute;
+            left: 50%;
+            bottom: 16px;
+            transform: translateX(-50%);
+            z-index: 60;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 18px 12px 30px;
+            overflow: hidden;
+            font: inherit;
+            color: #f5f5dc;
+            background:
+                radial-gradient(ellipse at 30% 0%, rgba(212, 225, 87, 0.22) 0%, transparent 60%),
+                linear-gradient(135deg, #2f2a24 0%, #1a1714 100%);
+            border: 3px solid var(--green-accent);
+            border-radius: 999px;
+            box-shadow:
+                0 0 0 3px var(--wood-border),
+                0 8px 22px rgba(0, 0, 0, 0.4),
+                0 0 26px rgba(212, 225, 87, 0.45);
+            cursor: pointer;
+            animation: stepInsideGlow 2.6s ease-in-out 2.2s infinite;
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+        }
+
+        /* A shine that sweeps across every few seconds */
+        .step-inside::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.45) 48%, rgba(255, 255, 255, 0.08) 56%, transparent 65%);
+            transform: translateX(-120%);
+            animation: stepInsideShine 4s ease-in-out 1.6s infinite;
+            pointer-events: none;
+        }
+
+        .has-webgl .step-inside {
+            display: inline-flex;
+        }
+
+        .step-inside:hover {
+            transform: translateX(-50%) translateY(-3px) scale(1.06);
+            box-shadow:
+                0 0 0 3px #a8885c,
+                0 12px 28px rgba(0, 0, 0, 0.45),
+                0 0 40px rgba(212, 225, 87, 0.7);
+        }
+
+        .step-inside:focus-visible {
+            outline: 3px solid #fff;
+            outline-offset: 6px;
+        }
+
+        .step-inside__label {
+            position: relative;
+            font-family: 'Pacifico', cursive;
+            font-size: 31px;
+            line-height: 1.15;
+            text-shadow: 0 0 6px #fff, 0 0 14px #b5c99a, 0 0 26px #97a97c;
+        }
+
+        .step-inside__tag {
+            position: relative;
+            padding: 5px 13px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: #1a1a1a;
+            background: linear-gradient(180deg, #e8f27a 0%, var(--green-accent) 100%);
+            border-radius: 999px;
+            box-shadow: 0 0 12px rgba(212, 225, 87, 0.8);
+            animation: stepInsideBounce 2.6s ease-in-out 2.2s infinite;
+        }
+
+        .step-inside.is-loading {
+            cursor: progress;
+            animation: none;
+        }
+
+        .step-inside.is-loading .step-inside__tag {
+            animation: stepInsideBrew 0.9s ease-in-out infinite alternate;
+        }
+
+        @keyframes stepInsideGlow {
+            0%, 100% {
+                box-shadow: 0 0 0 3px var(--wood-border), 0 8px 22px rgba(0, 0, 0, 0.4), 0 0 22px rgba(212, 225, 87, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 3px var(--wood-border), 0 8px 22px rgba(0, 0, 0, 0.4), 0 0 44px rgba(212, 225, 87, 0.75);
             }
         }
 
-        @media (min-width: 769px) and (max-width: 1199px) {
-            body { min-height: 100vh; }
+        @keyframes stepInsideShine {
+            0%, 55% { transform: translateX(-120%); }
+            85%, 100% { transform: translateX(120%); }
+        }
+
+        @keyframes stepInsideBounce {
+            0%, 40%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+            60% { transform: translateY(0); }
+            68% { transform: translateY(-2px); }
+        }
+
+        @keyframes stepInsideBrew {
+            from { opacity: 1; }
+            to { opacity: 0.45; }
+        }
+
+        /* ===================================
+           DESKTOP STAGE
+           The scene is laid out on a canvas of at least 1600x1000:
+           JS sets --stage-zoom = min(width/1600, height/1000), so wall
+           boards (positioned from the top) and the counter (positioned
+           from the floor) can never meet, whatever the aspect ratio.
+           The width-only fallbacks cover the no-JS case.
+           =================================== */
+        :root {
+            --stage-zoom: 1;
+        }
+
+        @media (max-width: 1599px) { :root { --stage-zoom: 0.8; } }
+        @media (max-width: 1299px) { :root { --stage-zoom: 0.7; } }
+        @media (max-width: 1099px) { :root { --stage-zoom: 0.6; } }
+
+        /* Range syntax so this and the stacked query below are exact
+           complements, even at fractional viewport sizes */
+        @media (width >= 769px) and (height >= 561px) and (orientation: landscape),
+               (width >= 1101px) and (height >= 561px) {
+            /* Only lock scrolling once JS has fitted the stage; without JS
+               the 1000px minimum below keeps everything reachable */
+            .js-stage body {
+                overflow: hidden;
+            }
+
             main {
                 position: relative;
-                zoom: 0.55;
-                width: calc(100vw / 0.55);
-                height: calc(100vh / 0.55);
+                display: block;
+                overflow: hidden;
+                zoom: var(--stage-zoom);
+                width: calc(100vw / var(--stage-zoom));
+                height: max(calc(100vh / var(--stage-zoom)), 1000px);
+            }
+
+            /* Dim the room while a board is open, so it reads as in front */
+            main::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: rgba(26, 20, 16, 0.38);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.4s ease;
+                z-index: calc(var(--z-sign) + 15);
+            }
+
+            main:has(.expanded)::after {
+                opacity: 1;
+            }
+
+            /* Proximity pull: each board leans toward a nearby pointer,
+               swinging from its top edge like a hung sign. JS sets the
+               --pull-* values per board; boards far from the pointer rest. */
+            .price-list,
+            .wifi-sign,
+            .contact-info {
+                translate: var(--pull-x, 0px) var(--pull-y, 0px);
+                rotate: var(--pull-rot, 0deg);
+                transition-property: width, top, padding, box-shadow, transform, translate, rotate, z-index;
+                transition-duration: 0.5s, 0.5s, 0.5s, 0.3s, 0.3s, 0.7s, 0.7s, 0s;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1), cubic-bezier(0.4, 0, 0.2, 1), cubic-bezier(0.4, 0, 0.2, 1), ease, ease, cubic-bezier(0.22, 1, 0.36, 1), cubic-bezier(0.22, 1, 0.36, 1), linear;
+            }
+
+            /* Stay on top while collapsing, so a closing board doesn't
+               slide behind its neighbour mid-animation */
+            .wifi-sign,
+            .contact-info {
+                transition-delay: 0s, 0s, 0s, 0s, 0s, 0s, 0s, 0.5s;
+            }
+
+            .wifi-sign.expanded,
+            .contact-info.expanded {
+                transition-delay: 0s;
             }
         }
 
@@ -2805,7 +3166,9 @@
            (Kept at the end of the stylesheet: these override the
            base component rules above, which share their specificity)
            =================================== */
-        @media (max-width: 768px) {
+        @media (width < 769px),
+               (width < 1101px) and (orientation: portrait),
+               (height < 561px) {
             body {
                 overflow-y: auto;
                 overflow-x: hidden;
@@ -2863,6 +3226,17 @@
                 width: 35px;
             }
 
+            .step-inside {
+                position: static;
+                transform: none;
+                margin: 0 auto 18px;
+                order: 0;
+            }
+
+            .step-inside:hover {
+                transform: translateY(-2px);
+            }
+
             /* All boards - consistent width, spacing, and appearance */
             .price-list,
             .wifi-sign,
@@ -2870,8 +3244,8 @@
             .contact-info {
                 position: static !important;
                 width: calc(100% - 32px) !important;
-                max-width: none !important;
-                margin: 0 16px 16px !important;
+                max-width: 560px !important;
+                margin: 0 auto 16px !important;
                 transform: none !important;
                 background:
                     radial-gradient(circle at 30% 40%, rgba(255,255,255,0.03) 0%, transparent 50%),
@@ -2890,12 +3264,15 @@
             .corgi-container { order: 6; }
 
             /* Coffee machine - decorative break before contact */
+            /* zoom rather than transform, so the layout box shrinks too
+               (a 400px box overflowed 320px phones) */
             .coffee-machine {
-                position: static !important;
-                transform: scale(0.65);
-                transform-origin: center top;
-                margin: 0 auto -8px;
-                padding-bottom: 16px;
+                position: relative !important;
+                left: auto;
+                bottom: auto;
+                transform: none;
+                zoom: 0.6;
+                margin: 8px auto 72px;
                 z-index: 10;
             }
 
@@ -2912,7 +3289,7 @@
             .actual-wifi-sign.expanded,
             .contact-info.expanded {
                 width: calc(100% - 32px) !important;
-                max-width: none !important;
+                max-width: 560px !important;
             }
 
             .wifi-sign.expanded .wifi-sign__extra {
@@ -2951,7 +3328,7 @@
             .actual-wifi-sign,
             .contact-info {
                 width: calc(100% - 24px) !important;
-                margin: 0 12px 12px !important;
+                margin: 0 auto 12px !important;
                 padding: 14px;
             }
 
@@ -2968,12 +3345,29 @@
             }
 
             .wifi-sign__content,
-            .contact-info__item {
+            .contact-info__item,
+            .build-list li {
                 font-size: 13px;
             }
         }
 
     </style>
+    <!-- 3D café modules: bump ?v= on every change so GitHub Pages' 10-minute
+         cache can never serve a mix of old and new files -->
+    <script type="importmap">
+    {
+        "imports": {
+            "./cafe/main.js": "./cafe/main.js?v=26",
+            "./cafe/world.js": "./cafe/world.js?v=26",
+            "./cafe/kit.js": "./cafe/kit.js?v=26",
+            "./cafe/textures.js": "./cafe/textures.js?v=26",
+            "./cafe/corgi.js": "./cafe/corgi.js?v=26",
+            "./cafe/controls.js": "./cafe/controls.js?v=26",
+            "./cafe/hud.js": "./cafe/hud.js?v=26",
+            "./cafe/gallery.js": "./cafe/gallery.js?v=26"
+        }
+    }
+    </script>
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -3112,6 +3506,13 @@
             <span class="neon-sign__est-line"></span>
         </div>
     </div>
+
+    <!-- The door to the 3D café -->
+    <button class="step-inside" type="button" aria-describedby="step-inside-desc">
+        <span class="step-inside__label">Step inside</span>
+        <span class="step-inside__tag" aria-hidden="true">3D</span>
+    </button>
+    <span class="visually-hidden" id="step-inside-desc">Opens an explorable 3D version of the café. Everything on this page is also in there, and you can leave any time with Escape.</span>
 
     <!-- Floor -->
     <div class="floor" role="presentation"></div>
@@ -3254,20 +3655,41 @@
         <h2 class="wifi-sign__title">
             <button class="board-toggle" type="button" aria-expanded="false" aria-controls="recent-builds-panel">Recent Builds</button>
         </h2>
-        <div class="wifi-sign__content">
-            <span class="wifi-sign__label">⌚</span>
-            <span class="wifi-sign__value">whatisthismark.com</span>
-            <span class="wifi-sign__label">✈️</span>
-            <span class="wifi-sign__value">visa-requirements.io</span>
-            <span class="wifi-sign__label">🍺</span>
-            <span class="wifi-sign__value">foamfinders.co.uk</span>
-            <span class="wifi-sign__label">🚣</span>
-            <span class="wifi-sign__value">thamespaddleplanner.com</span>
-        </div>
+        <ul class="wifi-sign__content build-list">
+            <li><span class="build-list__icon" aria-hidden="true">✳️</span>SIX · sixnetwork.co</li>
+            <li><span class="build-list__icon" aria-hidden="true">🎢</span>Merlin · Neo ledger</li>
+            <li><span class="build-list__icon" aria-hidden="true">📈</span>Throughline</li>
+            <li><span class="build-list__icon" aria-hidden="true">🧪</span>+ 4 live side projects</li>
+        </ul>
         <div class="wifi-sign__hint" aria-hidden="true">Click for details →</div>
         <a href="showcase.html" class="wifi-sign__link wifi-sign__link--showcase">See full showcase →</a>
 
         <div class="wifi-sign__extra" id="recent-builds-panel">
+            <div class="wifi-sign__section">
+                <div class="wifi-sign__section-title">SIX</div>
+                <div class="wifi-sign__section-content">
+                    <div class="wifi-sign__rule">Invitation-only network matching operator-investors with founders</div>
+                    <div class="wifi-sign__rule">AI matching on Amazon Bedrock, multi-region AWS, built for Vecto Ventures</div>
+                    <a href="https://sixnetwork.co" target="_blank" rel="noopener noreferrer" class="wifi-sign__link">Visit sixnetwork.co →</a>
+                </div>
+            </div>
+
+            <div class="wifi-sign__section">
+                <div class="wifi-sign__section-title">Merlin · Neo</div>
+                <div class="wifi-sign__section-content">
+                    <div class="wifi-sign__rule">Guest entitlements and membership architecture for Merlin Entertainments</div>
+                    <div class="wifi-sign__rule">Event-sourced, bi-temporal ledger on Azure, Cosmos DB and Terraform</div>
+                </div>
+            </div>
+
+            <div class="wifi-sign__section">
+                <div class="wifi-sign__section-title">Throughline</div>
+                <div class="wifi-sign__section-content">
+                    <div class="wifi-sign__rule">Founder diagnostic: an AI interview, scored pipelines, a playbook per blocker</div>
+                    <div class="wifi-sign__rule">Private demo, available on request</div>
+                </div>
+            </div>
+
             <div class="wifi-sign__section">
                 <div class="wifi-sign__section-title">What Is This Mark?</div>
                 <div class="wifi-sign__section-content">
@@ -3349,6 +3771,8 @@
         <div class="contact-info__item">
             <span class="contact-info__label">EMAIL</span>
             <a href="mailto:hello@iron-pig.com" class="contact-info__mail">hello@iron-pig.com</a>
+            <button class="contact-info__copy" type="button"><span class="contact-info__copy-text">Copy</span><span class="visually-hidden"> email address</span></button>
+            <span class="visually-hidden" role="status" id="copy-status"></span>
         </div>
         <div class="contact-info__item">
             <span class="contact-info__label">LOCATION</span>
@@ -3431,9 +3855,10 @@
     </div>
 
     <!-- Corgi -->
-    <button class="corgi-container" type="button" aria-label="Say hello to the corgi">
+    <button class="corgi-container" type="button" aria-label="Say hello to Pebbles">
         <div class="corgi-speech-bubble">Woof woof!</div>
         <div class="corgi">
+            <div class="collar"><div class="collar__tag"></div></div>
             <div class="head">
                 <div class="ear ear--r"></div>
                 <div class="ear ear--l"></div>
@@ -3494,6 +3919,8 @@
                     document.getElementById('wifi-sign-btn'),
                     document.getElementById('contact-info-btn')
                 ].filter(Boolean),
+                main: document.querySelector('main'),
+                copyEmail: document.querySelector('.contact-info__copy'),
                 counterPlant: document.querySelector('.counter-plant'),
                 corgi: document.querySelector('.corgi-container'),
                 coffeeMachine: document.querySelector('.coffee-machine'),
@@ -3504,14 +3931,55 @@
                 machineRunning: true
             };
 
+            // Keep in sync with the desktop stage media query in the CSS
+            const desktopQuery = window.matchMedia(
+                '(width >= 769px) and (height >= 561px) and (orientation: landscape), ' +
+                '(width >= 1101px) and (height >= 561px)'
+            );
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+            // ==========================================
+            // DESKTOP STAGE
+            // ==========================================
+            const STAGE_WIDTH = 1600;
+            const STAGE_HEIGHT = 1000;
+            const MAX_ZOOM = 1.3;
+
+            /**
+             * Scale the scene so it always has at least a 1600x1000 canvas.
+             * Using both dimensions (not just width) is what stops the wall
+             * boards sliding down into the counter on short laptop screens.
+             */
+            function fitStage() {
+                const w = document.documentElement.clientWidth;
+                const h = window.innerHeight;
+                const zoom = Math.min(MAX_ZOOM, w / STAGE_WIDTH, h / STAGE_HEIGHT);
+                document.documentElement.style.setProperty('--stage-zoom', zoom.toFixed(4));
+            }
+
+            fitStage();
+            document.documentElement.classList.add('js-stage');
+
             // ==========================================
             // EXPANDABLE BOARDS
             // ==========================================
+
+            const touchOnly = !finePointer.matches;
+
+            // "Click for details" reads oddly on a phone, and once open the
+            // hint should say how to close
+            document.querySelectorAll('.wifi-sign__hint, .contact-info__hint').forEach(hint => {
+                if (touchOnly) hint.textContent = hint.textContent.replace('Click', 'Tap');
+                hint.dataset.closed = hint.textContent;
+            });
 
             function setExpanded(board, expanded) {
                 board.classList.toggle('expanded', expanded);
                 const toggle = board.querySelector('.board-toggle');
                 if (toggle) toggle.setAttribute('aria-expanded', String(expanded));
+                const hint = board.querySelector('.wifi-sign__hint, .contact-info__hint');
+                if (hint) hint.textContent = expanded ? 'Close ↑' : hint.dataset.closed;
             }
 
             function closeAllPanels() {
@@ -3558,6 +4026,9 @@
                 barkIndex = (barkIndex + 1) % barkMessages.length;
 
                 // Show the speech bubble
+                // Restart the hop even if the last bark is still showing
+                elements.corgi.classList.remove('barking');
+                void elements.corgi.offsetWidth;
                 elements.corgi.classList.add('barking');
 
                 // Hide after a delay
@@ -3623,10 +4094,177 @@
                 // except on links (they should just navigate)
                 elements.boards.forEach(board => {
                     board.addEventListener('click', function(e) {
-                        if (e.target.closest('a')) return;
+                        if (e.target.closest('a, .contact-info__copy')) return;
                         toggleBoard(board);
                     });
                 });
+
+                // Copy email
+                if (elements.copyEmail) {
+                    const email = 'hello@iron-pig.com';
+                    let copyTimeout = null;
+
+                    // Older browsers / blocked clipboard permission
+                    function legacyCopy() {
+                        const field = document.createElement('textarea');
+                        field.value = email;
+                        field.setAttribute('readonly', '');
+                        field.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+                        document.body.appendChild(field);
+                        let ok = false;
+                        try {
+                            field.select();
+                            ok = document.execCommand('copy');
+                        } catch (err) {
+                            ok = false;
+                        }
+                        field.remove();
+                        elements.copyEmail.focus();
+                        return ok;
+                    }
+
+                    const copyText = elements.copyEmail.querySelector('.contact-info__copy-text');
+                    const copyStatus = document.getElementById('copy-status');
+
+                    function showCopied(ok) {
+                        copyText.textContent = ok ? 'Copied ✓' : 'Copy failed';
+                        if (copyStatus) copyStatus.textContent = ok ? 'Email address copied' : 'Could not copy the email address';
+                        elements.copyEmail.classList.toggle('copied', ok);
+                        if (copyTimeout) clearTimeout(copyTimeout);
+                        copyTimeout = setTimeout(() => {
+                            copyText.textContent = 'Copy';
+                            if (copyStatus) copyStatus.textContent = '';
+                            elements.copyEmail.classList.remove('copied');
+                        }, 1800);
+                    }
+
+                    elements.copyEmail.addEventListener('click', function() {
+                        if (navigator.clipboard && window.isSecureContext) {
+                            navigator.clipboard.writeText(email)
+                                .then(() => showCopied(true))
+                                .catch(() => showCopied(legacyCopy()));
+                        } else {
+                            showCopied(legacyCopy());
+                        }
+                    });
+                }
+
+                // Re-fit the stage on resize (once per frame)
+                let resizeFrame = null;
+                window.addEventListener('resize', function() {
+                    if (resizeFrame) return;
+                    resizeFrame = requestAnimationFrame(() => {
+                        resizeFrame = null;
+                        fitStage();
+                    });
+                });
+
+                // Proximity pull: boards near the pointer lean toward it
+                if (elements.main) {
+                    const pullBoards = Array.from(document.querySelectorAll('.price-list, .wifi-sign, .contact-info'));
+                    const PULL_RADIUS = 220;   // stage px from the board's edge
+                    const PULL_SHIFT_X = 7;    // px
+                    const PULL_SHIFT_Y = 5;    // px
+                    const PULL_TILT = 1.6;     // deg
+                    let pullFrame = null;
+                    let pointerX = 0;
+                    let pointerY = 0;
+
+                    function setPull(board, x, y, rot) {
+                        board.style.setProperty('--pull-x', x.toFixed(2) + 'px');
+                        board.style.setProperty('--pull-y', y.toFixed(2) + 'px');
+                        board.style.setProperty('--pull-rot', rot.toFixed(3) + 'deg');
+                    }
+
+                    function releaseAll() {
+                        pullBoards.forEach(board => setPull(board, 0, 0, 0));
+                    }
+
+                    function updatePull() {
+                        pullFrame = null;
+                        // Rects inside the zoomed stage may come back in stage
+                        // units or screen pixels depending on the browser, so
+                        // map the pointer into whatever space they use
+                        const scale = elements.main.getBoundingClientRect().width / document.documentElement.clientWidth;
+                        const px = pointerX * scale;
+                        const py = pointerY * scale;
+
+                        pullBoards.forEach(board => {
+                            if (board.classList.contains('expanded')) {
+                                setPull(board, 0, 0, 0);
+                                return;
+                            }
+                            const r = board.getBoundingClientRect();
+                            const dx = Math.max(r.left - px, 0, px - r.right);
+                            const dy = Math.max(r.top - py, 0, py - r.bottom);
+                            const distance = Math.hypot(dx, dy);
+                            const strength = Math.max(0, 1 - distance / PULL_RADIUS) ** 2;
+                            if (!strength) {
+                                setPull(board, 0, 0, 0);
+                                return;
+                            }
+                            // Pointer position relative to the board's centre, -1..1
+                            const nx = Math.max(-1, Math.min(1, (px - (r.left + r.width / 2)) / (r.width / 2)));
+                            const ny = Math.max(-1, Math.min(1, (py - (r.top + r.height / 2)) / (r.height / 2)));
+                            setPull(board, nx * PULL_SHIFT_X * strength, ny * PULL_SHIFT_Y * strength, -nx * PULL_TILT * strength);
+                        });
+                    }
+
+                    document.addEventListener('pointermove', function(e) {
+                        if (!desktopQuery.matches || reducedMotion.matches || e.pointerType !== 'mouse') return;
+                        if (document.body.classList.contains('cafe-open')) return;
+                        pointerX = e.clientX;
+                        pointerY = e.clientY;
+                        if (!pullFrame) pullFrame = requestAnimationFrame(updatePull);
+                    });
+
+                    document.documentElement.addEventListener('mouseleave', releaseAll);
+                    desktopQuery.addEventListener('change', releaseAll);
+                    reducedMotion.addEventListener('change', releaseAll);
+                }
+
+                // Step inside: the 3D café, loaded only when asked for
+                const stepInside = document.querySelector('.step-inside');
+                const supportsWebGL2 = (() => {
+                    try {
+                        return !!document.createElement('canvas').getContext('webgl2');
+                    } catch (err) {
+                        return false;
+                    }
+                })();
+                if (stepInside && supportsWebGL2) {
+                    document.documentElement.classList.add('has-webgl');
+                    const loadCafe = () => import('./cafe/main.js');
+                    // Start fetching as soon as someone shows interest
+                    ['pointerenter', 'focus', 'touchstart'].forEach(type => {
+                        stepInside.addEventListener(type, () => { loadCafe().catch(() => {}); }, { once: true, passive: true });
+                    });
+                    const enter = fromDeepLink => {
+                        if (stepInside.classList.contains('is-loading')) return;
+                        closeAllPanels();
+                        stepInside.classList.add('is-loading');
+                        stepInside.setAttribute('aria-busy', 'true');
+                        loadCafe()
+                            .then(cafe => cafe.isCafeOpen() ? null : cafe.enterCafe({ fromDeepLink }))
+                            .catch(err => {
+                                // Modules can't load from file://, so say so instead of failing silently
+                                const fromDisk = location.protocol === 'file:';
+                                console.error(fromDisk
+                                    ? 'The 3D café needs a web server: run `python3 -m http.server` in this folder and open http://localhost:8000'
+                                    : 'Could not open the café:', err);
+                                const label = stepInside.querySelector('.step-inside__label');
+                                const original = label.textContent;
+                                label.textContent = fromDisk ? 'Needs a web server' : 'Couldn\'t open, try again';
+                                setTimeout(() => { label.textContent = original; }, 3500);
+                            })
+                            .finally(() => {
+                                stepInside.classList.remove('is-loading');
+                                stepInside.removeAttribute('aria-busy');
+                            });
+                    };
+                    stepInside.addEventListener('click', () => enter(false));
+                    if (location.hash === '#cafe') enter(true);
+                }
 
                 // Escape collapses any open board
                 document.addEventListener('keydown', function(e) {
@@ -3725,7 +4363,7 @@
                     }
 
                     console.log('%c☕ Iron Pig', 'font-size: 20px; font-weight: bold; color: #2E5E3F;');
-                    console.log('%cWelcome to the source! Curious minds are always welcome here.\nTry typing "ni" while on the page... the shrubbery demands it. 🌿', 'font-size: 13px; color: #8B6F47;');
+                    console.log('%cWelcome to the source! Curious minds are always welcome here.\nTry typing "ni" while on the page... the shrubbery demands it. 🌿\nOr step inside: iron-pig.com/#cafe ☕', 'font-size: 13px; color: #8B6F47;');
                 } catch (error) {
                     console.error('Initialization error:', error);
                 }
