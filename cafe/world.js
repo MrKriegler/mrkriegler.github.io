@@ -1054,15 +1054,16 @@ export function buildWorld({ layout, content, logo }) {
     clinic.position.set(-hw + 0.02, 1.48, doorZ1 + 0.38);
     clinic.rotation.y = Math.PI / 2;
     scene.add(clinic);
-    const clinicBack = new THREE.Mesh(rbox(0.44, 0.3, 0.02, 0.008), toon('#8B6F47'));
+    const clinicBack = new THREE.Mesh(rbox(0.5, 0.34, 0.02, 0.008), toon('#8B6F47'));
     clinicBack.position.z = 0.0;
     outline(clinicBack);
     clinic.add(clinicBack);
-    const clinicFace = new THREE.Mesh(new THREE.PlaneGeometry(0.4, 0.26), glowMaterial({
-        map: track(labelTexture(480, 312, '#f3ead6', [
-            { text: 'ARGUMENT', size: 50, weight: 700, color: COLORS.text, spacing: 4 },
-            { text: 'CLINIC', size: 50, weight: 700, color: COLORS.text, spacing: 4 },
-            { text: 'Room 12A · 5 min £1', size: 30, italic: true, color: COLORS.accent }
+    // Dark board, cream lettering: readable from across the room
+    const clinicFace = new THREE.Mesh(new THREE.PlaneGeometry(0.46, 0.3), glowMaterial({
+        map: track(labelTexture(552, 360, COLORS.chalkWarm, [
+            { text: 'ARGUMENT', size: 64, weight: 700, color: '#f3ead6', spacing: 4 },
+            { text: 'CLINIC', size: 64, weight: 700, color: '#f3ead6', spacing: 4 },
+            { text: 'Room 12A · 5 min £1', size: 36, italic: true, color: COLORS.accent }
         ]))
     }));
     clinicFace.position.z = 0.012;
