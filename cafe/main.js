@@ -41,7 +41,13 @@ const ACHIEVEMENTS = [
     { id: 'hq', icon: '🍳', title: 'Kitchen Table CEO', text: 'Found the real headquarters.' },
     { id: 'night', icon: '💡', title: 'Lights on', text: 'Found the light switch by the door.' },
     { id: 'neon', icon: '💡', title: 'Neon dreams', text: 'Changed the colour of the sign.' },
-    { id: 'gallery', icon: '🖼️', title: 'Art lover', text: 'Looked at every piece of work on the walls.' }
+    { id: 'gallery', icon: '🖼️', title: 'Art lover', text: 'Looked at every piece of work on the walls.' },
+    { id: 'grenade', icon: '💥', title: 'Three shall be the number', text: 'Lobbed the Holy Hand Grenade at the Black Knight.' },
+    { id: 'parrot', icon: '🦜', title: 'Ex-parrot', text: 'Got Pebbles to admit the truth about the Norwegian Blue.' },
+    { id: 'argument', icon: '🗣️', title: 'Five minutes, £1', text: 'Had an argument. Well, a contradiction.' },
+    { id: 'inquisition', icon: '🟥', title: 'Nobody expects…', text: 'Flicked the lights until the Inquisition turned up.' },
+    { id: 'silly', icon: '🎩', title: 'Ministry approved', text: 'Hopped about until the Ministry of Silly Walks noticed.' },
+    { id: 'tap', icon: '🚰', title: 'Water works', text: 'Ran the kitchen tap.' }
 ];
 
 const PLACES = [
@@ -56,25 +62,52 @@ const PLACES = [
     { id: 'neon', icon: '💡', label: 'Neon sign' },
     { id: 'laptop', icon: '💻', label: 'Kitchen Table HQ' },
     { id: 'fridge', icon: '📝', label: 'Notes on the fridge' },
+    { id: 'parrot', icon: '🦜', label: 'The Norwegian Blue' },
+    { id: 'argument', icon: '🗣️', label: 'Argument Clinic' },
     { id: 'switch', icon: '💡', label: 'Light switch' },
     { id: 'exit', icon: '🚪', label: 'Exit to 2D' }
 ];
 
-// Pebbles' guided tour: where she goes and what she says when she gets there
+// Pebbles' guided tour: where she goes and what she says when she gets there.
+// Stops near a hidden bean add a nudge, but only while that bean is still out there.
 const TOUR = [
-    { id: 'services', title: 'The menu', line: 'This is the menu. More cups means a bigger job. Fire drills are three cups, obviously.' },
+    { id: 'services', title: 'The menu', line: 'This is the menu. More cups means a bigger job. Fire drills are three cups, obviously.', bean: 'bean-menu', nudge: 'Psst: look up. Right on top of this board. 👀' },
     { id: 'help', title: 'How I help', line: 'Build, fix, lead. That\'s the whole job. Mostly fixing, if I\'m honest.' },
-    { id: 'builds', title: 'Recent builds', line: 'Real things, actually shipped. The Guinness one was very important research.' },
-    { id: 'art-six', title: 'The gallery', line: 'The bigger work hangs on these walls: SIX, Merlin\'s guest ledger, Throughline. Click any frame for the story.' },
-    { id: 'machine', title: 'The machine', line: 'The espresso machine. Fuels the whole operation. Give it a poke, it hisses.' },
+    { id: 'builds', title: 'Recent builds', line: 'Real things, actually shipped. The Guinness one was very important research.', bean: 'bean-table', nudge: 'Also, have a sniff under that table. Just saying. 👀' },
+    { id: 'art-six', title: 'The gallery', line: 'And now for something completely different: the bigger work. SIX, Merlin\'s guest ledger, Throughline. Click any frame for the story.' },
+    { id: 'machine', title: 'The machine', line: 'The espresso machine. Fuels the whole operation. Give it a poke, it hisses.', bean: 'bean-counter', nudge: 'Somebody dropped a bean behind the counter. Wasn\'t me.' },
     { id: 'order', title: 'The till', line: 'Order a coffee here and it turns into a project brief. Clever, eh?' },
     { id: 'plant', title: 'The shrubbery', line: 'This plant only talks to the Knights Who Say Ni. Try typing N-I.' },
-    { id: 'laptop', title: 'Kitchen Table HQ', line: 'Welcome to HQ. Yes, it\'s a kitchen table. This is where the real work happens.' },
+    { id: 'laptop', title: 'Kitchen Table HQ', line: 'Welcome to HQ. Yes, it\'s a kitchen table. This is where the real work happens.', bean: 'bean-bed', nudge: 'That\'s my bed by the wall. Might be something in it. 🐾' },
     { id: 'fridge', title: 'The fridge', line: 'The fridge has the real rules. Docs live in YOUR repo, so nothing ever goes missing.' },
     { id: 'contact', title: 'Let\'s talk', line: 'That\'s the tour! Want to talk? The email\'s right here. I\'ll be by the door, wagging.' }
 ];
 const BARKS = ['Woof!', 'Bork bork!', '*happy tail wag*', 'Arf! (translation: hire this human)', '🐾 Pebbles, Head of Morale, reporting for duty'];
 const NI = ['Ni!', 'Ni! Ni!', 'We are the Knights Who Say... Ni!', 'We want... a shrubbery!', 'One that looks nice. And not too expensive.'];
+// The Black Knight: guarding, then (after the grenade) gamely carrying on
+const KNIGHT_GUARD = ['None shall pass.', 'None shall pass!', 'I move for no barista.', 'Have at you!', 'Your shrubbery is safe with me. Nobody else\'s is.'];
+const KNIGHT_BEATEN = ['\'Tis but a scratch.', 'It\'s just a flesh wound.', 'Come back! I\'ll nibble your ankles!', 'All right, we\'ll call it a draw.'];
+// The Norwegian Blue: Pebbles does the shop-keeping, badly
+const PARROT = [
+    ['parrot', '…'],
+    ['corgi', 'Lovely plumage, the Norwegian Blue 🐾'],
+    ['corgi', 'It\'s not dead. It\'s resting.'],
+    ['corgi', 'Pining for the fjords, probably.'],
+    ['parrot', '…'],
+    ['corgi', 'Fine. It\'s an ex-parrot. Please don\'t tell the fridge. 🐾']
+];
+// Argument Clinic, Room 12A: you pick a line, the clinic disagrees with it
+const ARGUMENT = [
+    ['Is this the right room for an argument?', 'I\'ve told you once.'],
+    ['No you haven\'t.', 'Yes I have.'],
+    ['When?', 'Just now.'],
+    ['That\'s not an argument, that\'s just contradiction.', 'No it isn\'t.'],
+    ['An argument is reasons, leading somewhere.', 'Is it?'],
+    ['Yes!', 'No.'],
+    ['This is pointless.', 'Ah, I\'m afraid that\'s your five minutes.'],
+    ['That was never five minutes!', 'Agreed. Disagreed. Whichever costs more.'],
+    ['I want to complain.', 'Complaints are next door. For a conversation that actually goes somewhere, try hello@iron-pig.com.']
+];
 
 let session = null;
 
@@ -138,6 +171,11 @@ class CafeSession {
         this.cleanup = [];
         this.niIndex = 0;
         this.barkIndex = 0;
+        this.knightIndex = 0;
+        this.parrotIndex = 0;
+        this.lightFlips = 0;
+        this.jumps = [];
+        this.holding = null;
         this.keyBuffer = '';
         this.frameTimes = [];
         this.lastDogCheck = 0;
@@ -606,6 +644,26 @@ class CafeSession {
             case 'shrubbery':
                 this.hud.say('shrubbery', 'It is a good shrubbery. I like the laurels particularly.');
                 break;
+            case 'knight':
+                if (fromMenu || this.holding === 'grenade') await this.goTo(info);
+                if (this.holding === 'grenade') this.throwGrenade();
+                else this.challengeKnight();
+                break;
+            case 'grenade':
+                this.takeGrenade();
+                break;
+            case 'parrot':
+                if (fromMenu) await this.goTo(info);
+                this.inspectParrot();
+                break;
+            case 'argument':
+                if (!(await this.goTo(info))) break;
+                this.openArgument();
+                break;
+            case 'tap':
+                if (fromMenu) await this.goTo(info);
+                this.toggleTap();
+                break;
             default:
                 break;
         }
@@ -646,6 +704,13 @@ class CafeSession {
         if (this.mode !== 'play') return;
         const dog = this.world.corgi.root.position;
         const me = this.player.position;
+        // Enough hopping about and the Ministry takes an interest
+        const now = performance.now();
+        this.jumps = this.jumps.filter(t => now - t < 6000).concat(now);
+        if (this.jumps.length >= 6 && !this.trophies.has('silly')) {
+            this.hud.say('corgi', 'That\'s a very silly walk. The Ministry would fund that. 🎩', 3200);
+            this.unlock('silly');
+        }
         if (Math.hypot(dog.x - me.x, dog.z - me.z) < 3.5) {
             setTimeout(() => this.world.corgi.doHop(), 180);
             if (Math.random() < 0.35) this.hud.say('corgi', 'Boing! 🐾', 1200);
@@ -664,6 +729,13 @@ class CafeSession {
     toggleNight() {
         const to = this.world.getNight() > 0.5 ? 0 : 1;
         this.unlock('night');
+        // Flick it enough times and someone unexpected turns up
+        this.lightFlips++;
+        if (this.lightFlips === 5) {
+            this.hud.say('corgi', 'NOBODY expects the Spanish Inquisition! 🐾', 2600);
+            this.later(() => this.hud.say('corgi', 'Our chief weapon is surprise. And tidy commit messages.', 3600), 2800);
+            this.unlock('inquisition');
+        }
         this.hud.announce(to ? 'Lights down.' : 'Lights up.');
         this.fadeLights(to, 1200);
     }
@@ -718,9 +790,220 @@ class CafeSession {
             this.world.shrubCollider.disabled = false;
             this.hud.say('plant', 'All four beans! The Knights accept this… shrubbery. 🌳', 4200);
             this.world.corgi.doHop();
+            this.spawnKnight();
         } else {
             this.hud.toast(`Bean ${found} of ${total}`, `You found ${bean.label}.`, '☕');
         }
+    }
+
+    /** setTimeout that's cleared if the café closes first */
+    later(fn, ms) {
+        this.timeouts = this.timeouts || [];
+        const id = setTimeout(() => { if (this.mode === 'play') fn(); }, ms);
+        this.timeouts.push(id);
+        return id;
+    }
+
+    wait(ms) {
+        return new Promise(resolve => this.later(resolve, ms));
+    }
+
+    /* ---------- The Black Knight ---------- */
+
+    spawnKnight() {
+        const w = this.world;
+        w.knight.root.visible = true;
+        w.knightShadow.visible = true;
+        w.knightCollider.disabled = false;
+        w.grenade.visible = true;
+        this.later(() => {
+            w.knight.flourish();
+            this.hud.say('knight', 'None shall pass.', 2600);
+        }, 4600);
+        this.later(() => this.hud.say('corgi', 'Psst. Something holy just turned up on the café table 🐾', 3600), 7600);
+    }
+
+    challengeKnight() {
+        const k = this.world.knight;
+        if (k.defeated) {
+            this.hud.say('knight', KNIGHT_BEATEN[this.knightIndex % KNIGHT_BEATEN.length]);
+        } else {
+            k.flourish();
+            this.hud.say('knight', KNIGHT_GUARD[this.knightIndex % KNIGHT_GUARD.length]);
+            if (this.world.grenade.visible && this.knightIndex === 1) {
+                this.later(() => this.hud.say('corgi', 'He won\'t budge. Maybe something on the café table can help? 🐾', 3400), 2400);
+            }
+        }
+        this.knightIndex++;
+    }
+
+    takeGrenade() {
+        const w = this.world;
+        if (!w.grenade.visible) return;
+        w.grenade.visible = false;
+        this.holding = 'grenade';
+        this.hud.setHolding('💥 Throw the Holy Hand Grenade', () => this.activate('knight', { fromMenu: true }));
+        this.hud.toast('The Holy Hand Grenade of Antioch', 'Count to three. Three is the number. Then click the Black Knight.', '✨');
+    }
+
+    async throwGrenade() {
+        if (this.throwing) return;
+        this.throwing = true;
+        const w = this.world;
+        const k = w.knight;
+        this.holding = null;
+        this.hud.setHolding(null);
+        this.hud.say('corgi', 'One… two… five!', 1500);
+        await this.wait(1600);
+        this.hud.say('corgi', 'Three, my lord! THREE! 🐾', 1300);
+        await this.wait(1300);
+
+        const target = k.root.position.clone().add(new THREE.Vector3(0, 1.15, 0));
+        const land = () => {
+            w.thrown.visible = false;
+            const { hw, D } = w.bounds;
+            k.blowUp(w.scene, { reducedMotion: this.reducedMotion(), bounds: { x0: -hw + 0.25, x1: hw - 0.25, z0: 0.3, z1: D - 0.25 } });
+            this.boom(target);
+            w.corgi.doBark();
+            this.unlock('grenade');
+            this.later(() => this.hud.say('knight', '\'Tis but a scratch.', 2400), 900);
+            this.later(() => this.hud.say('knight', 'It\'s just a flesh wound.', 2600), 3500);
+            this.knightIndex = 2;
+            this.throwing = false;
+        };
+        if (this.reducedMotion()) {
+            land();
+            return;
+        }
+        // A lob from just below the eye line, in an arc, spinning
+        const forward = new THREE.Vector3();
+        this.camera.getWorldDirection(forward);
+        const start = this.camera.position.clone().addScaledVector(forward, 0.4).add(new THREE.Vector3(0, -0.25, 0));
+        const g = w.thrown;
+        g.position.copy(start);
+        g.visible = true;
+        const t0 = performance.now();
+        const fly = () => {
+            if (this.mode !== 'play') return;
+            const t = Math.min(1, (performance.now() - t0) / 900);
+            g.position.lerpVectors(start, target, t);
+            g.position.y += Math.sin(Math.PI * t) * 0.7;
+            g.rotation.set(t * 9, t * 4, 0);
+            if (t < 1) requestAnimationFrame(fly);
+            else land();
+        };
+        fly();
+    }
+
+    /** One soft golden swell where the grenade lands. Never flashes. */
+    boom(at) {
+        const b = this.world.blast;
+        if (this.reducedMotion()) return;
+        b.position.copy(at);
+        b.visible = true;
+        const t0 = performance.now();
+        const step = () => {
+            const t = Math.min(1, (performance.now() - t0) / 700);
+            b.scale.setScalar(0.2 + easeInOutCubic(t) * 2.6);
+            b.material.opacity = t < 0.25 ? t / 0.25 : 1 - (t - 0.25) / 0.75;
+            if (t < 1 && this.mode === 'play') requestAnimationFrame(step);
+            else b.visible = false;
+        };
+        step();
+    }
+
+    /* ---------- Flying Circus ---------- */
+
+    inspectParrot() {
+        const [who, line] = PARROT[this.parrotIndex];
+        this.hud.say(who, line, who === 'parrot' ? 1600 : undefined);
+        if (this.parrotIndex === PARROT.length - 1) this.unlock('parrot');
+        this.parrotIndex = (this.parrotIndex + 1) % PARROT.length;
+    }
+
+    openArgument() {
+        const SESSION = 300; // five minutes, allegedly
+        const body = el('div', 'cafe-board cafe-argue');
+        const clock = el('span', 'cafe-argue__clock', { 'aria-label': 'Time left' });
+        const fill = el('span');
+        const log = el('ol', 'cafe-argue__log', { role: 'log', 'aria-live': 'polite' });
+        const footer = el('div', 'cafe-argue__footer');
+        body.append(
+            el('div', 'cafe-argue__head', {}, [el('span', '', { text: 'Room 12A · five minutes, £1' }), clock]),
+            el('div', 'cafe-argue__bar', { 'aria-hidden': 'true' }, [fill]),
+            log,
+            footer
+        );
+        let step = 0;
+        let left = SESSION;
+        const quick = this.reducedMotion();
+        const setClock = seconds => {
+            left = Math.max(0, seconds);
+            clock.textContent = `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
+            clock.classList.toggle('is-up', left === 0);
+            fill.style.width = `${(left / SESSION) * 100}%`;
+        };
+        const addLine = (who, text) => {
+            const li = el('li', `cafe-argue__line cafe-argue__line--${who}`, {}, [
+                el('span', 'cafe-argue__who', { text: who === 'you' ? 'You' : 'Clinic' }), el('span', '', { text })
+            ]);
+            log.appendChild(li);
+            log.scrollTop = log.scrollHeight;
+            return li;
+        };
+        const focusFooter = () => footer.querySelector('button')?.focus({ preventScroll: true });
+        const render = () => {
+            footer.innerHTML = '';
+            if (step < ARGUMENT.length) {
+                const say = el('button', 'cafe-argue__say', { type: 'button' }, [
+                    el('span', 'cafe-argue__say-label', { text: 'Say' }),
+                    el('span', 'cafe-argue__say-text', { text: ARGUMENT[step][0] }),
+                    el('span', 'cafe-argue__say-go', { text: '↵', 'aria-hidden': 'true' })
+                ]);
+                say.addEventListener('click', () => {
+                    const [mine, theirs] = ARGUMENT[step];
+                    say.disabled = true;
+                    addLine('you', mine);
+                    // A beat before the clinic disagrees, like it's thinking about it
+                    const typing = el('li', 'cafe-argue__line cafe-argue__line--clinic cafe-argue__typing', { 'aria-hidden': 'true' }, [el('i'), el('i'), el('i')]);
+                    log.appendChild(typing);
+                    log.scrollTop = log.scrollHeight;
+                    this.later(() => {
+                        // Closed mid-sentence: the clinic has nobody to disagree with
+                        if (!body.isConnected || !this.hud.isPanelOpen()) return;
+                        typing.remove();
+                        addLine('clinic', theirs);
+                        // The clock runs fast, then "runs out" well short of five minutes
+                        setClock(step >= 6 ? 0 : SESSION - (step + 1) * 25);
+                        step++;
+                        if (step === ARGUMENT.length) this.unlock('argument');
+                        render();
+                        focusFooter();
+                    }, quick ? 150 : 700);
+                });
+                footer.appendChild(say);
+            } else {
+                const talk = el('button', 'cafe-btn cafe-btn--accent cafe-btn--block', { type: 'button', text: 'Have a real conversation ☕' });
+                talk.addEventListener('click', () => { this.hud.closePanel(); this.openContact(); });
+                const again = el('button', 'cafe-argue__again', { type: 'button', text: 'Another five minutes (£1)' });
+                again.addEventListener('click', () => { step = 0; log.innerHTML = ''; setClock(SESSION); render(); focusFooter(); });
+                footer.append(talk, again);
+            }
+        };
+        setClock(SESSION);
+        render();
+        this.hud.openPanel('Argument Clinic', body);
+    }
+
+    toggleTap() {
+        const tap = this.world.tap;
+        tap.on = !tap.on;
+        const info = this.world.interactables.get('tap');
+        info.verb = tap.on ? 'Turn off' : 'Turn on';
+        this.hud.announce(tap.on ? 'The tap is running.' : 'Tap off.');
+        if (tap.on) this.unlock('tap');
+        // Hovered things keep their old label until the pointer moves
+        this.centerTarget = null;
     }
 
     /* ==============================================================
@@ -779,7 +1062,8 @@ class CafeSession {
         this.hud.closePanel();
         this.hud.hideControls(true);
         this.tour = { index: 0, timer: null, paused: false, arrived: false };
-        this.hud.say('corgi', 'Follow me! I\'ll show you round 🐾', 2200);
+        const left = this.world.beans.filter(b => !b.found).length;
+        this.hud.say('corgi', left ? 'Follow me! Keep an eye out for coffee beans on the way 🐾' : 'Follow me! I\'ll show you round 🐾', 2400);
         this.runTourStop();
     }
 
@@ -806,10 +1090,25 @@ class CafeSession {
         const stop = TOUR[tour.index];
         tour.arrived = true;
         this.markVisited(stop.id);
-        const ms = this.hud.say('corgi', stop.line);
+        const ms = this.hud.say('corgi', this.tourLine(stop));
         // Long enough to read the line and look around, then move on
         // (unless they've paused to poke at something)
         if (!tour.paused) tour.timer = setTimeout(() => this.nextTourStop(), ms + 1800);
+    }
+
+    /** A stop's line, plus a bean hint if one's still hidden nearby, plus a tally at the end */
+    tourLine(stop) {
+        let line = stop.line;
+        const bean = stop.bean && this.world.beans.find(b => b.id === stop.bean);
+        if (bean && !bean.found) line += ` ${stop.nudge}`;
+        if (stop === TOUR[TOUR.length - 1]) {
+            const found = this.world.beans.filter(b => b.found).length;
+            const total = this.world.beans.length;
+            line += found === total
+                ? ' And you found all four beans. Watch out for the knight by the door.'
+                : ` You\'ve found ${found} of ${total} beans. Find them all and see who turns up.`;
+        }
+        return line;
     }
 
     /** Clicking or walking around mid-tour pauses it rather than ending it */
@@ -908,7 +1207,7 @@ class CafeSession {
         this.world.beans.forEach(bean => {
             if (bean.found) return;
             const g = bean.group.position;
-            if (Math.hypot(g.x - p.x, g.z - p.z) < 0.85 && Math.abs(g.y - p.y) < 1.7) this.collectBean(bean);
+            if (Math.hypot(g.x - p.x, g.z - p.z) < 1.1 && Math.abs(g.y - p.y) < 1.8) this.collectBean(bean);
         });
     }
 
@@ -937,6 +1236,9 @@ class CafeSession {
         place('machine', machine.center.clone().add(new THREE.Vector3(0, 0.35, 0)));
         const shrub = this.world.interactables.get('shrubbery');
         place('shrubbery', shrub.center.clone().add(new THREE.Vector3(0, 0.6, 0)));
+        place('knight', this.world.knight.head.getWorldPosition(v).add(new THREE.Vector3(0, 0.45, 0)).clone());
+        const parrot = this.world.interactables.get('parrot');
+        place('parrot', parrot.center.clone().add(new THREE.Vector3(0, 0.3, 0)));
     }
 
     /* ==============================================================
@@ -1081,7 +1383,7 @@ class CafeSession {
             const who = (data.get('name') || '').trim();
             return {
                 size: data.get('size'), blend: data.get('blend'), shots: data.get('shots'), who,
-                text: `1 × ${data.get('size')}, ${data.get('blend')} blend, ${data.get('shots').toLowerCase()} shot${who ? ` — for ${who}` : ''}`
+                text: `1 × ${data.get('size')}, ${data.get('blend')} blend, ${data.get('shots').toLowerCase()} shot${who ? `, for ${who}` : ''}`
             };
         };
         const refresh = () => { ticket.textContent = `🧾 ${summary().text}`; };
@@ -1097,9 +1399,9 @@ class CafeSession {
                 ``,
                 `I'd like to order: ${s.text}.`,
                 ``,
-                `Size — ${s.size === 'Espresso' ? 'a quick fix' : s.size === 'Flat white' ? 'a proper project' : 'an ongoing partnership'}`,
-                `Blend — ${s.blend === 'Build' ? 'build something' : s.blend === 'Fix' ? 'fix something' : 'lead a team'}`,
-                `Urgency — ${s.shots === 'Single' ? 'whenever suits' : s.shots === 'Double' ? 'soon' : 'it\'s on fire'}`,
+                `Size: ${s.size === 'Espresso' ? 'a quick fix' : s.size === 'Flat white' ? 'a proper project' : 'an ongoing partnership'}`,
+                `Blend: ${s.blend === 'Build' ? 'build something' : s.blend === 'Fix' ? 'fix something' : 'lead a team'}`,
+                `Urgency: ${s.shots === 'Single' ? 'whenever suits' : s.shots === 'Double' ? 'soon' : 'it\'s on fire'}`,
                 ``,
                 extra ? `More context:\n${extra}\n` : '',
                 `(Ordered from the café at iron-pig.com)`
@@ -1119,7 +1421,7 @@ class CafeSession {
         const body = el('div', 'cafe-board');
         body.append(
             el('p', 'cafe-contact__lead', { text: 'CEO, CTO and Chief Coffee Officer of Iron Pig Ltd. Also the cleaner.' }),
-            el('p', '', { text: 'Iron Pig is a one-person software consultancy run from this kitchen table (and a few London coffee shops). No account managers, no juniors learning on your budget: when you hire Iron Pig, you get me.' }),
+            el('p', '', { text: 'Iron Pig is a one-person software consultancy run from this kitchen table (and a few London coffee shops). No account managers, no hand-offs: when you hire Iron Pig, you get me.' }),
             cloneExtra('#contact-info-panel'),
             el('p', 'cafe-note', { text: 'Pebbles handles morale. The fridge handles strategy.' }),
             this.orderButton()
@@ -1135,7 +1437,7 @@ class CafeSession {
             ['Fix prod first.', 'Users before roadmaps. Always.'],
             ['No meetings about meetings.', 'Decisions get written down, then we move.'],
             ['Docs live in YOUR repo.', 'No secret recipes. If I get hit by a bus, you\'re fine.'],
-            ['Buy oat milk.', 'Some things are non-negotiable.']
+            ['Buy Spam. And oat milk.', 'Spam, spam, eggs and spam. Some things are non-negotiable.']
         ].forEach(([title, text], i) => notes.appendChild(el('li', `cafe-fridge__note cafe-fridge__note--${i}`, {}, [el('strong', '', { text: title }), el('span', '', { text })])));
         body.append(notes, cloneExtra('#tech-stack-panel'));
         this.hud.openPanel('Notes on the fridge', body, { wide: true });
@@ -1170,7 +1472,7 @@ class CafeSession {
                 <dt>Get somewhere fast</dt><dd>“Jump to” in the corner, or follow Pebbles 🐾</dd>
                 <dt>Leave</dt><dd><kbd>Esc</kbd>, the Exit button, the front door, or your browser's back button</dd>
             </dl>
-            <p class="cafe-note">There are four coffee beans hidden around the café, ten achievements, and at least one shrubbery. Nothing can be failed and nothing is timed.</p>`;
+            <p class="cafe-note">There are four coffee beans hidden around the café, ${ACHIEVEMENTS.length} achievements, at least one shrubbery, and someone who won't let you pass. Nothing can be failed and nothing is timed.</p>`;
         this.hud.openPanel('How to play', body);
     }
 
@@ -1212,6 +1514,7 @@ class CafeSession {
 
     destroy() {
         this.mode = 'gone';
+        (this.timeouts || []).forEach(clearTimeout);
         this.cleanup.forEach(off => off());
         clearTimeout(this.niTimer);
         if (this.tour) clearTimeout(this.tour.timer);
@@ -1242,7 +1545,13 @@ function hintFor(id) {
         hq: 'Staff only. (Go on.)',
         night: 'It\'s dim in here. There\'s a switch by the door.',
         neon: 'Signs can be persuaded.',
-        gallery: 'There\'s art on the walls. Look closer.'
+        gallery: 'There\'s art on the walls. Look closer.',
+        grenade: 'Find all four beans. Then count to three. Not five.',
+        parrot: 'There\'s a very quiet bird in the kitchen.',
+        argument: 'Room 12A. Five minutes, £1.',
+        inquisition: 'Nobody expects it. Try the lights. A lot.',
+        silly: 'Jump about a bit. Sillier.',
+        tap: 'The kitchen sink works. Probably.'
     }[id] || 'Keep exploring.';
 }
 
@@ -1305,7 +1614,7 @@ function readContent() {
     const helpSpans = helpNode ? [...helpNode.querySelectorAll('.wifi-sign__content > span')] : [];
     const helpRows = [];
     for (let i = 0; i + 1 < helpSpans.length; i += 2) helpRows.push({ label: text(helpSpans[i]), value: text(helpSpans[i + 1]) });
-    const help = { kind: 'help', title: text(helpNode?.querySelector('.board-toggle')) || 'How I Help', rows: helpRows, hint: 'Click to read more →' };
+    const help = { kind: 'help', title: text(helpNode?.querySelector('.board-toggle')) || 'How I Help', rows: helpRows, hint: 'Read more →' };
     const builds = [...document.querySelectorAll('.build-list li')].map(li => {
         const icon = text(li.querySelector('.build-list__icon'));
         return { icon, text: text(li).replace(icon, '').trim() };
@@ -1315,7 +1624,7 @@ function readContent() {
         title: text(document.querySelector('#wifi-sign-btn .board-toggle')) || 'Recent Builds',
         items: builds,
         footer: 'See full showcase →',
-        hint: 'Click for details →'
+        hint: 'Details →'
     };
     const contactNode = document.getElementById('contact-info-btn');
     const contactRows = contactNode ? [...contactNode.querySelectorAll('.contact-info__item')].map(item => {
@@ -1324,7 +1633,7 @@ function readContent() {
         const value = mail ? text(mail) : text(item).replace(label, '').trim();
         return { label, value };
     }) : [];
-    const contact = { kind: 'contact', title: text(contactNode?.querySelector('.board-toggle')) || 'Let\'s Talk', rows: contactRows, hint: 'Click to say hello →' };
+    const contact = { kind: 'contact', title: text(contactNode?.querySelector('.board-toggle')) || 'Let\'s Talk', rows: contactRows, hint: 'Say hello →' };
     return { boards: { services, help, builds: buildsBoard, contact }, builds };
 }
 

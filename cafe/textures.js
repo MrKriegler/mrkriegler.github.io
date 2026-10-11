@@ -478,9 +478,14 @@ export function labelTexture(width, height, background, lines, { border, radius 
     ctx.textBaseline = 'top';
     lines.forEach(line => {
         const family = line.script ? SCRIPT_FONT : BODY_FONT;
-        ctx.font = `${line.italic ? 'italic ' : ''}${line.weight || 400} ${line.size}px ${family}`;
+        const font = size => `${line.italic ? 'italic ' : ''}${line.weight || 400} ${size}px ${family}`;
+        ctx.font = font(line.size);
         ctx.fillStyle = line.color || COLORS.text;
         setSpacing(ctx, line.spacing || 0);
+        // Shrink a line that's too wide rather than clip it at the edges
+        const room = width - 32;
+        const measured = ctx.measureText(line.text).width;
+        if (measured > room) ctx.font = font(Math.floor(line.size * room / measured));
         ctx.fillText(line.text, width / 2, y + line.size * 0.15);
         setSpacing(ctx, 0);
         y += line.size * 1.3;
@@ -568,7 +573,8 @@ export function skylineTexture(night) {
         }
         ctx.fillStyle = '#f5f1d8';
         ctx.beginPath();
-        ctx.arc(820, 90, 34, 0, Math.PI * 2);
+        // Inside the middle 40%, which is all the narrowest pane (the door) shows
+        ctx.arc(600, 80, 30, 0, Math.PI * 2);
         ctx.fill();
     } else {
         ctx.fillStyle = 'rgba(255,255,255,0.85)';

@@ -496,6 +496,40 @@ body.cafe-open main * {
     border-top-color: #2a2520;
 }
 
+/* The Black Knight speaks from inside a helmet */
+.cafe-bubble--knight {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: #f5f5f5;
+    background: #141416;
+    border: 2px solid #c3cacd;
+}
+
+.cafe-bubble--knight::after {
+    bottom: -9px;
+    border-top-color: #141416;
+}
+
+/* A steel-coloured tail behind the black one, so the border runs round it */
+.cafe-bubble--knight::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -13px;
+    margin-left: -11px;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-top: 12px solid #c3cacd;
+}
+
+.cafe-bubble--parrot {
+    color: #1f4f9e;
+    background: #e6f0fb;
+}
+
+.cafe-bubble--parrot::after {
+    border-top-color: #e6f0fb;
+}
+
 /* ---------- Subtitles ---------- */
 .cafe-subtitle {
     position: absolute;
@@ -1244,4 +1278,214 @@ body.cafe-open main * {
     .cafe-panel__title {
         font-size: 20px;
     }
+}
+
+/* ---------- Carried item (the Holy Hand Grenade) ---------- */
+.cafe-item {
+    animation: cafe-item-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes cafe-item-glow {
+    0%, 100% { box-shadow: var(--cafe-shadow); }
+    50% { box-shadow: 0 0 0 4px rgba(217, 180, 90, 0.55), var(--cafe-shadow); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cafe-item { animation: none; }
+}
+
+/* ---------- Argument Clinic ---------- */
+.cafe-argue__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--cafe-muted);
+}
+
+.cafe-argue__clock {
+    padding: 2px 10px;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--cafe-accent);
+    border: 1px solid rgba(212, 225, 87, 0.4);
+    border-radius: 999px;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.cafe-argue__clock.is-up {
+    color: #ff9b8a;
+    border-color: rgba(255, 155, 138, 0.5);
+}
+
+.cafe-argue__bar {
+    height: 3px;
+    margin: 10px 0 4px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+}
+
+.cafe-argue__bar span {
+    display: block;
+    height: 100%;
+    background: var(--cafe-accent);
+    transition: width 0.5s ease;
+}
+
+/* Fixed height, newest at the bottom, older lines fade out at the top */
+.cafe-argue__log {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: min(44vh, 360px);
+    margin: 0 0 14px;
+    padding: 28px 2px 4px;
+    overflow-y: auto;
+    list-style: none;
+    scroll-behavior: smooth;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 32px);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 32px);
+}
+
+.cafe-argue__log > :first-child {
+    margin-top: auto;
+}
+
+.cafe-argue__line {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-self: flex-start;
+    max-width: 78%;
+    padding: 9px 14px 10px;
+    font-size: 15px;
+    line-height: 1.4;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 14px 14px 14px 4px;
+    animation: cafe-argue-in 0.25s ease-out;
+}
+
+.cafe-argue__line--you {
+    align-self: flex-end;
+    background: rgba(212, 225, 87, 0.15);
+    border-radius: 14px 14px 4px 14px;
+}
+
+.cafe-argue__who {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--cafe-label);
+}
+
+.cafe-argue__line--you .cafe-argue__who {
+    color: var(--cafe-accent);
+}
+
+/* The clinic, thinking about how to disagree */
+.cafe-argue__typing {
+    flex-direction: row;
+    gap: 5px;
+    padding: 14px 16px;
+}
+
+.cafe-argue__typing i {
+    width: 7px;
+    height: 7px;
+    background: var(--cafe-muted);
+    border-radius: 50%;
+    animation: cafe-argue-dot 1s ease-in-out infinite;
+}
+
+.cafe-argue__typing i:nth-child(2) { animation-delay: 0.15s; }
+.cafe-argue__typing i:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes cafe-argue-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes cafe-argue-dot {
+    0%, 60%, 100% { opacity: 0.3; transform: none; }
+    30% { opacity: 1; transform: translateY(-3px); }
+}
+
+.cafe-argue__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Your next line, as a reply chip rather than a shouty button */
+.cafe-argue__say {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 16px;
+    font: inherit;
+    font-size: 15px;
+    text-align: left;
+    color: var(--cafe-text);
+    background: rgba(212, 225, 87, 0.08);
+    border: 2px solid rgba(212, 225, 87, 0.55);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.cafe-argue__say:hover {
+    background: rgba(212, 225, 87, 0.16);
+    border-color: var(--cafe-accent);
+}
+
+.cafe-argue__say:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.cafe-argue__say-label {
+    flex: none;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--cafe-accent);
+}
+
+.cafe-argue__say-text {
+    flex: 1;
+}
+
+.cafe-argue__say-go {
+    flex: none;
+    color: var(--cafe-accent);
+}
+
+.cafe-argue__again {
+    align-self: center;
+    padding: 6px 10px;
+    font: inherit;
+    font-size: 13px;
+    color: var(--cafe-muted);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+
+.cafe-argue__again:hover {
+    color: var(--cafe-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cafe-argue__log { scroll-behavior: auto; }
+    .cafe-argue__line, .cafe-argue__typing i { animation: none; }
 }

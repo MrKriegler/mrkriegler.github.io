@@ -7,7 +7,7 @@
  */
 import * as THREE from '../vendor/three/three.r186.min.js';
 import {
-    toon, lambert, glowMaterial, outline, rbox, cyl, sphere, matrix,
+    toon, lambert, glowMaterial, outline, rbox, cyl, sphere, capsule, matrix,
     Batcher, glowConeMaterial, compactGroup
 } from './kit.js';
 import {
@@ -17,6 +17,7 @@ import {
     logoTexture
 } from './textures.js';
 import { Corgi } from './corgi.js';
+import { Knight, holyHandGrenade } from './knight.js';
 import { hangGallery } from './gallery.js';
 
 export const PX = 0.004;
@@ -221,9 +222,16 @@ export function buildWorld({ layout, content, logo }) {
         const handle = new THREE.Mesh(new THREE.TorusGeometry(0.022, 0.007, 8, 16), toon('#ffffff'));
         handle.position.set(0.06, 0, 0);
         cup.add(handle);
+        // Coffee in the cup, just under the rim
+        const crema = new THREE.Mesh(new THREE.CircleGeometry(0.05, 24), toon('#8a5a3c'));
+        crema.rotation.x = -Math.PI / 2;
+        crema.position.y = 0.0385;
+        cup.add(crema);
         cups.push(cup);
-        const stream = new THREE.Mesh(cyl(0.006, 0.006, 0.19, 8), toon('#74372b'));
-        stream.geometry.translate(0, -0.095, 0);
+        // Long enough to reach into the cup even at the shortest wobble
+        // (the pour scales it to 85-90%); the cup hides the extra
+        const stream = new THREE.Mesh(cyl(0.006, 0.006, 0.24, 8), toon('#74372b'));
+        stream.geometry.translate(0, -0.12, 0);
         stream.position.set(x, 0.405, 0.3);
         stream.scale.y = 0.001;
         machine.add(stream);
@@ -338,9 +346,9 @@ export function buildWorld({ layout, content, logo }) {
     const signTex = track(labelTexture(256, 320, COLORS.chalkWarm, [
         { text: 'Today\'s', size: 34, script: true, color: COLORS.text },
         { text: 'special', size: 34, script: true, color: COLORS.text },
-        { text: 'A SENIOR', size: 26, weight: 700, color: COLORS.accent, spacing: 2 },
-        { text: 'ENGINEER', size: 26, weight: 700, color: COLORS.accent, spacing: 2 },
-        { text: 'no foam', size: 24, italic: true, color: COLORS.label }
+        { text: 'FRESHLY', size: 26, weight: 700, color: COLORS.accent, spacing: 2 },
+        { text: 'SHIPPED', size: 26, weight: 700, color: COLORS.accent, spacing: 2 },
+        { text: 'hold the drama', size: 24, italic: true, color: COLORS.label }
     ], { border: '#8B6F47' }));
     const aBoard = new THREE.Mesh(new THREE.PlaneGeometry(0.2, 0.25), toon('#ffffff', { map: signTex }));
     aBoard.position.set(0, 0.125, 0.03);
@@ -546,6 +554,14 @@ export function buildWorld({ layout, content, logo }) {
     scene.remove(frontWall);
     front.add(frontWall);
     const dayTex = track(skylineTexture(false));
+    // A plane showing the middle of the 2:1 skyline at its true proportions
+    const skylinePane = (pw, ph) => {
+        const g = new THREE.PlaneGeometry(pw, ph);
+        const keep = Math.min(1, pw / ph / 2);
+        const uv = g.attributes.uv;
+        for (let i = 0; i < uv.count; i++) uv.setX(i, 0.5 + (uv.getX(i) - 0.5) * keep);
+        return g;
+    };
     const nightTex = track(skylineTexture(true));
     const nightPanes = [];
     function windowView(x, y, z, w, h, rotY = 0, parent = front, depth = 0.8) {
@@ -553,10 +569,13 @@ export function buildWorld({ layout, content, logo }) {
         view.position.set(x, y, z);
         view.rotation.y = rotY;
         parent.add(view);
-        const day = new THREE.Mesh(new THREE.PlaneGeometry(w * 1.6, h * 1.5), glowMaterial({ map: dayTex }));
+        // The skyline is painted 2:1; crop its middle to the pane's shape
+        // instead of squashing it (that made the moon an egg)
+        const paneGeo = () => skylinePane(w * 1.6, h * 1.5);
+        const day = new THREE.Mesh(paneGeo(), glowMaterial({ map: dayTex }));
         day.position.z = -depth;
         view.add(day);
-        const night = new THREE.Mesh(new THREE.PlaneGeometry(w * 1.6, h * 1.5), glowMaterial({ map: nightTex, transparent: true, opacity: 0 }));
+        const night = new THREE.Mesh(paneGeo(), glowMaterial({ map: nightTex, transparent: true, opacity: 0 }));
         night.position.z = -depth + 0.01;
         view.add(night);
         nightPanes.push(night);
@@ -601,11 +620,11 @@ export function buildWorld({ layout, content, logo }) {
     doorLeaf.position.set(0, 1.1, 0.02);
     outline(doorLeaf);
     door.add(doorLeaf);
-    const doorGlassDay = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 1.0), glowMaterial({ map: dayTex }));
+    const doorGlassDay = new THREE.Mesh(skylinePane(0.8, 1.0), glowMaterial({ map: dayTex }));
     doorGlassDay.position.set(0, 1.45, -0.02);
     doorGlassDay.rotation.y = Math.PI;
     door.add(doorGlassDay);
-    const doorGlassNight = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 1.0), glowMaterial({ map: nightTex, transparent: true, opacity: 0 }));
+    const doorGlassNight = new THREE.Mesh(skylinePane(0.8, 1.0), glowMaterial({ map: nightTex, transparent: true, opacity: 0 }));
     doorGlassNight.position.set(0, 1.45, -0.026);
     doorGlassNight.rotation.y = Math.PI;
     door.add(doorGlassNight);
@@ -782,19 +801,43 @@ export function buildWorld({ layout, content, logo }) {
     batch.add(new THREE.BoxGeometry(sinkW + 0.03, 0.006, 0.018), steel, matrix(sinkX, topY + 0.003, sz1 + 0.004), { outlined: false });
     batch.add(new THREE.BoxGeometry(0.018, 0.006, sinkD), steel, matrix(sx0 - 0.004, topY + 0.003, sinkZ), { outlined: false });
     batch.add(new THREE.BoxGeometry(0.018, 0.006, sinkD), steel, matrix(sx1 + 0.004, topY + 0.003, sinkZ), { outlined: false });
-    // Gooseneck tap on a round base, with two levers
+    // Gooseneck tap on a round base, with two levers (interactive: it runs)
     const tapZ = kz0 + 0.1;
-    batch.add(cyl(0.03, 0.034, 0.03, 20), steel, matrix(sinkX, topY + 0.015, tapZ));
+    const tap = new THREE.Group();
+    tap.position.set(sinkX, topY, tapZ);
+    kitchen.add(tap);
+    const tpart = (geo, mat, x, y, z, parent = tap) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); outline(m); parent.add(m); return m; };
+    tpart(cyl(0.03, 0.034, 0.03, 20), steel, 0, 0.015, 0);
     const neck = new THREE.CatmullRomCurve3([
         new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0.2, 0), new THREE.Vector3(0, 0.29, 0.05),
         new THREE.Vector3(0, 0.27, 0.13), new THREE.Vector3(0, 0.21, 0.155)
     ]);
-    batch.add(new THREE.TubeGeometry(neck, 32, 0.013, 12, false), steel, matrix(sinkX, topY + 0.02, tapZ));
-    batch.add(cyl(0.016, 0.013, 0.025, 12), steelDark, matrix(sinkX, topY + 0.02 + 0.2, tapZ + 0.155));
-    [-1, 1].forEach(side => {
-        batch.add(cyl(0.016, 0.018, 0.035, 14), steel, matrix(sinkX + side * 0.09, topY + 0.0175, tapZ));
-        batch.add(rbox(0.012, 0.012, 0.06, 0.004), steel, matrix(sinkX + side * 0.09, topY + 0.04, tapZ + 0.025, -0.35));
+    tpart(new THREE.TubeGeometry(neck, 32, 0.013, 12, false), steel, 0, 0.02, 0);
+    tpart(cyl(0.016, 0.013, 0.025, 12), steelDark, 0, 0.22, 0.155);
+    const tapLevers = [-1, 1].map(side => {
+        tpart(cyl(0.016, 0.018, 0.035, 14), steel, side * 0.09, 0.0175, 0);
+        const pivot = new THREE.Group();
+        pivot.position.set(side * 0.09, 0.035, 0);
+        tap.add(pivot);
+        const lever = tpart(rbox(0.012, 0.012, 0.06, 0.004), steel, 0, 0.005, 0.025, pivot);
+        lever.rotation.x = -0.35;
+        return pivot;
     });
+    // Running water: from the spout down into the basin
+    const waterLen = 0.2075 + sinkDepth;
+    const water = new THREE.Mesh(cyl(0.007, 0.009, waterLen, 10), toon('#a9d8f0', { transparent: true, opacity: 0.75 }));
+    water.geometry.translate(0, -waterLen / 2, 0);
+    water.position.set(0, 0.2075, 0.155);
+    water.visible = false;
+    water.raycast = () => {};
+    tap.add(water);
+    const splashRing = new THREE.Mesh(new THREE.RingGeometry(0.012, 0.03, 20), toon('#d6eef9', { transparent: true, opacity: 0.6 }));
+    splashRing.rotation.x = -Math.PI / 2;
+    splashRing.position.set(0, -sinkDepth + 0.012, 0.155);
+    splashRing.visible = false;
+    splashRing.raycast = () => {};
+    tap.add(splashRing);
+    const tapState = { on: false, flow: 0 };
     // A sponge and a bottle of washing-up liquid
     batch.add(rbox(0.1, 0.035, 0.065, 0.008), toon('#f2c94c'), matrix(sx1 + 0.12, topY + 0.0175, sinkZ + 0.05, 0, 0.3));
     batch.add(rbox(0.1, 0.012, 0.065, 0.004), toon('#4a8550'), matrix(sx1 + 0.12, topY + 0.041, sinkZ + 0.05, 0, 0.3), { outlined: false });
@@ -829,7 +872,7 @@ export function buildWorld({ layout, content, logo }) {
         ['Ship it.', '#f7e27a', -0.18, 1.62, 0.1],
         ['Fix prod first', '#ffb3c7', 0.08, 1.7, -0.08],
         ['No meetings about meetings', '#b8e3ff', -0.12, 1.1, -0.05],
-        ['Buy oat milk', '#c5f0a4', 0.12, 1.02, 0.12],
+        ['Buy Spam (& oat milk)', '#c5f0a4', 0.12, 1.02, 0.12],
         ['Docs live in YOUR repo', '#f7e27a', -0.05, 0.62, 0.04]
     ];
     notes.forEach(([text, color, nx, ny, rot]) => {
@@ -929,12 +972,101 @@ export function buildWorld({ layout, content, logo }) {
     batch.add(cyl(0.38, 0.4, 0.08, 32), toon('#7a9a7c'), matrix(bedX, 0.04, bedZ));
     batch.add(new THREE.TorusGeometry(0.33, 0.08, 12, 32), toon('#8fa890'), matrix(bedX, 0.11, bedZ, Math.PI / 2));
     batch.add(cyl(0.12, 0.09, 0.07, 24), toon('#c97a5f'), matrix(bedX - 0.6, 0.035, bedZ + 0.25));
-    const bowlLabel = new THREE.Mesh(new THREE.PlaneGeometry(0.42, 0.1), glowMaterial({
-        map: track(labelTexture(420, 100, null, [{ text: 'PEBBLES · HEAD OF MORALE', size: 34, weight: 700, color: '#2a2220', spacing: 2 }])), transparent: true
+    // Canvas wide enough for the whole title (the old one clipped both ends)
+    const bowlLabel = new THREE.Mesh(new THREE.PlaneGeometry(0.62, 0.1), glowMaterial({
+        map: track(labelTexture(620, 100, null, [{ text: 'PEBBLES · HEAD OF MORALE', size: 34, weight: 700, color: '#2a2220', spacing: 2 }])), transparent: true
     }));
     bowlLabel.position.set(bedX, 0.6, kz1 - 0.02);
     bowlLabel.rotation.y = Math.PI;
     kitchen.add(bowlLabel);
+
+    // A Norwegian Blue, on its back in its cage. Beautiful plumage.
+    const parrot = new THREE.Group();
+    parrot.position.set(runCX - 0.16, topY, kz0 + 0.34);
+    parrot.rotation.y = 0.4;
+    kitchen.add(parrot);
+    const brass = toon('#c9a24f');
+    const cageBase = new THREE.Mesh(cyl(0.14, 0.15, 0.03, 24), toon('#3a3230'));
+    cageBase.position.y = 0.015;
+    outline(cageBase);
+    parrot.add(cageBase);
+    for (let i = 0; i < 14; i++) {
+        const a = (i / 14) * Math.PI * 2;
+        const bar = new THREE.Mesh(cyl(0.004, 0.004, 0.3, 4), brass);
+        bar.position.set(Math.sin(a) * 0.13, 0.18, Math.cos(a) * 0.13);
+        parrot.add(bar);
+    }
+    [0.04, 0.33].forEach(y => {
+        const ring = new THREE.Mesh(new THREE.TorusGeometry(0.13, 0.006, 6, 32), brass);
+        ring.rotation.x = Math.PI / 2;
+        ring.position.y = y;
+        parrot.add(ring);
+    });
+    const dome = new THREE.Mesh(new THREE.SphereGeometry(0.13, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), brass);
+    dome.position.y = 0.33;
+    dome.scale.y = 0.45;
+    parrot.add(dome);
+    const hook = new THREE.Mesh(new THREE.TorusGeometry(0.025, 0.005, 6, 16), brass);
+    hook.position.y = 0.41;
+    parrot.add(hook);
+    const perch = new THREE.Mesh(cyl(0.006, 0.006, 0.24, 6), toon('#8f6038'));
+    perch.rotation.z = Math.PI / 2;
+    perch.position.y = 0.2;
+    parrot.add(perch);
+    // The bird: lying on its back, feet in the air. It's resting.
+    const bird = new THREE.Group();
+    bird.position.set(0, 0.075, 0);
+    parrot.add(bird);
+    const blue = toon('#2f6fd1');
+    const birdBody = new THREE.Mesh(capsule(0.032, 0.07, 4, 10), blue);
+    birdBody.rotation.z = Math.PI / 2;
+    outline(birdBody);
+    bird.add(birdBody);
+    const birdHead = new THREE.Mesh(sphere(0.03, 12, 10), blue);
+    birdHead.position.set(0.075, 0.004, 0);
+    outline(birdHead);
+    bird.add(birdHead);
+    const beak = new THREE.Mesh(new THREE.ConeGeometry(0.012, 0.03, 8), toon('#3a3230'));
+    beak.position.set(0.108, 0.0, 0);
+    beak.rotation.z = -Math.PI / 2 - 0.4;
+    bird.add(beak);
+    const tail = new THREE.Mesh(rbox(0.07, 0.008, 0.035, 0.003), toon('#1f4f9e'));
+    tail.position.set(-0.09, -0.004, 0);
+    bird.add(tail);
+    [-0.012, 0.012].forEach(z => {
+        const leg = new THREE.Mesh(cyl(0.003, 0.003, 0.04, 4), toon('#d0a050'));
+        leg.position.set(0.0, 0.05, z);
+        bird.add(leg);
+        const eye = new THREE.Mesh(rbox(0.012, 0.003, 0.003, 0.001), toon('#111111'));
+        eye.position.set(0.085, 0.022, z * 1.6);
+        eye.rotation.y = z > 0 ? 0.8 : -0.8;
+        bird.add(eye);
+    });
+    const parrotTag = new THREE.Mesh(new THREE.PlaneGeometry(0.2, 0.06), glowMaterial({
+        map: track(labelTexture(400, 120, '#f6f0e1', [{ text: 'Norwegian Blue', size: 44, script: true, color: '#1f4f9e' }], { border: '#8B6F47' }))
+    }));
+    parrotTag.position.set(0, 0.015, 0.152);
+    parrotTag.rotation.x = -0.25;
+    parrot.add(parrotTag);
+
+    // Argument Clinic, Room 12A: on the café wall, just past the kitchen door
+    const clinic = new THREE.Group();
+    clinic.position.set(-hw + 0.02, 1.48, doorZ1 + 0.38);
+    clinic.rotation.y = Math.PI / 2;
+    scene.add(clinic);
+    const clinicBack = new THREE.Mesh(rbox(0.44, 0.3, 0.02, 0.008), toon('#8B6F47'));
+    clinicBack.position.z = 0.0;
+    outline(clinicBack);
+    clinic.add(clinicBack);
+    const clinicFace = new THREE.Mesh(new THREE.PlaneGeometry(0.4, 0.26), glowMaterial({
+        map: track(labelTexture(480, 312, '#f3ead6', [
+            { text: 'ARGUMENT', size: 50, weight: 700, color: COLORS.text, spacing: 4 },
+            { text: 'CLINIC', size: 50, weight: 700, color: COLORS.text, spacing: 4 },
+            { text: 'Room 12A · 5 min £1', size: 30, italic: true, color: COLORS.accent }
+        ]))
+    }));
+    clinicFace.position.z = 0.012;
+    clinic.add(clinicFace);
 
     /* ------------------------------------------------------------------
        CORGI
@@ -959,16 +1091,16 @@ export function buildWorld({ layout, content, logo }) {
     const beans = beanSpots.map((spot, i) => {
         const group = new THREE.Group();
         group.position.copy(spot.pos);
-        const half = new THREE.Mesh(sphere(0.035, 16, 12), toon('#6b3e22'));
+        const half = new THREE.Mesh(sphere(0.045, 16, 12), toon('#6b3e22'));
         half.scale.set(1, 0.72, 0.8);
         outline(half);
         group.add(half);
-        const crease = new THREE.Mesh(new THREE.TorusGeometry(0.022, 0.004, 6, 16, Math.PI), toon('#3b2112'));
+        const crease = new THREE.Mesh(new THREE.TorusGeometry(0.028, 0.005, 6, 16, Math.PI), toon('#3b2112'));
         crease.rotation.set(0, Math.PI / 2, Math.PI / 2);
-        crease.position.y = 0.024;
+        crease.position.y = 0.031;
         group.add(crease);
         const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: beanGlowTex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
-        halo.scale.set(0.22, 0.22, 1);
+        halo.scale.set(0.3, 0.3, 1);
         halo.raycast = () => {};
         group.add(halo);
         group.userData.base = spot.pos.y;
@@ -994,10 +1126,64 @@ export function buildWorld({ layout, content, logo }) {
     const shrubSign = new THREE.Mesh(new THREE.PlaneGeometry(0.42, 0.14), glowMaterial({
         map: track(labelTexture(420, 140, '#f6f0e1', [{ text: 'One shrubbery.', size: 40, script: true, color: COLORS.counter }, { text: 'Not too expensive.', size: 26, italic: true, color: '#6b5a48' }], { border: '#8B6F47' }))
     }));
-    shrubSign.position.set(-0.45, 0.42, -0.1);
-    shrubSign.rotation.y = Math.PI * 0.85;
+    // On a stake in front of the tub, facing back into the room, clear of the leaves
+    const signFacing = Math.atan2(-0.6, -0.8);
+    const signStake = new THREE.Mesh(cyl(0.008, 0.008, 0.2, 6), toon('#8f6038'));
+    signStake.position.set(Math.sin(signFacing) * 0.42, 0.1, Math.cos(signFacing) * 0.42);
+    shrubbery.add(signStake);
+    shrubSign.position.set(Math.sin(signFacing) * 0.43, 0.24, Math.cos(signFacing) * 0.43);
+    shrubSign.rotation.set(-0.2, signFacing, 0, 'YXZ');
     shrubbery.add(shrubSign);
 
+    /* ------------------------------------------------------------------
+       THE BLACK KNIGHT & THE HOLY HAND GRENADE (after all four beans)
+       ------------------------------------------------------------------ */
+    // Guarding the front door: just to its right as you face it from inside,
+    // turned a little into the room
+    const knight = new Knight();
+    knight.root.position.set(-1.15, 0, D - 0.5);
+    knight.root.rotation.y = Math.atan2(0.25, -0.97);
+    knight.root.visible = false;
+    scene.add(knight.root);
+    const knightShadow = contactShadow(knight.root.position.x, knight.root.position.z, 0.7, 0.5);
+    knightShadow.visible = false;
+
+    // Brother Maynard left it on the café table, on a little cushion
+    const grenade = new THREE.Group();
+    grenade.position.set(tableX - 0.2, 0.8, tableZ + 0.14);
+    grenade.visible = false;
+    scene.add(grenade);
+    const cushion = new THREE.Mesh(rbox(0.16, 0.035, 0.16, 0.015), toon('#9e2b35'));
+    cushion.position.y = 0.0175;
+    outline(cushion);
+    grenade.add(cushion);
+    const orb = holyHandGrenade();
+    orb.position.y = 0.03;
+    grenade.add(orb);
+    const grenadeHalo = new THREE.Sprite(new THREE.SpriteMaterial({ map: beanGlowTex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+    grenadeHalo.scale.set(0.45, 0.45, 1);
+    grenadeHalo.position.y = 0.12;
+    grenadeHalo.raycast = () => {};
+    grenade.add(grenadeHalo);
+
+    // The one we throw (a copy, so the cushion stays put)
+    const thrown = holyHandGrenade();
+    thrown.visible = false;
+    scene.add(thrown);
+
+    // One soft golden bloom when it lands: a single swell, never a flicker
+    const blast = new THREE.Sprite(new THREE.SpriteMaterial({
+        map: track(radialTexture([[0, 'rgba(255,244,200,1)'], [0.35, 'rgba(255,214,120,0.7)'], [1, 'rgba(255,190,80,0)']])),
+        transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: 0
+    }));
+    blast.visible = false;
+    blast.raycast = () => {};
+    scene.add(blast);
+
+    /* ------------------------------------------------------------------
+       FLYING CIRCUS: a Norwegian Blue and the Argument Clinic
+       ------------------------------------------------------------------ */
+    
     /* ------------------------------------------------------------------
        STEAM - one particle system for every hot thing
        ------------------------------------------------------------------ */
@@ -1059,6 +1245,10 @@ export function buildWorld({ layout, content, logo }) {
     compactGroup(laptop);
     compactGroup(nameplate);
     compactGroup(shrubbery);
+    compactGroup(grenade, [grenadeHalo]);
+    compactGroup(parrot);
+    compactGroup(clinic);
+    compactGroup(tap, [...tapLevers, water, splashRing]);
 
     /* ------------------------------------------------------------------
        INTERACTABLES
@@ -1146,8 +1336,39 @@ export function buildWorld({ layout, content, logo }) {
         });
     });
     register('corgi', corgi.root, { label: 'Pebbles', verb: 'Pet', kind: 'corgi', pad: 0.06, dynamic: true });
-    beans.forEach(bean => register(bean.id, bean.group, { label: 'Coffee bean', verb: 'Pick up', kind: 'bean', pad: 0.06, dynamic: true, bean }));
+    // Beans are tiny, so their click box is generous
+    beans.forEach(bean => register(bean.id, bean.group, { label: 'Coffee bean', verb: 'Pick up', kind: 'bean', pad: 0.16, dynamic: true, bean }));
     register('shrubbery', shrubbery, { label: 'A shrubbery', verb: 'Admire', kind: 'shrubbery', pad: 0.05, hidden: true });
+    // Registered while visible so the boxes measure properly, then hidden
+    knight.root.visible = true;
+    grenade.visible = true;
+    register('knight', knight.root, {
+        label: 'The Black Knight', verb: 'Challenge', kind: 'knight', pad: 0.08, hidden: true,
+        view: viewFrom(knight.root.position.x + 0.5, D - 2.9, new THREE.Vector3(knight.root.position.x, 1.25, knight.root.position.z)),
+        dogSpot: new THREE.Vector3(knight.root.position.x + 0.9, 0, D - 1.4)
+    });
+    register('grenade', grenade, {
+        label: 'The Holy Hand Grenade of Antioch', verb: 'Take', kind: 'grenade', pad: 0.12, hidden: true,
+        view: viewFrom(tableX - 0.3, tableZ + 1.3, new THREE.Vector3(tableX - 0.2, 0.85, tableZ + 0.14)),
+        dogSpot: new THREE.Vector3(tableX - 0.7, 0, tableZ + 0.8)
+    });
+    knight.root.visible = false;
+    grenade.visible = false;
+    register('parrot', parrot, {
+        label: 'Norwegian Blue', verb: 'Inspect', kind: 'parrot', pad: 0.06,
+        view: { pos: new THREE.Vector3(parrot.position.x + 0.1, 1.5, kz0 + 1.45), look: new THREE.Vector3(parrot.position.x, topY + 0.15, parrot.position.z) },
+        dogSpot: new THREE.Vector3(parrot.position.x + 0.5, 0, kz0 + 1.3)
+    });
+    register('tap', tap, {
+        label: 'Kitchen tap', verb: 'Turn on', kind: 'tap', pad: 0.05,
+        view: { pos: new THREE.Vector3(sinkX + 0.15, 1.55, kz0 + 1.35), look: new THREE.Vector3(sinkX, topY + 0.05, sinkZ) },
+        dogSpot: new THREE.Vector3(sinkX + 0.6, 0, kz0 + 1.3)
+    });
+    register('argument', clinic, {
+        label: 'Argument Clinic', verb: 'Have an argument', kind: 'argument', pad: 0.04,
+        view: viewFrom(-hw + 1.6, clinic.position.z, new THREE.Vector3(-hw, 1.45, clinic.position.z)),
+        dogSpot: new THREE.Vector3(-hw + 0.9, 0, clinic.position.z + 0.5)
+    });
 
     /* ------------------------------------------------------------------
        NAVIGATION GRAPH (for the corgi)
@@ -1235,6 +1456,9 @@ export function buildWorld({ layout, content, logo }) {
 
     const shrubCollider = { x0: shrubbery.position.x - 0.3, x1: shrubbery.position.x + 0.3, z0: shrubbery.position.z - 0.3, z1: shrubbery.position.z + 0.3, disabled: true };
     colliders.push(shrubCollider);
+    const kp = knight.root.position;
+    const knightCollider = { x0: kp.x - 0.3, x1: kp.x + 0.3, z0: kp.z - 0.3, z1: kp.z + 0.4, disabled: true };
+    colliders.push(knightCollider);
 
     /* ------------------------------------------------------------------
        DAY / NIGHT
@@ -1310,6 +1534,19 @@ export function buildWorld({ layout, content, logo }) {
         corgiInfo.proxy.position.set(corgi.root.position.x, 0.2, corgi.root.position.z);
         corgiInfo.center.copy(corgiInfo.proxy.position);
 
+        // Kitchen tap: levers swing round and the water eases on and off
+        tapState.flow += ((tapState.on ? 1 : 0) - tapState.flow) * Math.min(1, dt * 8);
+        tapLevers.forEach((l, i) => { l.rotation.y = (i ? -1 : 1) * tapState.flow * 0.9; });
+        water.visible = splashRing.visible = tapState.flow > 0.03;
+        if (water.visible) {
+            const wobble = reducedMotion ? 1 : 1 + Math.sin(time * 31) * 0.08;
+            water.scale.set(tapState.flow * wobble, 1, tapState.flow * wobble);
+            splashRing.scale.setScalar(tapState.flow * (reducedMotion ? 1 : 1 + Math.sin(time * 17) * 0.15));
+        }
+
+        // The Black Knight (once he's turned up)
+        if (knight.root.visible) knight.update(dt);
+
         // Steam
         steam.update(dt, Object.values(steamSources), reducedMotion);
 
@@ -1320,6 +1557,7 @@ export function buildWorld({ layout, content, logo }) {
 
     return {
         scene, update, interactables, occluders, colliders, collide, clampInside, findPath, artworks, beans, corgi, shrubbery, shrubCollider,
+        knight, knightShadow, knightCollider, grenade, thrown, blast, tap: tapState,
         boards, machine: machineState, plant: plantState, cycleNeon, applyNight, getNight: () => night,
         bounds: { hw, ceil, D, kx0, kx1, kz0, kz1, doorZ0, doorZ1 },
         dispose() {

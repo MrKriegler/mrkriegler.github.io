@@ -66,7 +66,10 @@ export class Hud {
             this.jumpMenu.appendChild(item);
         });
         this.jumpBtn.addEventListener('click', () => this.toggleJump());
-        this.root.appendChild(el('div', 'cafe-hud__br', {}, [guide, el('div', 'cafe-jump-wrap', {}, [this.jumpMenu, this.jumpBtn])]));
+        // Whatever you're carrying (the Holy Hand Grenade, so far)
+        this.itemBtn = el('button', 'cafe-btn cafe-btn--accent cafe-item', { type: 'button', hidden: '' });
+        this.itemBtn.addEventListener('click', () => this.onUseItem && this.onUseItem());
+        this.root.appendChild(el('div', 'cafe-hud__br', {}, [this.itemBtn, guide, el('div', 'cafe-jump-wrap', {}, [this.jumpMenu, this.jumpBtn])]));
 
         // Centre prompt for keyboard / gaze interaction
         this.prompt = el('div', 'cafe-prompt', { 'aria-hidden': 'true' });
@@ -186,6 +189,12 @@ export class Hud {
         if (item) item.classList.add('is-visited');
     }
 
+    setHolding(label, onUse) {
+        this.itemBtn.hidden = !label;
+        this.itemBtn.textContent = label || '';
+        this.onUseItem = label ? onUse : null;
+    }
+
     setBeans(found, total) {
         this.beansEl.textContent = `${found}/${total}`;
         this.beansEl.parentElement.classList.toggle('is-complete', found === total);
@@ -291,7 +300,7 @@ export class Hud {
 
     showSubtitle(key, text) {
         if (this.subtitleKey === key && this.subtitle.lastChild.textContent === text) return;
-        const names = { corgi: 'Pebbles', plant: 'The counter plant', machine: 'Espresso machine', shrubbery: 'The Knights Who Say Ni' };
+        const names = { corgi: 'Pebbles', plant: 'The counter plant', machine: 'Espresso machine', shrubbery: 'The Knights Who Say Ni', knight: 'The Black Knight', parrot: 'The Norwegian Blue' };
         this.subtitleKey = key;
         this.subtitle.firstChild.textContent = names[key] || '';
         this.subtitle.lastChild.textContent = text;

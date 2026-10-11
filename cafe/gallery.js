@@ -30,7 +30,7 @@ export const PROJECTS = [
         id: 'art-merlin',
         name: 'Merlin',
         kicker: 'Merlin Entertainments · 2026',
-        pitch: 'Guest entitlements and membership architecture for a global theme-park operator\'s single attractions app.',
+        pitch: 'Guest entitlement and membership architecture for a global theme-park operator\'s single attractions app.',
         highlights: [
             'Neo: an event-sourced, bi-temporal ledger of what every guest has, had and will have',
             'Append-only, content-hashed ingest that stays idempotent under concurrent writes',
@@ -60,7 +60,7 @@ export const PROJECTS = [
         name: 'What Is This Mark?',
         kicker: 'Side project · live',
         pitch: 'Identify watch markings, serial numbers and case-back codes from a photo.',
-        highlights: ['AI-powered photo analysis across 13+ brands'],
+        highlights: ['Photo analysis of markings across 13+ brands'],
         stack: ['AI vision', 'Web'],
         url: 'https://whatisthismark.com/',
         paint: paintWatch
