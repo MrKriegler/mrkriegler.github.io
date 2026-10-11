@@ -1049,17 +1049,21 @@ export function buildWorld({ layout, content, logo }) {
     parrotTag.rotation.x = -0.25;
     parrot.add(parrotTag);
 
-    // Argument Clinic, Room 12A: on the café wall, just past the kitchen door
+    // Argument Clinic, Room 12A: on the café wall, just past the kitchen door.
+    // Centred in the gap between the door trim (doorZ1 + 0.08) and the Visa
+    // poster's frame (z 3.86), with its bottom edge level with the poster's (y 1.33)
+    const CLINIC_W = 0.4;
+    const CLINIC_H = 0.27;
     const clinic = new THREE.Group();
-    clinic.position.set(-hw + 0.02, 1.48, doorZ1 + 0.38);
+    clinic.position.set(-hw + 0.02, 1.33 + CLINIC_H / 2, (doorZ1 + 0.08 + 3.86) / 2);
     clinic.rotation.y = Math.PI / 2;
     scene.add(clinic);
-    const clinicBack = new THREE.Mesh(rbox(0.5, 0.34, 0.02, 0.008), toon('#8B6F47'));
+    const clinicBack = new THREE.Mesh(rbox(CLINIC_W, CLINIC_H, 0.02, 0.008), toon('#8B6F47'));
     clinicBack.position.z = 0.0;
     outline(clinicBack);
     clinic.add(clinicBack);
     // Dark board, cream lettering: readable from across the room
-    const clinicFace = new THREE.Mesh(new THREE.PlaneGeometry(0.46, 0.3), glowMaterial({
+    const clinicFace = new THREE.Mesh(new THREE.PlaneGeometry(CLINIC_W - 0.035, CLINIC_H - 0.035), glowMaterial({
         map: track(labelTexture(552, 360, COLORS.chalkWarm, [
             { text: 'ARGUMENT', size: 64, weight: 700, color: '#f3ead6', spacing: 4 },
             { text: 'CLINIC', size: 64, weight: 700, color: '#f3ead6', spacing: 4 },
