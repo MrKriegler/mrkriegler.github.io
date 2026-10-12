@@ -525,7 +525,7 @@ export function buildWorld({ layout, content, logo }) {
     const reserved = new THREE.Mesh(new THREE.PlaneGeometry(0.16, 0.1), toon('#ffffff', {
         map: track(labelTexture(320, 200, '#f6f0e1', [
             { text: 'RESERVED', size: 40, weight: 700, color: COLORS.counter, spacing: 4 },
-            { text: 'for your next project', size: 28, italic: true, color: '#6b5a48' }
+            { text: 'for Pebbles', size: 28, italic: true, color: '#6b5a48' }
         ], { border: '#8B6F47' })),
         side: THREE.DoubleSide
     }));
@@ -935,8 +935,8 @@ export function buildWorld({ layout, content, logo }) {
     nameplate.add(wedge);
     const plateFace = new THREE.Mesh(new THREE.PlaneGeometry(0.32, 0.07), glowMaterial({
         map: track(labelTexture(640, 140, '#2a2220', [
-            { text: 'CEO · CTO', size: 46, weight: 700, color: '#e8d6a8', spacing: 4 },
-            { text: 'Chief Coffee Officer', size: 34, italic: true, color: COLORS.accent }
+            { text: 'NOEL KRIEGLER', size: 46, weight: 700, color: '#e8d6a8', spacing: 4 },
+            { text: 'Founder, Iron Pig', size: 34, italic: true, color: COLORS.accent }
         ]))
     }));
     plateFace.position.set(0, 0.04, 0.041);

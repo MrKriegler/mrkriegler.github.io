@@ -38,7 +38,7 @@ const ACHIEVEMENTS = [
     { id: 'goodboy', icon: '🐾', title: 'Good girl', text: 'Gave Pebbles, Head of Morale, a pat.' },
     { id: 'ni', icon: '🌿', title: 'Ni!', text: 'Appeased the Knights Who Say Ni.' },
     { id: 'beans', icon: '☕', title: 'Bean counter', text: 'Found all four coffee beans.' },
-    { id: 'hq', icon: '🍳', title: 'Kitchen Table CEO', text: 'Found the real headquarters.' },
+    { id: 'hq', icon: '🍳', title: 'Kitchen Table HQ', text: 'Found the real headquarters.' },
     { id: 'night', icon: '💡', title: 'Lights on', text: 'Found the light switch by the door.' },
     { id: 'neon', icon: '💡', title: 'Neon dreams', text: 'Changed the colour of the sign.' },
     { id: 'gallery', icon: '🖼️', title: 'Art lover', text: 'Looked at every piece of work on the walls.' },
@@ -75,14 +75,14 @@ const TOUR = [
     { id: 'help', title: 'How I help', line: 'Build, fix, lead. That\'s the whole job. Mostly fixing, if I\'m honest.' },
     { id: 'builds', title: 'Recent builds', line: 'Real things, actually shipped. The Guinness one was very important research.', bean: 'bean-table', nudge: 'Also, have a sniff under that table. Just saying. 👀' },
     { id: 'art-six', title: 'The gallery', line: 'And now for something completely different: the bigger work. SIX, Merlin\'s guest ledger, Throughline. Click any frame for the story.' },
-    { id: 'machine', title: 'The machine', line: 'The espresso machine. Fuels the whole operation. Give it a poke, it hisses.', bean: 'bean-counter', nudge: 'Somebody dropped a bean behind the counter. Wasn\'t me.' },
-    { id: 'order', title: 'The till', line: 'Order a coffee here and it turns into a project brief. Clever, eh?' },
+    { id: 'machine', title: 'The machine', line: 'The espresso machine. Give it a poke, it hisses.', bean: 'bean-counter', nudge: 'Somebody dropped a bean behind the counter. Wasn\'t me.' },
+    { id: 'order', title: 'The till', line: 'Order a coffee here and it turns into a project brief.' },
     { id: 'plant', title: 'The shrubbery', line: 'This plant only talks to the Knights Who Say Ni. Try typing N-I.' },
-    { id: 'laptop', title: 'Kitchen Table HQ', line: 'Welcome to HQ. Yes, it\'s a kitchen table. This is where the real work happens.', bean: 'bean-bed', nudge: 'That\'s my bed by the wall. Might be something in it. 🐾' },
+    { id: 'laptop', title: 'Kitchen Table HQ', line: 'Welcome to HQ. Yes, it\'s a kitchen table.', bean: 'bean-bed', nudge: 'That\'s my bed by the wall. Might be something in it. 🐾' },
     { id: 'fridge', title: 'The fridge', line: 'The fridge has the real rules. Docs live in YOUR repo, so nothing ever goes missing.' },
     { id: 'contact', title: 'Let\'s talk', line: 'That\'s the tour! Want to talk? The email\'s right here. I\'ll be by the door, wagging.' }
 ];
-const BARKS = ['Woof!', 'Bork bork!', '*happy tail wag*', 'Arf! (translation: hire this human)', '🐾 Pebbles, Head of Morale, reporting for duty'];
+const BARKS = ['Woof!', 'Bork bork!', '*happy tail wag*', 'Arf!', '🐾 Pebbles, Head of Morale'];
 const NI = ['Ni!', 'Ni! Ni!', 'We are the Knights Who Say... Ni!', 'We want... a shrubbery!', 'One that looks nice. And not too expensive.'];
 // The Black Knight: guarding, then (after the grenade) gamely carrying on
 const KNIGHT_GUARD = ['None shall pass.', 'None shall pass!', 'I move for no barista.', 'Have at you!', 'Your shrubbery is safe with me. Nobody else\'s is.'];
@@ -733,7 +733,7 @@ class CafeSession {
         this.lightFlips++;
         if (this.lightFlips === 5) {
             this.hud.say('corgi', 'NOBODY expects the Spanish Inquisition! 🐾', 2600);
-            this.later(() => this.hud.say('corgi', 'Our chief weapon is surprise. And tidy commit messages.', 3600), 2800);
+            this.later(() => this.hud.say('corgi', 'Our chief weapon is surprise.', 3600), 2800);
             this.unlock('inquisition');
         }
         this.hud.announce(to ? 'Lights down.' : 'Lights up.');
@@ -1324,7 +1324,7 @@ class CafeSession {
             el('p', 'cafe-contact__lead', { text: 'Pull up a chair. Tell me what\'s stuck, and I\'ll tell you honestly whether I can help.' }),
             el('div', 'cafe-contact__row', {}, [mail, copy]),
             el('p', 'cafe-contact__where', { text: '📍 London · usually within a day' }),
-            this.orderButton('Or order a coffee (a fun project brief) ☕'),
+            this.orderButton('Or order a coffee (a quick project brief) ☕'),
             cloneExtra('#contact-info-panel')
         );
         this.hud.openPanel('Let\'s talk', body);
@@ -1420,13 +1420,13 @@ class CafeSession {
     openAbout() {
         const body = el('div', 'cafe-board');
         body.append(
-            el('p', 'cafe-contact__lead', { text: 'CEO, CTO and Chief Coffee Officer of Iron Pig Ltd. Also the cleaner.' }),
+            el('p', 'cafe-contact__lead', { text: 'I run Iron Pig Ltd. I\'m also the cleaner.' }),
             el('p', '', { text: 'Iron Pig is a one-person software consultancy run from this kitchen table (and a few London coffee shops). No account managers, no hand-offs: when you hire Iron Pig, you get me.' }),
             cloneExtra('#contact-info-panel'),
-            el('p', 'cafe-note', { text: 'Pebbles handles morale. The fridge handles strategy.' }),
+            el('p', 'cafe-note', { text: 'Pebbles handles morale.' }),
             this.orderButton()
         );
-        this.hud.openPanel('The Kitchen Table CEO', body);
+        this.hud.openPanel('About me', body);
     }
 
     openFridge() {
