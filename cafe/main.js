@@ -221,6 +221,12 @@ class CafeSession {
         renderer.domElement.tabIndex = -1;
         document.body.appendChild(renderer.domElement);
         this.renderer = renderer;
+        // Signs are mostly seen at an angle: use the sharpest filtering the GPU offers
+        const maxAniso = renderer.capabilities.getMaxAnisotropy();
+        this.world.scene.traverse(o => {
+            const map = o.material && o.material.map;
+            if (map && map.anisotropy > 1) map.anisotropy = maxAniso;
+        });
 
         // Near plane at 10cm keeps depth precision high enough that thin
         // signs never flicker against their frames
@@ -427,13 +433,19 @@ class CafeSession {
 
     adaptQuality(dt) {
         if (this.mode !== 'play' || this.qualityLocked) return;
+        // Skip the first second: shader compiles and texture uploads aren't the real frame rate
+        this.qualityWarmup = (this.qualityWarmup || 0) + 1;
+        if (this.qualityWarmup < 60) return;
         this.frameTimes.push(dt);
         if (this.frameTimes.length < 120) return;
-        const avg = this.frameTimes.reduce((a, b) => a + b, 0) / this.frameTimes.length;
+        // Median, so the odd hitch doesn't cost a sharp screen its resolution
+        const median = this.frameTimes.sort((a, b) => a - b)[this.frameTimes.length >> 1];
         this.frameTimes = [];
         const ratio = this.renderer.getPixelRatio();
-        if (avg > 0.024 && ratio > 1) {
-            this.renderer.setPixelRatio(Math.max(1, ratio - 0.5));
+        // Retina screens never drop below 1.5: at 1x the text turns to mush
+        const floor = window.devicePixelRatio >= 2 && !this.coarse ? 1.5 : 1;
+        if (median > 0.028 && ratio > floor) {
+            this.renderer.setPixelRatio(Math.max(floor, ratio - 0.25));
         } else {
             this.qualityLocked = true;
         }

@@ -253,7 +253,7 @@ export function radialTexture(stops, size = 128) {
    CHALKBOARDS - drawn from the live 2D page's text
    ========================================================== */
 
-const BOARD_SCALE = 2.5; // canvas px per stage px
+const BOARD_SCALE = 4; // canvas px per stage px
 
 function boardBackground(ctx, w, h, warm) {
     const grad = ctx.createLinearGradient(0, 0, w, h);
@@ -456,8 +456,11 @@ export function neonTextures(color = COLORS.neon, glow = COLORS.neonGlow) {
 /**
  * A flat label: lines = [{ text, size, font, color, weight, italic }]
  */
+const LABEL_SCALE = 2; // canvas px per label px, so small signs stay crisp on Retina
+
 export function labelTexture(width, height, background, lines, { border, radius = 0 } = {}) {
-    const [canvas, ctx] = makeCanvas(width, height);
+    const [canvas, ctx] = makeCanvas(width * LABEL_SCALE, height * LABEL_SCALE);
+    ctx.scale(LABEL_SCALE, LABEL_SCALE);
     if (background) {
         ctx.fillStyle = background;
         if (radius) {
