@@ -1087,23 +1087,74 @@ export function buildWorld({ layout, content, logo }) {
        ------------------------------------------------------------------ */
     const servicesRect = layout.boards.services;
     const beanSpots = [
-        { id: 'bean-menu', label: 'a bean on top of the Services board', pos: new THREE.Vector3(X(servicesRect.x + servicesRect.w * 0.8), Y(servicesRect.y) + 0.04, 0.05) },
+        // Above eye height, so this one lies cut-face down to show the slit to a player looking up
+        { id: 'bean-menu', label: 'a bean on top of the Services board', pos: new THREE.Vector3(X(servicesRect.x + servicesRect.w * 0.8), Y(servicesRect.y) + 0.04, 0.05), flip: true },
         { id: 'bean-table', label: 'a bean under the table', pos: new THREE.Vector3(tableX + 0.18, 0.035, tableZ + 0.24) },
         { id: 'bean-counter', label: 'a bean behind the counter', pos: new THREE.Vector3(-1.1, 0.035, 0.45) },
         { id: 'bean-bed', label: 'a bean in Pebbles\' bed', pos: new THREE.Vector3(bedX, 0.13, bedZ) }
     ];
     const beanGlowTex = track(radialTexture([[0, 'rgba(255,230,140,0.9)'], [0.5, 'rgba(255,210,100,0.25)'], [1, 'rgba(255,200,80,0)']]));
+    // One shared coffee-bean mesh: an oval with its length on X, a flat top
+    // face (+Y) over a domed belly, and an S-shaped centre cut carved into the
+    // face, so the slit is real geometry and the ink hull draws it for us
+    const beanGeo = (() => {
+        const L = 0.045, WIDE = 0.033, TOP = 0.016, BELLY = 0.031;
+        const CUT_DEPTH = 0.011, CUT_SIGMA = 0.0042, CUT_S = 0.006;
+        const smooth = (a, b, v) => { const t = Math.min(1, Math.max(0, (v - a) / (b - a))); return t * t * (3 - 2 * t); };
+        const geo = new THREE.SphereGeometry(1, 96, 28);
+        geo.rotateZ(Math.PI / 2); // poles at the tips; the UV seam ends up under the belly
+        const pos = geo.attributes.position;
+        const colors = new Float32Array(pos.count * 3);
+        const roast = new THREE.Color('#70401f'), slit = new THREE.Color('#24130a'), c = new THREE.Color();
+        for (let i = 0; i < pos.count; i++) {
+            const ux = pos.getX(i), uy = pos.getY(i), uz = pos.getZ(i);
+            const x = ux * L, z = uz * WIDE;
+            // Flat face meets the domed belly with (almost) matching slope at the rim
+            let y = uy > 0 ? TOP * uy * (2 - uy) : BELLY * uy;
+            // S-curved centre cut along the length, fading out just before the tips
+            const zc = CUT_S * Math.sin(Math.PI * ux);
+            const d = (z - zc) / CUT_SIGMA;
+            const cut = Math.exp(-d * d) * smooth(0.15, 0.6, uy) * (1 - Math.pow(Math.abs(ux), 6));
+            y -= CUT_DEPTH * cut;
+            pos.setXYZ(i, x, y, z);
+            c.copy(roast).lerp(slit, Math.min(1, cut * 1.4));
+            colors[i * 3] = c.r; colors[i * 3 + 1] = c.g; colors[i * 3 + 2] = c.b;
+        }
+        geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        geo.computeVertexNormals();
+        // Weld normals across the UV seam and the poles so the toon shading and
+        // the inverted-hull outline stay seamless
+        const nrm = geo.attributes.normal, sums = new Map();
+        // Quantise, folding -0 into 0 so seam and pole twins (sin(2π), sin(π) ≈ ±1e-16) share a key
+        const q = v => { const r = Math.round(v * 1e5); return r === 0 ? 0 : r; };
+        const key = i => `${q(pos.getX(i))},${q(pos.getY(i))},${q(pos.getZ(i))}`;
+        for (let i = 0; i < pos.count; i++) {
+            const k = key(i), s = sums.get(k) || [0, 0, 0];
+            s[0] += nrm.getX(i); s[1] += nrm.getY(i); s[2] += nrm.getZ(i);
+            sums.set(k, s);
+        }
+        for (let i = 0; i < pos.count; i++) {
+            const [nx, ny, nz] = sums.get(key(i)), len = Math.hypot(nx, ny, nz) || 1;
+            nrm.setXYZ(i, nx / len, ny / len, nz / len);
+        }
+        geo.computeBoundingSphere();
+        return geo;
+    })();
+    // toon() only caches option-less materials, so make this one once and share it
+    const beanMat = toon('#ffffff', { vertexColors: true });
     const beans = beanSpots.map((spot, i) => {
         const group = new THREE.Group();
         group.position.copy(spot.pos);
-        const half = new THREE.Mesh(sphere(0.045, 16, 12), toon('#6b3e22'));
-        half.scale.set(1, 0.72, 0.8);
-        outline(half);
-        group.add(half);
-        const crease = new THREE.Mesh(new THREE.TorusGeometry(0.028, 0.005, 6, 16, Math.PI), toon('#3b2112'));
-        crease.rotation.set(0, Math.PI / 2, Math.PI / 2);
-        crease.position.y = 0.031;
-        group.add(crease);
+        const bean = new THREE.Mesh(beanGeo, beanMat);
+        // Centre it on the group with the cut face towards the viewer (up, or
+        // down for the high bean). Only a slight tilt for a hint of 3/4 view:
+        // a bean spinning about Y swings any tilt away from the camera half
+        // the time, so a big one would hide the slit edge-on every half turn
+        const flip = spot.flip ? -1 : 1;
+        bean.position.y = 0.0075 * flip;
+        bean.rotation.set(spot.flip ? Math.PI - 0.18 : 0.18, 0, 0.18);
+        outline(bean);
+        group.add(bean);
         const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: beanGlowTex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
         halo.scale.set(0.3, 0.3, 1);
         halo.raycast = () => {};
