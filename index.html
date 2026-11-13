@@ -2990,11 +2990,29 @@
            STEP INSIDE - the door to the 3D café
            (hidden until JS confirms WebGL2)
            =================================== */
+        .legal-strip {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 55;
+            padding: 3px 12px;
+            font-size: 10px;
+            line-height: 14px;
+            letter-spacing: 0.3px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: rgba(245, 245, 220, 0.9);
+            background: rgba(42, 34, 32, 0.88);
+        }
+
         .step-inside {
             display: none;
             position: absolute;
             left: 50%;
-            bottom: 16px;
+            bottom: 28px;
             transform: translateX(-50%);
             z-index: 60;
             align-items: center;
@@ -3252,6 +3270,17 @@
 
             .step-inside:hover {
                 transform: translateY(-2px);
+            }
+
+            .legal-strip {
+                position: static;
+                order: 99;
+                width: 100%;
+                margin-top: 24px;
+                padding: 12px 16px;
+                font-size: 11px;
+                line-height: 1.5;
+                white-space: normal;
             }
 
             /* All boards - consistent width, spacing, and appearance */
@@ -3549,6 +3578,9 @@
 
     <!-- Floor -->
     <div class="floor" role="presentation"></div>
+
+    <!-- Company details (required on a UK company's website) -->
+    <footer class="legal-strip">Iron Pig Ltd &middot; Registered in England and Wales, company no. 16847978 &middot; Registered office: Flat 15, Mallard House, Station Court, Townmead Road, London SW6 2BF &middot; VAT no. GB 508344400</footer>
 
     <!-- Rug - Textured sage green rug in center -->
     <div class="rug" role="presentation"></div>

@@ -19,7 +19,7 @@ export const PROJECTS = [
         highlights: [
             'AI matching with Claude and Cohere embeddings on Amazon Bedrock, served in the EU',
             'Multi-region by design: Terraform per region, a Cognito pool per region',
-            '108 architecture decision records, security and privacy reviews',
+            'Over 120 architecture decision records, security and privacy reviews',
             'Its own design system with WCAG AA contrast audits'
         ],
         stack: ['TypeScript', 'Hono', 'Postgres + pgvector', 'React 19', 'Bedrock', 'Terraform'],
