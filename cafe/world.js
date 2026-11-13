@@ -1340,7 +1340,7 @@ export function buildWorld({ layout, content, logo }) {
     // Stand back far enough that the board sits comfortably in frame
     // (boards over the counter need a little more room)
     const boardView = b => viewFrom(b.cx * 0.92, b.cx < 0.3 ? 3.3 : 2.9, new THREE.Vector3(b.cx, b.cy - 0.15, 0));
-    const boardLabels = { services: 'Services menu', help: 'How I help', builds: 'Recent builds', contact: 'Let\'s talk' };
+    const boardLabels = { services: 'Services menu', help: 'How we help', builds: 'Recent builds', contact: 'Let\'s talk' };
     Object.entries(boards).forEach(([id, b]) => {
         register(id, b.group, {
             label: boardLabels[id], verb: 'Read', kind: 'board',

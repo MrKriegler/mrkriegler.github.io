@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Iron Pig - Software consultant in London. I build products, fix broken processes, and lead teams. Full-stack engineering, operations, and technical leadership.">
+    <meta name="description" content="Iron Pig is a London product engineering company. We design and build products, fix what's stuck and lead delivery, from idea to live product.">
     <meta name="author" content="Iron Pig Ltd">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline';">
     <meta name="theme-color" content="#2a2220">
     <meta property="og:title" content="Iron Pig - Software, Teams & Operations">
-    <meta property="og:description" content="Software consultant in London. I build products, fix broken processes, and lead teams through the hard parts.">
+    <meta property="og:description" content="A London product engineering company. We build products, fix broken processes and lead teams through the hard parts.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://iron-pig.com/">
     <meta property="og:site_name" content="Iron Pig">
@@ -18,14 +18,14 @@
     <meta property="og:locale" content="en_GB">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Iron Pig - Software, Teams & Operations">
-    <meta name="twitter:description" content="Software consultant in London. I build products, fix broken processes, and lead teams through the hard parts.">
+    <meta name="twitter:description" content="A London product engineering company. We build products, fix broken processes and lead teams through the hard parts.">
     <meta name="twitter:image" content="https://iron-pig.com/iron_pig_social.jpg">
     <link rel="canonical" href="https://iron-pig.com/">
     <meta name="robots" content="index, follow">
     <meta name="geo.region" content="GB-LND">
     <meta name="geo.placename" content="London">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <title>Iron Pig | Software Consultant - Build, Fix, Lead | London</title>
+    <title>Iron Pig | Product Engineering - Build, Fix, Lead | London</title>
     <link rel="icon" type="image/svg+xml" href="iron_pig_mark.svg">
     <link rel="preload" href="fonts/adineue-pro-regular.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="preload" href="fonts/adineue-pro-bold.otf" as="font" type="font/otf" crossorigin>
@@ -1854,7 +1854,11 @@
         }
 
         .contact-info.expanded .contact-info__extra {
-            max-height: 600px;
+            max-height: min(600px, calc(100vh - 330px));
+            overflow-y: auto;
+            padding-right: 12px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(184, 150, 122, 0.5) transparent;
             opacity: 1;
             visibility: visible;
             transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
@@ -3310,6 +3314,12 @@
                 overflow-y: visible;
             }
 
+            .contact-info.expanded .contact-info__extra {
+                max-height: 2000px;
+                overflow-y: visible;
+                padding-right: 0;
+            }
+
             /* Disable hover transforms */
             .wifi-sign:hover,
             .actual-wifi-sign:hover,
@@ -3396,9 +3406,18 @@
                     "@type": "ImageObject",
                     "url": "https://iron-pig.com/iron_pig.svg"
                 },
-                "description": "Software consultant in London. I build products, fix broken processes, and lead teams.",
+                "description": "A London product engineering company. We build products, fix broken processes and lead teams.",
                 "email": "hello@iron-pig.com",
                 "foundingDate": "2025",
+                "founder": { "@type": "Person", "name": "Noel Kriegler" },
+                "vatID": "GB508344400",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "Flat 15, Mallard House, Station Court, Townmead Road",
+                    "addressLocality": "London",
+                    "postalCode": "SW6 2BF",
+                    "addressCountry": "GB"
+                },
                 "areaServed": "GB",
                 "sameAs": ["https://github.com/MrKriegler"]
             },
@@ -3429,8 +3448,8 @@
                 "@type": "WebPage",
                 "@id": "https://iron-pig.com/#webpage",
                 "url": "https://iron-pig.com",
-                "name": "Iron Pig | Software Consultant - Build, Fix, Lead | London",
-                "description": "Software consultant in London. I build products, fix broken processes, and lead teams.",
+                "name": "Iron Pig | Product Engineering - Build, Fix, Lead | London",
+                "description": "A London product engineering company. We build products, fix broken processes and lead teams.",
                 "isPartOf": {
                     "@id": "https://iron-pig.com/#website"
                 },
@@ -3440,7 +3459,7 @@
             },
             {
                 "@type": "Service",
-                "serviceType": "Software Consulting",
+                "serviceType": "Product Engineering",
                 "provider": {
                     "@id": "https://iron-pig.com/#organization"
                 },
@@ -3470,7 +3489,7 @@
                             "@type": "Offer",
                             "itemOffered": {
                                 "@type": "Service",
-                                "name": "Full Product Development"
+                                "name": "Product Engineering"
                             }
                         },
                         {
@@ -3484,7 +3503,7 @@
                             "@type": "Offer",
                             "itemOffered": {
                                 "@type": "Service",
-                                "name": "Full-Stack Software Engineering"
+                                "name": "Product and Interface Design"
                             }
                         }
                     ]
@@ -3497,7 +3516,7 @@
 <body>
     <!-- Coffee shop scene - Visual illustration of Iron Pig Software Development -->
     <main>
-    <h1 class="visually-hidden">Iron Pig - Software Consultant in London | Build, Fix & Lead</h1>
+    <h1 class="visually-hidden">Iron Pig - Product Engineering Company in London | Build, Fix & Lead</h1>
 
     <!-- Pendant Lights -->
     <div class="pendant-light pendant-light-1" role="presentation">
@@ -3617,15 +3636,15 @@
         </div>
     </div>
 
-    <!-- How I Help Sign -->
+    <!-- How We Help Sign -->
     <div class="wifi-sign" id="tech-stack-btn">
         <h2 class="wifi-sign__title">
-            <button class="board-toggle" type="button" aria-expanded="false" aria-controls="tech-stack-panel">How I Help</button>
+            <button class="board-toggle" type="button" aria-expanded="false" aria-controls="tech-stack-panel">How We Help</button>
         </h2>
         <div class="wifi-sign__content">
-            <span class="wifi-sign__label">What I do:</span>
+            <span class="wifi-sign__label">What we do:</span>
             <span class="wifi-sign__value">Software, teams & operations</span>
-            <span class="wifi-sign__label">How I work:</span>
+            <span class="wifi-sign__label">How we work:</span>
             <span class="wifi-sign__value">Find the problem. Fix it. Move on.</span>
         </div>
         <div class="wifi-sign__hint" aria-hidden="true">More details →</div>
@@ -3634,7 +3653,7 @@
             <div class="wifi-sign__section">
                 <div class="wifi-sign__section-title">Build</div>
                 <div class="wifi-sign__section-content">
-                    <div class="wifi-sign__rule">I write code. Products, tools, internal systems.</div>
+                    <div class="wifi-sign__rule">We design and build products, tools and internal systems.</div>
                     <div class="wifi-sign__rule">Full stack, start to finish.</div>
                     <div class="wifi-sign__rule">Frontend, backend, infrastructure, the lot.</div>
                 </div>
@@ -3644,21 +3663,30 @@
                 <div class="wifi-sign__section-title">Fix</div>
                 <div class="wifi-sign__section-content">
                     <div class="wifi-sign__rule">Slow teams, broken processes, tech that's holding you back.</div>
-                    <div class="wifi-sign__rule">I find the bottleneck and sort it out.</div>
+                    <div class="wifi-sign__rule">We find the bottleneck and sort it out.</div>
                 </div>
             </div>
 
             <div class="wifi-sign__section">
                 <div class="wifi-sign__section-title">Lead</div>
                 <div class="wifi-sign__section-content">
-                    <div class="wifi-sign__rule">I embed with your team. Set direction, unblock people, ship the thing.</div>
+                    <div class="wifi-sign__rule">A senior lead embeds with your team. Set direction, unblock people, ship the thing.</div>
                     <div class="wifi-sign__rule">Hands-on leadership, not meetings about meetings.</div>
                 </div>
             </div>
 
             <div class="wifi-sign__section">
+                <div class="wifi-sign__section-title">Ways to work with us</div>
+                <div class="wifi-sign__section-content">
+                    <div class="wifi-sign__rule">Monthly retainer: a product team for a fixed fee.</div>
+                    <div class="wifi-sign__rule">Fixed-scope build: one price, one outcome.</div>
+                    <div class="wifi-sign__rule">Architecture and technical leadership, by the day.</div>
+                </div>
+            </div>
+
+            <div class="wifi-sign__section">
                 <div class="wifi-sign__section-content wifi-sign__section-content--italic">
-                    I've done the startup grind and the enterprise slog. I know which fixes actually matter.
+                    We've done the startup grind and the enterprise slog. We know which fixes actually matter.
                 </div>
             </div>
         </div>
@@ -3671,8 +3699,8 @@
         </h2>
         <ul class="wifi-sign__content build-list">
             <li><span class="build-list__icon" aria-hidden="true">✳️</span>SIX · coming soon</li>
-            <li><span class="build-list__icon" aria-hidden="true">🎢</span>Merlin · Neo ledger</li>
-            <li><span class="build-list__icon" aria-hidden="true">📈</span>Throughline</li>
+            <li><span class="build-list__icon" aria-hidden="true">🎢</span>Guest ledger · attractions</li>
+            <li><span class="build-list__icon" aria-hidden="true">📈</span>Founder diagnostic</li>
             <li><span class="build-list__icon" aria-hidden="true">🧪</span>+ 4 live side projects</li>
         </ul>
         <div class="wifi-sign__hint" aria-hidden="true">Click for details →</div>
@@ -3689,17 +3717,17 @@
             </div>
 
             <div class="wifi-sign__section">
-                <div class="wifi-sign__section-title">Merlin · Neo</div>
+                <div class="wifi-sign__section-title">Guest ledger</div>
                 <div class="wifi-sign__section-content">
-                    <div class="wifi-sign__rule">Guest entitlement and membership architecture for Merlin Entertainments</div>
+                    <div class="wifi-sign__rule">Guest entitlement and membership architecture for a global attractions operator</div>
                     <div class="wifi-sign__rule">Event-sourced, bi-temporal ledger on Azure, Cosmos DB and Terraform</div>
                 </div>
             </div>
 
             <div class="wifi-sign__section">
-                <div class="wifi-sign__section-title">Throughline</div>
+                <div class="wifi-sign__section-title">Founder diagnostic</div>
                 <div class="wifi-sign__section-content">
-                    <div class="wifi-sign__rule">Founder diagnostic: an AI interview, scored pipelines, a playbook per blocker</div>
+                    <div class="wifi-sign__rule">An AI interview, scored pipelines, a playbook per blocker</div>
                     <div class="wifi-sign__rule">Private demo, available on request</div>
                 </div>
             </div>
@@ -3749,7 +3777,7 @@
     </div>
 
     <!-- Services List -->
-    <div class="price-list" role="complementary" aria-label="My services">
+    <div class="price-list" role="complementary" aria-label="Our services">
         <h2 class="price-list__title">SERVICES</h2>
         <p class="price-list__key">More cups, bigger job</p>
         <div class="price-list__item">
@@ -3793,27 +3821,48 @@
             <span class="contact-info__label">LOCATION</span>
             London
         </div>
-        <div class="contact-info__hint" aria-hidden="true">About me →</div>
+        <div class="contact-info__hint" aria-hidden="true">About us →</div>
 
         <div class="contact-info__extra" id="contact-info-panel">
             <div class="contact-info__section">
-                <div class="contact-info__section-title">About Me</div>
+                <div class="contact-info__section-title">About Iron Pig</div>
                 <div class="contact-info__section-content">
-                    I'm Noel Kriegler, a software consultant based in London. I build things, fix things, and lead teams through the hard parts. I've shipped products from scratch, turned around struggling teams, and streamlined operations at companies that had outgrown their processes.
+                    Iron Pig is a product engineering company based in London. We build things, fix things, and lead teams through the hard parts: products shipped from scratch, struggling teams turned around, and operations streamlined at companies that had outgrown their processes.
+                </div>
+            </div>
+
+            <div class="contact-info__section">
+                <div class="contact-info__section-title">Who You'll Work With</div>
+                <div class="contact-info__section-content">
+                    Founded and led by Noel Kriegler, who leads the technical work. Senior engineers and specialist designers join as each project needs them.
                 </div>
             </div>
 
             <div class="contact-info__section">
                 <div class="contact-info__section-title">Writing</div>
                 <div class="contact-info__section-content">
-                    I've been helping developers grow for years. <a class="contact-info__link" href="https://www.offerzen.com/blog/excelling-as-a-junior-dev-from-day-one" target="_blank" rel="noopener">Excelling as a junior dev from day one</a> (OfferZen, 2019)
+                    Noel has been helping developers grow for years. <a class="contact-info__link" href="https://www.offerzen.com/blog/excelling-as-a-junior-dev-from-day-one" target="_blank" rel="noopener">Excelling as a junior dev from day one</a> (OfferZen, 2019)
                 </div>
             </div>
 
             <div class="contact-info__section">
-                <div class="contact-info__section-title">My Approach</div>
+                <div class="contact-info__section-title">How We Work</div>
                 <div class="contact-info__section-content">
-                    I work out what's actually going wrong, then I fix it. No decks, no discovery phases that last longer than the actual work. You get someone who can write the code, make the calls, and get it done.
+                    We work out what's actually going wrong, then we fix it. No decks, no discovery phases that last longer than the actual work. You get people who can write the code, make the calls, and get it done.
+                </div>
+            </div>
+
+            <div class="contact-info__section">
+                <div class="contact-info__section-title">Working With Us</div>
+                <div class="contact-info__section-content">
+                    You own the code and the docs. Every build gets a private staging site from week one. We carry professional indemnity, public liability and employers' liability insurance.
+                </div>
+            </div>
+
+            <div class="contact-info__section">
+                <div class="contact-info__section-title">Company</div>
+                <div class="contact-info__section-content">
+                    Iron Pig Ltd. Registered in England and Wales, company no. 16847978. Registered office: Flat 15, Mallard House, Station Court, Townmead Road, London SW6 2BF. VAT no. GB 508344400.
                 </div>
             </div>
         </div>

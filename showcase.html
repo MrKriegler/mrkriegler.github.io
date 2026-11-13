@@ -264,6 +264,33 @@
             z-index: 2;
         }
 
+        .showcase-group {
+            grid-column: 1 / -1;
+            margin-top: 16px;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
+            color: #5a4a38;
+        }
+
+        .showcase-group:first-child {
+            margin-top: 0;
+        }
+
+        .project-card--solo {
+            grid-column: 1 / -1;
+            width: calc(50% - 20px);
+            justify-self: center;
+        }
+
+        @media (max-width: 768px) {
+            .project-card--solo {
+                width: 100%;
+            }
+        }
+
         /* ===================================
            PROJECT CARDS - Chalkboard style
            =================================== */
@@ -515,6 +542,12 @@
             letter-spacing: 0.5px;
         }
 
+        .page-footer__text--legal {
+            margin-top: 8px;
+            color: rgba(245, 245, 220, 0.7);
+            line-height: 1.6;
+        }
+
         .page-footer__link {
             color: rgba(181, 201, 154, 0.6);
             text-decoration: none;
@@ -601,16 +634,18 @@
     <!-- Page Heading -->
     <header class="page-heading">
         <h1 class="page-heading__title">Showcase</h1>
-        <p class="page-heading__subtitle">Client platforms and side projects, built and shipped</p>
+        <p class="page-heading__subtitle">Client platforms, lab builds and our own products</p>
     </header>
 
     <!-- Project Grid -->
     <main class="showcase-grid">
 
+        <h2 class="showcase-group">Client platforms</h2>
+
         <!-- SIX -->
         <article class="project-card">
             <div class="project-card__icon">&#x2733;&#xFE0F;</div>
-            <h2 class="project-card__name">SIX</h2>
+            <h3 class="project-card__name">SIX</h3>
             <div class="project-card__url">Vecto Ventures &middot; coming soon</div>
             <div class="project-card__divider"></div>
             <div class="project-card__art">
@@ -650,22 +685,22 @@
             <div class="project-card__note">Launching soon</div>
         </article>
 
-        <!-- Merlin -->
+        <!-- Guest ledger -->
         <article class="project-card">
             <div class="project-card__icon">&#x1F3A2;</div>
-            <h2 class="project-card__name">Merlin &middot; Neo</h2>
-            <div class="project-card__url">Merlin Entertainments</div>
+            <h3 class="project-card__name">Guest ledger</h3>
+            <div class="project-card__url">A global attractions operator</div>
             <div class="project-card__divider"></div>
             <div class="project-card__art">
                 <svg viewBox="0 0 900 500" role="img" aria-label="A rollercoaster loop and big wheel against a night sky">
                     <defs>
-                        <linearGradient id="merlin-sky" x1="0" y1="0" x2="0" y2="1">
+                        <linearGradient id="ledger-sky" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="0" stop-color="#120c2e"/>
                             <stop offset="0.6" stop-color="#3b1d5e"/>
                             <stop offset="1" stop-color="#f08a4b"/>
                         </linearGradient>
                     </defs>
-                    <rect width="900" height="500" fill="url(#merlin-sky)"/>
+                    <rect width="900" height="500" fill="url(#ledger-sky)"/>
                     <g fill="#fffbe8" fill-opacity="0.8">
                         <circle cx="60" cy="40" r="2"/><circle cx="210" cy="90" r="1.5"/><circle cx="330" cy="30" r="2"/><circle cx="480" cy="70" r="1.5"/>
                         <circle cx="610" cy="35" r="2"/><circle cx="760" cy="80" r="1.5"/><circle cx="840" cy="25" r="2"/><circle cx="130" cy="150" r="1.5"/>
@@ -679,12 +714,12 @@
                         <path d="M760 280 V440 M680 360 H840 M703 303 L817 417 M817 303 L703 417"/>
                     </g>
                     <path d="M0 470 L60 420 L90 380 L120 420 L200 450 L260 380 L300 450 L900 460 L900 500 L0 500 Z" fill="#0d0820"/>
-                    <text x="48" y="90" font-family="'adineue PRO', sans-serif" font-size="58" font-weight="700" fill="#ffffff">Neo</text>
+                    <text x="48" y="90" font-family="'adineue PRO', sans-serif" font-size="58" font-weight="700" fill="#ffffff">Ledger</text>
                     <text x="50" y="122" font-family="'adineue PRO', sans-serif" font-size="18" letter-spacing="2" fill="#ffd36e">GUEST ENTITLEMENTS LEDGER</text>
                 </svg>
             </div>
             <p class="project-card__description">
-                Guest entitlement and membership architecture for Merlin Entertainments' move to one attractions app: what every guest has, had and will have, across every ticketing system.
+                Guest entitlement and membership architecture for a global attractions operator's move to one app: what every guest has, had and will have, across every ticketing system.
             </p>
             <div class="project-card__features">
                 <div class="project-card__feature">Event-sourced, bi-temporal ledger with idempotent ingest</div>
@@ -694,11 +729,13 @@
             <div class="project-card__note">Client platform, not publicly browsable</div>
         </article>
 
-        <!-- Throughline -->
-        <article class="project-card">
+        <h2 class="showcase-group">In the lab</h2>
+
+        <!-- Founder diagnostic -->
+        <article class="project-card project-card--solo">
             <div class="project-card__icon">&#x1F4C8;</div>
-            <h2 class="project-card__name">Throughline</h2>
-            <div class="project-card__url">Iron Pig Labs</div>
+            <h3 class="project-card__name">Founder diagnostic</h3>
+            <div class="project-card__url">Built for a UK growth consultancy</div>
             <div class="project-card__divider"></div>
             <div class="project-card__art">
                 <svg viewBox="0 0 900 500" role="img" aria-label="Three pipelines braiding into one, with a score dial">
@@ -713,7 +750,7 @@
                         <path d="M640 160 A70 70 0 0 1 755 108" stroke="#2E5E3F"/>
                     </g>
                     <text x="700" y="145" text-anchor="middle" font-family="'adineue PRO', sans-serif" font-size="40" font-weight="700" fill="#2a2220">72</text>
-                    <text x="50" y="460" font-family="Pacifico, cursive" font-size="48" fill="#2a2220">Throughline</text>
+                    <text x="50" y="460" font-family="Pacifico, cursive" font-size="48" fill="#2a2220">Founder diagnostic</text>
                 </svg>
             </div>
             <p class="project-card__description">
@@ -727,10 +764,12 @@
             <div class="project-card__note">Private demo, available on request</div>
         </article>
 
+        <h2 class="showcase-group">Our own products</h2>
+
         <!-- What Is This Mark? -->
         <article class="project-card">
             <div class="project-card__icon">&#x231A;</div>
-            <h2 class="project-card__name">What Is This Mark?</h2>
+            <h3 class="project-card__name">What Is This Mark?</h3>
             <div class="project-card__url">whatisthismark.com</div>
             <div class="project-card__divider"></div>
             <div class="project-card__screenshot">
@@ -750,7 +789,7 @@
         <!-- Visa Requirements -->
         <article class="project-card">
             <div class="project-card__icon">&#x2708;&#xFE0F;</div>
-            <h2 class="project-card__name">Visa Requirements</h2>
+            <h3 class="project-card__name">Visa Requirements</h3>
             <div class="project-card__url">visa-requirements.io</div>
             <div class="project-card__divider"></div>
             <div class="project-card__screenshot">
@@ -770,7 +809,7 @@
         <!-- Foam Finders -->
         <article class="project-card">
             <div class="project-card__icon">&#x1F37A;</div>
-            <h2 class="project-card__name">Foam Finders</h2>
+            <h3 class="project-card__name">Foam Finders</h3>
             <div class="project-card__url">foamfinders.co.uk</div>
             <div class="project-card__divider"></div>
             <div class="project-card__screenshot">
@@ -790,7 +829,7 @@
         <!-- Thames Paddle Planner -->
         <article class="project-card">
             <div class="project-card__icon">&#x1F6A3;</div>
-            <h2 class="project-card__name">Thames Paddle Planner</h2>
+            <h3 class="project-card__name">Thames Paddle Planner</h3>
             <div class="project-card__url">thamespaddleplanner.com</div>
             <div class="project-card__divider"></div>
             <div class="project-card__screenshot">
@@ -816,6 +855,9 @@
     <footer class="page-footer">
         <p class="page-footer__text">
             &copy; 2026 Iron Pig Ltd &middot; <a href="index.html" class="page-footer__link">Back to Caf&eacute;</a>
+        </p>
+        <p class="page-footer__text page-footer__text--legal">
+            Registered in England and Wales, company no. 16847978 &middot; Registered office: Flat 15, Mallard House, Station Court, Townmead Road, London SW6 2BF &middot; VAT no. GB 508344400 &middot; <a href="mailto:hello@iron-pig.com" class="page-footer__link">hello@iron-pig.com</a>
         </p>
     </footer>
 </body>

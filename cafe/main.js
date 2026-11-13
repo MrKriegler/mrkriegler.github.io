@@ -52,7 +52,7 @@ const ACHIEVEMENTS = [
 
 const PLACES = [
     { id: 'services', icon: '📋', label: 'Services menu' },
-    { id: 'help', icon: '🛠️', label: 'How I help' },
+    { id: 'help', icon: '🛠️', label: 'How we help' },
     { id: 'builds', icon: '🚀', label: 'Recent builds' },
     { id: 'art-six', icon: '🖼️', label: 'The gallery' },
     { id: 'contact', icon: '✉️', label: 'Let\'s talk' },
@@ -72,9 +72,9 @@ const PLACES = [
 // Stops near a hidden bean add a nudge, but only while that bean is still out there.
 const TOUR = [
     { id: 'services', title: 'The menu', line: 'This is the menu. More cups means a bigger job. Fire drills are three cups, obviously.', bean: 'bean-menu', nudge: 'Psst: look up. Right on top of this board. 👀' },
-    { id: 'help', title: 'How I help', line: 'Build, fix, lead. That\'s the whole job. Mostly fixing, if I\'m honest.' },
+    { id: 'help', title: 'How we help', line: 'Build, fix, lead. That\'s the whole job. Mostly fixing, if we\'re honest.' },
     { id: 'builds', title: 'Recent builds', line: 'Real things, actually shipped. The Guinness one was very important research.', bean: 'bean-table', nudge: 'Also, have a sniff under that table. Just saying. 👀' },
-    { id: 'art-six', title: 'The gallery', line: 'And now for something completely different: the bigger work. SIX, Merlin\'s guest ledger, Throughline. Click any frame for the story.' },
+    { id: 'art-six', title: 'The gallery', line: 'And now for something completely different: the bigger work. SIX, a guest ledger, a founder diagnostic. Click any frame for the story.' },
     { id: 'machine', title: 'The machine', line: 'The espresso machine. Give it a poke, it hisses.', bean: 'bean-counter', nudge: 'Somebody dropped a bean behind the counter. Wasn\'t me.' },
     { id: 'order', title: 'The till', line: 'Order a coffee here and it turns into a project brief.' },
     { id: 'plant', title: 'The shrubbery', line: 'This plant only talks to the Knights Who Say Ni. Try typing N-I.' },
@@ -1298,7 +1298,7 @@ class CafeSession {
         this.content.boards.services.rows.forEach(row => {
             list.appendChild(el('li', '', {}, [el('span', '', { text: row.label }), el('span', 'cafe-menu__price', { text: row.value })]));
         });
-        body.append(list, el('p', 'cafe-note', { text: 'More cups means a bigger job. Not sure which you need? Order a coffee and I\'ll work it out with you.' }), this.orderButton());
+        body.append(list, el('p', 'cafe-note', { text: 'More cups means a bigger job. Not sure which you need? Order a coffee and we\'ll work it out with you.' }), this.orderButton());
         this.hud.openPanel('Services', body);
     }
 
@@ -1307,7 +1307,7 @@ class CafeSession {
         const pairs = el('dl', 'cafe-pairs');
         this.content.boards.help.rows.forEach(r => pairs.append(el('dt', '', { text: r.label }), el('dd', '', { text: r.value })));
         body.append(pairs, cloneExtra('#tech-stack-panel'));
-        this.hud.openPanel('How I help', body);
+        this.hud.openPanel('How we help', body);
     }
 
     openBuilds(title = 'Recent builds') {
@@ -1333,7 +1333,7 @@ class CafeSession {
             else done(false);
         });
         body.append(
-            el('p', 'cafe-contact__lead', { text: 'Pull up a chair. Tell me what\'s stuck, and I\'ll tell you honestly whether I can help.' }),
+            el('p', 'cafe-contact__lead', { text: 'Pull up a chair. Tell us what\'s stuck, and we\'ll tell you honestly whether we can help.' }),
             el('div', 'cafe-contact__row', {}, [mail, copy]),
             el('p', 'cafe-contact__where', { text: '📍 London · usually within a day' }),
             this.orderButton('Or order a coffee (a quick project brief) ☕'),
@@ -1432,13 +1432,13 @@ class CafeSession {
     openAbout() {
         const body = el('div', 'cafe-board');
         body.append(
-            el('p', 'cafe-contact__lead', { text: 'I run Iron Pig Ltd. I\'m also the cleaner.' }),
-            el('p', '', { text: 'Iron Pig is a one-person software consultancy run from this kitchen table (and a few London coffee shops). No account managers, no hand-offs: when you hire Iron Pig, you get me.' }),
+            el('p', 'cafe-contact__lead', { text: 'Iron Pig started at this kitchen table.' }),
+            el('p', '', { text: 'It\'s a small senior team now, still run from here (and a few London coffee shops). No account managers, no hand-offs: the people you talk to do the work.' }),
             cloneExtra('#contact-info-panel'),
             el('p', 'cafe-note', { text: 'Pebbles handles morale.' }),
             this.orderButton()
         );
-        this.hud.openPanel('About me', body);
+        this.hud.openPanel('About us', body);
     }
 
     openFridge() {
@@ -1448,7 +1448,7 @@ class CafeSession {
             ['Ship it.', 'Small, frequent releases beat big, scary ones.'],
             ['Fix prod first.', 'Users before roadmaps. Always.'],
             ['No meetings about meetings.', 'Decisions get written down, then we move.'],
-            ['Docs live in YOUR repo.', 'No secret recipes. If I get hit by a bus, you\'re fine.'],
+            ['Docs live in YOUR repo.', 'No secret recipes. Everything we build is yours to keep.'],
             ['Buy Spam. And oat milk.', 'Spam, spam, eggs and spam. Some things are non-negotiable.']
         ].forEach(([title, text], i) => notes.appendChild(el('li', `cafe-fridge__note cafe-fridge__note--${i}`, {}, [el('strong', '', { text: title }), el('span', '', { text })])));
         body.append(notes, cloneExtra('#tech-stack-panel'));
@@ -1626,7 +1626,7 @@ function readContent() {
     const helpSpans = helpNode ? [...helpNode.querySelectorAll('.wifi-sign__content > span')] : [];
     const helpRows = [];
     for (let i = 0; i + 1 < helpSpans.length; i += 2) helpRows.push({ label: text(helpSpans[i]), value: text(helpSpans[i + 1]) });
-    const help = { kind: 'help', title: text(helpNode?.querySelector('.board-toggle')) || 'How I Help', rows: helpRows, hint: 'Read more →' };
+    const help = { kind: 'help', title: text(helpNode?.querySelector('.board-toggle')) || 'How We Help', rows: helpRows, hint: 'Read more →' };
     const builds = [...document.querySelectorAll('.build-list li')].map(li => {
         const icon = text(li.querySelector('.build-list__icon'));
         return { icon, text: text(li).replace(icon, '').trim() };

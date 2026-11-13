@@ -27,24 +27,24 @@ export const PROJECTS = [
         paint: paintSix
     },
     {
-        id: 'art-merlin',
-        name: 'Merlin',
-        kicker: 'Merlin Entertainments · 2026',
+        id: 'art-ledger',
+        name: 'Guest ledger',
+        kicker: 'A global attractions operator · 2026',
         pitch: 'Guest entitlement and membership architecture for a global theme-park operator\'s single attractions app.',
         highlights: [
-            'Neo: an event-sourced, bi-temporal ledger of what every guest has, had and will have',
+            'An event-sourced, bi-temporal ledger of what every guest has, had and will have',
             'Append-only, content-hashed ingest that stays idempotent under concurrent writes',
             'A membership service orchestrating billing, passes and the ledger with sagas',
             'Co-authored the architecture for replacing per-park apps with one app and one BFF'
         ],
-        stack: ['TypeScript', 'Azure Functions', 'Cosmos DB', 'APIM', 'Terraform', 'Chargebee', 'accesso'],
-        paint: paintMerlin
+        stack: ['TypeScript', 'Azure Functions', 'Cosmos DB', 'APIM', 'Terraform'],
+        paint: paintLedger
     },
     {
-        id: 'art-throughline',
-        name: 'Throughline',
+        id: 'art-diagnostic',
+        name: 'Founder diagnostic',
         kicker: 'Iron Pig Labs · 2026',
-        pitch: 'A founder diagnostic: a short AI interview, then sales, fundraising and marketing pipelines scored with a playbook for every blocker.',
+        pitch: 'A short AI interview, then sales, fundraising and marketing pipelines scored with a playbook for every blocker.',
         highlights: [
             'A live AI interviewer that captures facts as the founder talks',
             'Deterministic scoring engine: the AI never produces a score',
@@ -53,7 +53,7 @@ export const PROJECTS = [
         ],
         stack: ['TypeScript', 'Next.js', 'Claude', 'Canvas + SVG'],
         note: 'Private demo, available on request',
-        paint: paintThroughline
+        paint: paintDiagnostic
     },
     {
         id: 'art-mark',
@@ -230,7 +230,7 @@ function paintSix(ctx, p) {
     grain(ctx, 0.03, 6);
 }
 
-function paintMerlin(ctx, p) {
+function paintLedger(ctx, p) {
     const sky = ctx.createLinearGradient(0, 0, 0, H);
     sky.addColorStop(0, '#120c2e');
     sky.addColorStop(0.55, '#3b1d5e');
@@ -277,18 +277,18 @@ function paintMerlin(ctx, p) {
     ctx.fillStyle = '#ffd36e';
     ctx.font = `700 22px ${SANS}`;
     spacing(ctx, 6);
-    ctx.fillText('MERLIN', 56, 110);
+    ctx.fillText('GUEST', 56, 110);
     spacing(ctx, 0);
     ctx.fillStyle = '#ffffff';
     ctx.font = `700 96px ${SANS}`;
-    ctx.fillText('Neo', 56, 200);
+    ctx.fillText('Ledger', 56, 200);
     ctx.font = `400 26px ${SANS}`;
     ctx.fillStyle = 'rgba(255,255,255,0.8)';
-    ctx.fillText('the guest entitlements ledger', 60, 240);
+    ctx.fillText('entitlements and memberships', 60, 240);
     footer(ctx, p, { ink: '#f4ecff', muted: '#b9a6d6', chip: 'rgba(255,211,110,0.16)', chipInk: '#ffd36e', top: 800 });
 }
 
-function paintThroughline(ctx, p) {
+function paintDiagnostic(ctx, p) {
     ctx.fillStyle = '#f3efe4';
     ctx.fillRect(0, 0, W, H);
     // Three flowing pipelines braiding into one line
@@ -323,7 +323,7 @@ function paintThroughline(ctx, p) {
     ctx.font = `700 54px ${SANS}`;
     ctx.fillText('72', W / 2, 608);
     ctx.font = `400 64px ${SCRIPT}`;
-    ctx.fillText('Throughline', W / 2, 120);
+    ctx.fillText('Founder diagnostic', W / 2, 120);
     footer(ctx, p, { ink: '#2a2220', muted: '#8b6f47', chip: 'rgba(46,94,63,0.12)', chipInk: '#2E5E3F', top: 750 });
     grain(ctx, 0.025, 21);
 }
