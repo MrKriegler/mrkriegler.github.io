@@ -14,7 +14,7 @@ export const PROJECTS = [
     {
         id: 'art-six',
         name: 'SIX',
-        kicker: 'Vecto Ventures · Coming soon',
+        kicker: 'Vecto Ventures · Live',
         pitch: 'An invitation-only network that matches experienced operator-investors with early-stage founders.',
         highlights: [
             'AI matching with Claude and Cohere embeddings on Amazon Bedrock, served in the EU',
@@ -23,7 +23,7 @@ export const PROJECTS = [
             'Its own design system with WCAG AA contrast audits'
         ],
         stack: ['TypeScript', 'Hono', 'Postgres + pgvector', 'React 19', 'Bedrock', 'Terraform'],
-        note: 'Launching soon',
+        url: 'https://sixnetwork.co/',
         paint: paintSix
     },
     {
